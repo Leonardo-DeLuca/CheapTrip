@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CheapTrip</string>
+    <string name="logarTxt">Logar</string>
+    <string name="usuarioHint">Usuario</string>
+    <string name="senhaHint">Senha</string>
+    <string name="mensagemCadastro">Não possui conta? Cadastre-se</string>
+</resources>
