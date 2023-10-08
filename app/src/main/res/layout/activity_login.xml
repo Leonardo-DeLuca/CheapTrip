@@ -103,5 +103,6 @@
         android:textSize="14sp"
         android:textAlignment="center"
         android:id="@+id/mensagemCadastro"
-        android:textColor="@color/roxo"/>
+        android:textColor="@color/roxo"
+        android:clickable="true" />
 </LinearLayout>

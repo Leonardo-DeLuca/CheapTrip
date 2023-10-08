@@ -4,4 +4,9 @@
     <string name="usuarioHint">Usuario</string>
     <string name="senhaHint">Senha</string>
     <string name="mensagemCadastro">Não possui conta? Cadastre-se</string>
+    <string name="registrarTxt">Registrar</string>
+    <string name="concluirTxt">Concluir</string>
+    <string name="nomeCadastro">Nome Completo</string>
+    <string name="emailCadastro">E-Mail</string>
+    <string name="senhaRepeat">Repita a Senha</string>
 </resources>
