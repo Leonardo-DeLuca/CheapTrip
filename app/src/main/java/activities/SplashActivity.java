@@ -1,4 +1,4 @@
-package com.example.cheaptrip;
+package activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.cheaptrip.R;
 
 public class SplashActivity extends AppCompatActivity {
     private ImageView logo;

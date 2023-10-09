@@ -1,11 +1,17 @@
-package com.example.cheaptrip;
+package activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.cheaptrip.R;
+
+import database.dao.UsuarioDAO;
+import database.model.UsuarioModel;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -23,6 +29,17 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
+
+        UsuarioModel u = new UsuarioModel();
+        u.setNomeCompleto("Vinicius");
+        u.setEmail("Vinicius@email.com");
+        u.setUsuario("vinicius");
+        u.setSenha("123");
+
+        UsuarioDAO usuarioDAO = new UsuarioDAO(LoginActivity.this);
+        long insert = usuarioDAO.insert(u);
+
+        Log.d("Debuggandooo", String.valueOf(insert));
     }
 
 }
