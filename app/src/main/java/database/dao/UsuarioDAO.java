@@ -54,6 +54,26 @@ public class UsuarioDAO extends Base {
         return usuarioRetornado;
     }
 
+    public UsuarioModel selectByEmail(String email) {
+        UsuarioModel usuarioRetornado = null;
+        String[] params = { email };
+
+        try {
+            Open();
+
+            Cursor cursor = db.query(UsuarioModel.TABELA, UsuarioModel.getColunas(), UsuarioModel.COLUNA_EMAIL + " = ?", params, null, null, null);
+
+            if (cursor.moveToFirst()) {
+                usuarioRetornado = CursorParaUsuario(cursor);
+            }
+        }
+        finally {
+            Close();
+        }
+
+        return usuarioRetornado;
+    }
+
     private UsuarioModel CursorParaUsuario(Cursor cursor) {
         UsuarioModel u = new UsuarioModel();
 

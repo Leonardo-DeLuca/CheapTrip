@@ -57,7 +57,8 @@
                         android:drawableStart="@drawable/baseline_person_24"
                         android:textColor="@color/black"
                         android:layout_marginTop="40dp"
-                        android:drawablePadding="8dp" />
+                        android:drawablePadding="8dp"
+                        android:singleLine="true"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -78,7 +79,8 @@
                         android:drawableStart="@drawable/baseline_person_24"
                         android:textColor="@color/black"
                         android:layout_marginTop="40dp"
-                        android:drawablePadding="8dp" />
+                        android:drawablePadding="8dp"
+                        android:singleLine="true"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -99,7 +101,9 @@
                         android:drawableStart="@drawable/baseline_email_24"
                         android:textColor="@color/black"
                         android:layout_marginTop="40dp"
-                        android:drawablePadding="8dp" />
+                        android:drawablePadding="8dp"
+                        android:singleLine="true"
+                        android:inputType="textEmailAddress"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -109,7 +113,7 @@
                     android:id="@+id/passwordCadastroLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:passwordToggleEnabled="true"
+                    app:passwordToggleEnabled="false"
                     android:layout_marginTop="30dp"
                     app:hintEnabled="false"
                     >
@@ -123,14 +127,15 @@
                         android:drawableStart="@drawable/baseline_lock_24"
                         android:textColor="@color/black"
                         android:inputType="textPassword"
-                        android:drawablePadding="8dp" />
+                        android:drawablePadding="8dp"
+                        android:singleLine="true"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/passwordRepeatLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:passwordToggleEnabled="true"
+                    app:passwordToggleEnabled="false"
                     android:layout_marginTop="30dp"
                     app:hintEnabled="false"
                     >
@@ -144,7 +149,8 @@
                         android:drawableStart="@drawable/baseline_lock_24"
                         android:textColor="@color/black"
                         android:inputType="textPassword"
-                        android:drawablePadding="8dp"/>
+                        android:drawablePadding="8dp"
+                        android:singleLine="true"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
