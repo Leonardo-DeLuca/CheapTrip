@@ -9,4 +9,5 @@
     <string name="nomeCadastro">Nome Completo</string>
     <string name="emailCadastro">E-Mail</string>
     <string name="senhaRepeat">Repita a Senha</string>
+    <string name="conectadoChkTxt">Manter-se conectado</string>
 </resources>

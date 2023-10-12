@@ -82,13 +82,21 @@
                     android:drawablePadding="8dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <CheckBox
+                android:id="@+id/chkBoxManterConectado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/conectadoChkTxt"
+                android:textSize="14sp"
+                android:layout_marginTop="10dp" />
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/loginButton"
                 android:text="@string/logarTxt"
                 android:textSize="20sp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 android:backgroundTint="@color/azulClaro"/>
 
         </LinearLayout>
@@ -96,13 +104,14 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
+        android:id="@+id/mensagemCadastro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="true"
+        android:minHeight="48dp"
         android:padding="8dp"
         android:text="@string/mensagemCadastro"
-        android:textSize="14sp"
         android:textAlignment="center"
-        android:id="@+id/mensagemCadastro"
         android:textColor="@color/roxo"
-        android:clickable="true" />
+        android:textSize="14sp" />
 </LinearLayout>
