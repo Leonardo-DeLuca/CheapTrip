@@ -34,6 +34,35 @@ public class UsuarioDAO extends Base {
         return linhasAfetadas;
     }
 
+    public boolean select(String usuario, String senha) {
+
+        boolean isExisteUsuario = false;
+
+        try {
+            Open();
+
+            Cursor cursor = db.query
+                    (
+                            UsuarioModel.TABELA, UsuarioModel.getColunas(),
+                            UsuarioModel.COLUNA_USUARIO + " = ? and " +
+                                    UsuarioModel.COLUNA_SENHA + " = ?",
+                            new String[]{usuario, senha},
+                            null,
+                            null,
+                            null
+                    );
+            if (cursor.moveToFirst()) {
+                isExisteUsuario = cursor.getCount() > 0;
+                cursor.close();
+            }
+        }
+        finally {
+            Close();
+        }
+
+        return isExisteUsuario;
+    }
+
     public UsuarioModel selectByUsuario(String usuario) {
         UsuarioModel usuarioRetornado = null;
         String[] params = { usuario };
