@@ -1,8 +1,6 @@
 package activities.fragments.viagens;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -21,10 +19,7 @@ import com.example.cheaptrip.R;
 import com.example.cheaptrip.databinding.FragmentViagensBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import activities.CadastroActivity;
-import activities.LoginActivity;
-import activities.MainActivity;
-import util.KeysUtil;
+import activities.CadastroViagensActivity;
 
 public class ViagensFragment extends Fragment {
 
@@ -50,15 +45,10 @@ public class ViagensFragment extends Fragment {
         TextView textView = view.findViewById(R.id.text_home);
         textView.setText("This is teste fragment");
 
-        Log.d("fab", String.valueOf(preferences.getBoolean(KeysUtil.MANTER_CONEXAO, false)));
-        fab = view.findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                edit.putBoolean(KeysUtil.MANTER_CONEXAO, false);
-                edit.apply();
-            }
+        FloatingActionButton btnAdd = view.findViewById(R.id.btn_add_viagem);
+        btnAdd.setOnClickListener(view1 -> {
+            Intent i = new Intent(getContext(), CadastroViagensActivity.class);
+            startActivity(i);
         });
     }
 
