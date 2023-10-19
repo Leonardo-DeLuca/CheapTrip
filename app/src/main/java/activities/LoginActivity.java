@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.example.cheaptrip.R;
+import com.google.android.material.textfield.TextInputEditText;
 
 import util.KeysUtil;
 
@@ -23,13 +24,19 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginBtn;
     private SharedPreferences preferences;
     private Boolean mantemConexao;
+    private TextInputEditText usuario;
+    private TextInputEditText senha;
+
+    private UsuarioDAO dao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        preferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor edit = preferences.edit();
 
         mantemConexao = preferences.getBoolean(KeysUtil.MANTER_CONEXAO, false);
+        Log.d("fab", String.valueOf(preferences.getBoolean(KeysUtil.MANTER_CONEXAO, false)));
+
         if(mantemConexao){
             Intent it = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(it);
@@ -38,10 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         else {
             setContentView(R.layout.activity_login);
 
-            //Atribuições por id
-            chkBoxManterConectado = findViewById(R.id.chkBoxManterConectado);
-            cadastro = findViewById(R.id.mensagemCadastro);
-            loginBtn = findViewById(R.id.loginButton);
+            setarIds();
 
             //Ação clicar novo cadasto
             cadastro.setOnClickListener(new View.OnClickListener() {
@@ -69,14 +73,45 @@ public class LoginActivity extends AppCompatActivity {
     //Função que realiza as validações de login, verifica se irá manter-se conectado e entra no aplicativo.
     private void acaoLogar (SharedPreferences.Editor edit){
 
-//        if(chkBoxManterConectado.isChecked()){
-//            edit.putBoolean(KeysUtil.MANTER_CONEXAO, true);
-//            edit.apply();
-//        }
 
-        Intent it = new Intent(LoginActivity.this, MainActivity.class);
-        startActivity(it);
 
+        String campoUser = usuario.getText().toString();
+        String campoSenha = senha.getText().toString();
+
+        if(campoUser.isEmpty()){
+            Toast.makeText(LoginActivity.this, "Campo usuário deve ser preenchido!", Toast.LENGTH_LONG).show();
+        }
+        else if(campoSenha.isEmpty()){
+            Toast.makeText(LoginActivity.this, "Campo senha deve ser preenchido!", Toast.LENGTH_LONG).show();
+        }
+        else{
+            dao = new UsuarioDAO(LoginActivity.this);
+            Boolean usuarioExiste = dao.select(campoUser, campoSenha);
+
+
+            if(usuarioExiste){
+                if(chkBoxManterConectado.isChecked()){
+                    edit.putBoolean(KeysUtil.MANTER_CONEXAO, true);
+                    edit.apply();
+                }
+
+                Intent it = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(it);
+                finish();
+            }
+            else {
+                Toast.makeText(LoginActivity.this, "Usuário ou senha inválidos!", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
+    private void setarIds(){
+        //Atribuições por id
+        chkBoxManterConectado = findViewById(R.id.chkBoxManterConectado);
+        cadastro = findViewById(R.id.mensagemCadastro);
+        loginBtn = findViewById(R.id.loginButton);
+        usuario = findViewById(R.id.usernameLogin);
+        senha = findViewById(R.id.passwordLogin);
     }
 
 }
