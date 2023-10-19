@@ -1,7 +1,6 @@
 package activities;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -14,7 +13,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import database.dao.UsuarioDAO;
 import database.model.UsuarioModel;
 
-public class CadastroActivity extends AppCompatActivity {
+public class RegistrarActivity extends AppCompatActivity {
 
     private TextInputEditText nome;
     private TextInputEditText usuario;
@@ -29,7 +28,7 @@ public class CadastroActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro);
+        setContentView(R.layout.activity_registrar);
 
         setarIds();
 
@@ -37,7 +36,7 @@ public class CadastroActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                dao = new UsuarioDAO(CadastroActivity.this);
+                dao = new UsuarioDAO(RegistrarActivity.this);
 
                 if (nome.getText().toString().isEmpty()) {
                     nome.setError("Campo nome obrigatório!");
@@ -61,7 +60,7 @@ public class CadastroActivity extends AppCompatActivity {
                 }
                 else if (!senha.getText().toString().equals(confirmaSenha.getText().toString())) {
                     confirmaSenha.requestFocus();
-                    Toast.makeText(CadastroActivity.this, "Os campos de senha não coincidem!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(RegistrarActivity.this, "Os campos de senha não coincidem!", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -85,7 +84,7 @@ public class CadastroActivity extends AppCompatActivity {
                 user.setEmail(email.getText().toString());
 
                 dao.insert(user);
-                Toast.makeText(CadastroActivity.this, "Cadastro Realizado com sucesso!", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegistrarActivity.this, "Cadastro Realizado com sucesso!", Toast.LENGTH_LONG).show();
                 finish();
             }
         });

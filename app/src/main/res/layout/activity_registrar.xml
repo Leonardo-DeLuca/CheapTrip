@@ -17,7 +17,8 @@
             android:layout_margin="30dp"
             app:cardCornerRadius="30dp"
             app:cardElevation="30dp"
-            android:background="@drawable/edittext_login">
+            android:background="@drawable/edittext_login"
+            app:cardBackgroundColor="@color/white">
 
 
             <LinearLayout

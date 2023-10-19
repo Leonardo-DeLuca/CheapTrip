@@ -1,5 +1,6 @@
 package activities.fragments.viagens;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.cheaptrip.R;
 import com.example.cheaptrip.databinding.FragmentViagensBinding;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import activities.CadastroViagensActivity;
 
 public class ViagensFragment extends Fragment {
 
@@ -30,6 +34,12 @@ public class ViagensFragment extends Fragment {
 
         TextView textView = view.findViewById(R.id.text_home);
         textView.setText("This is teste fragment");
+
+        FloatingActionButton btnAdd = view.findViewById(R.id.btn_add_viagem);
+        btnAdd.setOnClickListener(view1 -> {
+            Intent i = new Intent(getContext(), CadastroViagensActivity.class);
+            startActivity(i);
+        });
     }
 
     @Override

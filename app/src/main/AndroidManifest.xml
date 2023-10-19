@@ -26,11 +26,12 @@
             </intent-filter>
         </activity>
         <activity android:name="activities.LoginActivity" />
-        <activity android:name="activities.CadastroActivity" />
+        <activity android:name="activities.RegistrarActivity" />
         <activity android:name="activities.MainActivity"
             android:exported="false"
             android:label="@string/title_activity_main"
             android:theme="@style/Theme.CheapTrip.NoActionBar" />
+        <activity android:name="activities.CadastroViagensActivity" />
     </application>
 
 </manifest>
