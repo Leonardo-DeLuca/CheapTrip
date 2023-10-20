@@ -35,8 +35,6 @@ public class ConfiguracoesFragment extends Fragment {
 
     }
 
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

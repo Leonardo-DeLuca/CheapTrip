@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">CheapTrip</string>
+
+    <!--  Login/Registrar  -->
     <string name="logarTxt">Logar</string>
     <string name="usuarioHint">Usuario</string>
     <string name="senhaHint">Senha</string>
@@ -10,29 +12,30 @@
     <string name="emailCadastro">E-Mail</string>
     <string name="senhaRepeat">Repita a Senha</string>
     <string name="conectadoChkTxt">Manter-se conectado</string>
-    <string name="reais">R$</string>
-    <string name="total">Total</string>
-    <string name="valorInvalido">Valor inválido</string>
-
-
-    <string name="title_activity_main">MainActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
     <string name="logoutBtn">Deslogar-se</string>
 
+    <!--  Menu lateral  -->
     <string name="menu_viagens">Viagens</string>
     <string name="menu_config">Configurações</string>
+
+    <!--  Etapa inicial do cadastro de novas viagens  -->
     <string name="inicioNovaViagemTxt">Antes de planejar sua viagem, defina um título:</string>
     <string name="tituloViagem">Título</string>
     <string name="validacaoTituloTxt">Título não pode ser vazio</string>
-    <string name="adicionarViagem">Adicionar à viagem</string>
 
+    <!--  Etapa de gasolina do cadastro de novas viagens  -->
     <string name="gasolinaNovaViagemTxt">Agora vamos aos gastos de gasolina:</string>
     <string name="totalKmsTxt">Total estimado de quilômetros</string>
     <string name="mediaKmsLitroTxt">Média de quilômetros por litro</string>
     <string name="custoMedioLitroTxt">Custo médio por litro</string>
     <string name="totalVeiculosTxt">Total de veículos</string>
     <string name="alterarFotoBtn">Alterar foto</string>
+
+    <!--  Geral  -->
+    <string name="title_activity_main">MainActivity</string>
+    <string name="nav_header_desc">Cabeçalho de navegação</string>
+    <string name="reais">R$</string>
+    <string name="total">Total</string>
+    <string name="adicionarViagem">Adicionar à viagem</string>
+    <string name="valorInvalido">Valor inválido</string>
 </resources>

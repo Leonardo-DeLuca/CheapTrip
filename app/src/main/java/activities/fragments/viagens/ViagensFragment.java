@@ -1,7 +1,10 @@
 package activities.fragments.viagens;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,7 @@ import com.example.cheaptrip.databinding.FragmentViagensBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import activities.CadastroViagensActivity;
+import util.KeysUtil;
 
 public class ViagensFragment extends Fragment {
 
@@ -33,6 +37,14 @@ public class ViagensFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Testando para ver se as preferências carregam aqui nas duas situações (Deu certo) (Vamos usar para carregar a lista de viagens do usuario)
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+//        SharedPreferences.Editor edit = preferences.edit();
+//
+//        Log.d("DEBUGGG", preferences.getString(KeysUtil.USER_LOGADO, "Deu pau"));
+//        Log.d("DEBUGGG", preferences.getString(KeysUtil.EMAIL_LOGADO, "Deu pau"));
+//        Log.d("DEBUGGG", preferences.getString(KeysUtil.NOME_LOGADO, "Deu pau"));
 
         TextView textView = view.findViewById(R.id.text_home);
         textView.setText("This is teste fragment");

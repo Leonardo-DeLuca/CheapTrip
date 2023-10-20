@@ -38,35 +38,21 @@ public class LoginActivity extends AppCompatActivity {
 
         mantemConexao = preferences.getBoolean(KeysUtil.MANTER_CONEXAO, false);
 
-        if(mantemConexao){
+        if (mantemConexao) {
             Intent it = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(it);
-        }
-
-        else {
+        } else {
             setContentView(R.layout.activity_login);
 
             setarIds();
 
-            //Ação clicar novo cadasto
-            cadastro.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //Chama activity novo cadastro
-                    Intent it = new Intent(LoginActivity.this, RegistrarActivity.class);
-                    startActivity(it);
-                }
+            cadastro.setOnClickListener(v -> {
+                Intent it = new Intent(LoginActivity.this, RegistrarActivity.class);
+                startActivity(it);
             });
 
-            //Ação botão logar
-            loginBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                //Chama função que realiza as validações de login.
-                public void onClick(View v) {
-                    acaoLogar(edit);
-                }
-            });
-
+            //Chama função que realiza as validações de login.
+            loginBtn.setOnClickListener(v -> acaoLogar(edit));
         }
 
     }
@@ -76,35 +62,36 @@ public class LoginActivity extends AppCompatActivity {
         String campoUser = usuario.getText().toString();
         String campoSenha = senha.getText().toString();
 
-        if(campoUser.isEmpty()){
+        if (campoUser.isEmpty()) {
             Toast.makeText(LoginActivity.this, "Campo usuário deve ser preenchido!", Toast.LENGTH_LONG).show();
         }
-        else if(campoSenha.isEmpty()){
+        else if (campoSenha.isEmpty()) {
             Toast.makeText(LoginActivity.this, "Campo senha deve ser preenchido!", Toast.LENGTH_LONG).show();
         }
-        else{
+        else {
             dao = new UsuarioDAO(LoginActivity.this);
-            UsuarioModel usuario = dao.selectUserPassword(campoUser, campoSenha);
+            UsuarioModel usuario = dao.selectBy(UsuarioModel.COLUNA_USUARIO, campoUser);
 
-
-            if(usuario != null){
-                if(chkBoxManterConectado.isChecked()){
-                    edit.putBoolean(KeysUtil.MANTER_CONEXAO, true);
-                    edit.apply();
-                }
-
-                Integer idUser = usuario.getId();
-
-                edit.putInt(KeysUtil.ID_USER_LOGIN,idUser);
-                edit.apply();
-                Intent it = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(it);
-                finish();
-            }
-            else {
+            if (usuario == null || !campoSenha.equals(usuario.getSenha())) {
                 Toast.makeText(LoginActivity.this, "Usuário ou senha inválidos!", Toast.LENGTH_LONG).show();
+                return;
             }
+
+            if (chkBoxManterConectado.isChecked()) {
+                edit.putBoolean(KeysUtil.MANTER_CONEXAO, true);
+            }
+
+            edit.putInt(KeysUtil.ID_USER_LOGIN, usuario.getId());
+            edit.apply();
+
+            abreTelaMainAposLogar();
         }
+    }
+
+    private void abreTelaMainAposLogar() {
+        Intent it = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(it);
+        finish();
     }
 
     private void setarIds() {

@@ -35,61 +35,57 @@ public class RegistrarActivity extends AppCompatActivity {
         btnConcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                dao = new UsuarioDAO(RegistrarActivity.this);
-
                 if (nome.getText().toString().isEmpty()) {
                     nome.setError("Campo nome obrigatório!");
                     nome.setEnabled(true);
-                    return;
                 }
                 else if (usuario.getText().toString().isEmpty()) {
                     usuario.setError("Campo usuario obrigatório!");
                     usuario.setEnabled(true);
-                    return;
                 }
-                 else if (email.getText().toString().isEmpty()) {
+                else if (email.getText().toString().isEmpty()) {
                     email.setError("Campo e-mail obrigatório!");
                     email.setEnabled(true);
-                    return;
                 }
                 else if (senha.getText().toString().isEmpty()) {
                     senha.setError("Campo senha obrigatório!");
                     senha.setEnabled(true);
-                    return;
                 }
                 else if (!senha.getText().toString().equals(confirmaSenha.getText().toString())) {
                     confirmaSenha.requestFocus();
                     Toast.makeText(RegistrarActivity.this, "Os campos de senha não coincidem!", Toast.LENGTH_LONG).show();
-                    return;
+                } else {
+                    registrarUsuario();
                 }
 
-                UsuarioModel usuarioModel = dao.selectByUsuario(usuario.getText().toString());
-                if(usuarioModel != null){
-                    usuario.setError("Usuario já existente!");
-                    return;
-                }
-
-                usuarioModel = dao.selectByEmail(email.getText().toString());
-                if(usuarioModel != null){
-                    email.setError("E-mail já existente!");
-                    return;
-                }
-
-                UsuarioModel user = new UsuarioModel();
-
-                user.setNomeCompleto(nome.getText().toString());
-                user.setUsuario(usuario.getText().toString());
-                user.setSenha(senha.getText().toString());
-                user.setEmail(email.getText().toString());
-
-                dao.insert(user);
-                Toast.makeText(RegistrarActivity.this, "Cadastro Realizado com sucesso!", Toast.LENGTH_LONG).show();
-                finish();
             }
         });
+    }
 
+    private void registrarUsuario() {
+        UsuarioModel usuarioRegistrar = new UsuarioModel();
+        dao = new UsuarioDAO(RegistrarActivity.this);
 
+        UsuarioModel usuarioModel = dao.selectBy(UsuarioModel.COLUNA_USUARIO, usuario.getText().toString());
+        if (usuarioModel != null) {
+            usuario.setError("Usuário já existente!");
+            return;
+        }
+
+        usuarioModel = dao.selectBy(UsuarioModel.COLUNA_EMAIL, email.getText().toString());
+        if (usuarioModel != null) {
+            email.setError("E-mail já existente!");
+            return;
+        }
+
+        usuarioRegistrar.setNomeCompleto(nome.getText().toString());
+        usuarioRegistrar.setUsuario(usuario.getText().toString());
+        usuarioRegistrar.setSenha(senha.getText().toString());
+        usuarioRegistrar.setEmail(email.getText().toString());
+
+        dao.insert(usuarioRegistrar);
+        Toast.makeText(RegistrarActivity.this, "Cadastro Realizado com sucesso!", Toast.LENGTH_LONG).show();
+        finish();
     }
 
     private void setarIds(){

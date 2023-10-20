@@ -34,86 +34,18 @@ public class UsuarioDAO extends Base {
         return linhasAfetadas;
     }
 
-    public UsuarioModel selectUserPassword(String usuario, String senha) {
-
+    public UsuarioModel selectBy(String colunaParametro, String valorParametro) {
         UsuarioModel usuarioRetornado = null;
+        String[] params = { valorParametro };
 
         try {
             Open();
 
-            Cursor cursor = db.query
-                    (
-                            UsuarioModel.TABELA, UsuarioModel.getColunas(),
-                            UsuarioModel.COLUNA_USUARIO + " = ? and " +
-                                    UsuarioModel.COLUNA_SENHA + " = ?",
-                            new String[]{usuario, senha},
-                            null,
-                            null,
-                            null
-                    );
+            Cursor cursor = db.query(UsuarioModel.TABELA, UsuarioModel.getColunas(), colunaParametro + " = ?", params, null, null, null);
+
             if (cursor.moveToFirst()) {
                 usuarioRetornado = CursorParaUsuario(cursor);
                 cursor.close();
-            }
-        }
-        finally {
-            Close();
-        }
-
-        return usuarioRetornado;
-    }
-
-    public UsuarioModel selectByUsuario(String usuario) {
-        UsuarioModel usuarioRetornado = null;
-        String[] params = { usuario };
-
-        try {
-            Open();
-
-            Cursor cursor = db.query(UsuarioModel.TABELA, UsuarioModel.getColunas(), UsuarioModel.COLUNA_USUARIO + " = ?", params, null, null, null);
-
-            if (cursor.moveToFirst()) {
-                usuarioRetornado = CursorParaUsuario(cursor);
-            }
-        }
-        finally {
-            Close();
-        }
-
-        return usuarioRetornado;
-    }
-
-    public UsuarioModel selectByEmail(String email) {
-        UsuarioModel usuarioRetornado = null;
-        String[] params = { email };
-
-        try {
-            Open();
-
-            Cursor cursor = db.query(UsuarioModel.TABELA, UsuarioModel.getColunas(), UsuarioModel.COLUNA_EMAIL + " = ?", params, null, null, null);
-
-            if (cursor.moveToFirst()) {
-                usuarioRetornado = CursorParaUsuario(cursor);
-            }
-        }
-        finally {
-            Close();
-        }
-
-        return usuarioRetornado;
-    }
-
-    public UsuarioModel selectById(Integer id) {
-        UsuarioModel usuarioRetornado = null;
-        String[] params = { id.toString() };
-
-        try {
-            Open();
-
-            Cursor cursor = db.query(UsuarioModel.TABELA, UsuarioModel.getColunas(), UsuarioModel.COLUNA_ID + " = ?", params, null, null, null);
-
-            if (cursor.moveToFirst()) {
-                usuarioRetornado = CursorParaUsuario(cursor);
             }
         }
         finally {

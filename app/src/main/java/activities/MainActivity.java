@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
+import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,24 +31,12 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private UsuarioDAO dao;
 
-    private TextView nomeHeader;
-    private TextView usuarioHeader;
-    private TextView emailHeader;
+    private TextView nomeHeader, usuarioHeader, emailHeader;
+    private View cabecalho;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Integer id = preferences.getInt(KeysUtil.ID_USER_LOGIN, -1);
-        dao = new UsuarioDAO(MainActivity.this);
-        UsuarioModel usuario = dao.selectById(id);
-
-        SharedPreferences.Editor edit = preferences.edit();
-        edit.putString(KeysUtil.USER_LOGADO, usuario.getUsuario());
-        edit.putString(KeysUtil.EMAIL_LOGADO, usuario.getEmail());
-        edit.putString(KeysUtil.NOME_LOGADO, usuario.getNomeCompleto());
-        edit.apply();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -63,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-
+        recuperaUsuarioConectado();
+        alteraDadosNaDrawer(navigationView);
     }
 
     @Override
@@ -75,13 +66,31 @@ public class MainActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
 
-        nomeHeader = findViewById(R.id.nomeHeader);
-        nomeHeader.setText(preferences.getString(KeysUtil.NOME_LOGADO, "nome"));
-        emailHeader = findViewById(R.id.emailHeader);
-        emailHeader.setText(preferences.getString(KeysUtil.EMAIL_LOGADO, "email"));
-        usuarioHeader = findViewById(R.id.usuarioHeader);
-        usuarioHeader.setText(preferences.getString(KeysUtil.USER_LOGADO, "usuario"));
-
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
+    }
+
+    private void recuperaUsuarioConectado() {
+        preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        dao = new UsuarioDAO(MainActivity.this);
+
+        Integer id = preferences.getInt(KeysUtil.ID_USER_LOGIN, -1);
+        UsuarioModel usuario = dao.selectBy(UsuarioModel.COLUNA_ID, String.valueOf(id));
+
+        SharedPreferences.Editor edit = preferences.edit();
+        edit.putString(KeysUtil.USER_LOGADO, usuario.getUsuario());
+        edit.putString(KeysUtil.EMAIL_LOGADO, usuario.getEmail());
+        edit.putString(KeysUtil.NOME_LOGADO, usuario.getNomeCompleto());
+        edit.apply();
+    }
+
+    private void alteraDadosNaDrawer(NavigationView navigationView) {
+        cabecalho = navigationView.getHeaderView(0);
+
+        nomeHeader = cabecalho.findViewById(R.id.nomeHeader);
+        nomeHeader.setText(preferences.getString(KeysUtil.NOME_LOGADO, "nome"));
+        emailHeader = cabecalho.findViewById(R.id.emailHeader);
+        emailHeader.setText(preferences.getString(KeysUtil.EMAIL_LOGADO, "email"));
+        usuarioHeader = cabecalho.findViewById(R.id.usuarioHeader);
+        usuarioHeader.setText(preferences.getString(KeysUtil.USER_LOGADO, "usuario"));
     }
 }

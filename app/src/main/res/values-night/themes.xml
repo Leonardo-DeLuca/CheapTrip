@@ -1,8 +1,35 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Base.Theme.CheapTrip" parent="Theme.Material3.Light.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+
+        <item name="colorPrimary">@color/azulEscuro</item>
+        <item name="colorOnPrimary">@color/black</item>
+
+        <item name="colorSecondary">@color/azulClaro</item>
+        <item name="colorOnSecondary">@color/black</item>
+
+        <item name="colorPrimaryContainer">@color/azulClaro</item>
+        <item name="colorOnPrimaryContainer">@color/black</item>
+
+        <item name="colorSecondaryContainer">@color/azulClaro</item>
     </style>
+
+
+    <style name="Theme.CheapTrip" parent="Base.Theme.CheapTrip">
+
+    </style>
+
+    <style name="Theme.CheapTrip.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.CheapTrip.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+
+    </style>
+
+    <style name="Theme.CheapTrip.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+
+    </style>
+
 </resources>
