@@ -12,6 +12,7 @@
     <string name="conectadoChkTxt">Manter-se conectado</string>
     <string name="reais">R$</string>
     <string name="total">Total</string>
+    <string name="valorInvalido">Valor inválido</string>
 
 
     <string name="title_activity_main">MainActivity</string>

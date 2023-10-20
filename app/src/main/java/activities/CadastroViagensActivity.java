@@ -1,14 +1,9 @@
 package activities;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -24,7 +19,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashMap;
 
-import listeners.ListenerGasolina;
+import listeners.gasolina.ListenerCheckBoxGasolina;
+import listeners.gasolina.ListenerEditTextGasolina;
 
 public class CadastroViagensActivity extends AppCompatActivity {
     // Controle de etapas
@@ -42,6 +38,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
     // Elementos etapa gasolina
     private EditText editTextTotalEstimadoKms, editTextMediaKmsLitro, editTextCustoMediaLitro, editTextTotalVeiculos, editTextTotalGasolina;
     private CheckBox checkBoxAddViagemGasolina;
+    private EditText[] editTextsGasolina;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,15 +153,16 @@ public class CadastroViagensActivity extends AppCompatActivity {
         editTextTotalVeiculos = findViewById(R.id.edit_text_total_veiculos);
         checkBoxAddViagemGasolina = findViewById(R.id.check_gasolina);
         editTextTotalGasolina = findViewById(R.id.edit_text_total_gasolina);
+
+        editTextsGasolina = new EditText[]{ editTextTotalEstimadoKms, editTextMediaKmsLitro, editTextCustoMediaLitro, editTextTotalVeiculos };
     }
 
     private void setaListenersGasolina() {
-        ListenerGasolina listenerGasolina = new ListenerGasolina(editTextTotalEstimadoKms, editTextMediaKmsLitro, editTextCustoMediaLitro, editTextTotalVeiculos, editTextTotalGasolina);
-
-        editTextTotalEstimadoKms.addTextChangedListener(listenerGasolina);
-        editTextMediaKmsLitro.addTextChangedListener(listenerGasolina);
-        editTextCustoMediaLitro.addTextChangedListener(listenerGasolina);
-        editTextTotalVeiculos.addTextChangedListener(listenerGasolina);
+        editTextTotalEstimadoKms.addTextChangedListener(new ListenerEditTextGasolina(editTextTotalEstimadoKms, this));
+        editTextMediaKmsLitro.addTextChangedListener(new ListenerEditTextGasolina(editTextMediaKmsLitro, this));
+        editTextCustoMediaLitro.addTextChangedListener(new ListenerEditTextGasolina(editTextCustoMediaLitro, this));
+        editTextTotalVeiculos.addTextChangedListener(new ListenerEditTextGasolina(editTextTotalVeiculos, this));
+        checkBoxAddViagemGasolina.setOnCheckedChangeListener(new ListenerCheckBoxGasolina(editTextsGasolina, editTextTotalGasolina, this));
     }
 
     private void finalizaCadastro() {
