@@ -10,10 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cheaptrip.R;
 import com.google.android.material.textfield.TextInputEditText;
 
+import database.dao.UsuarioDAO;
 import util.KeysUtil;
 
 public class LoginActivity extends AppCompatActivity {
@@ -35,7 +37,6 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences.Editor edit = preferences.edit();
 
         mantemConexao = preferences.getBoolean(KeysUtil.MANTER_CONEXAO, false);
-        Log.d("fab", String.valueOf(preferences.getBoolean(KeysUtil.MANTER_CONEXAO, false)));
 
         if(mantemConexao){
             Intent it = new Intent(LoginActivity.this, MainActivity.class);
@@ -72,9 +73,6 @@ public class LoginActivity extends AppCompatActivity {
 
     //Função que realiza as validações de login, verifica se irá manter-se conectado e entra no aplicativo.
     private void acaoLogar (SharedPreferences.Editor edit){
-
-
-
         String campoUser = usuario.getText().toString();
         String campoSenha = senha.getText().toString();
 

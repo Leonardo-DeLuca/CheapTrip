@@ -16,4 +16,5 @@
     <style name="Theme.CheapTrip.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.CheapTrip.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    
 </resources>
