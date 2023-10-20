@@ -41,5 +41,6 @@
         <item name="colorAccent">@color/azulClaro</item>
     </style>
 
-
+    <style name="Theme.CheapTrip.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+   
 </resources>

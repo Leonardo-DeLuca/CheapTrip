@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cheaptrip.R;
@@ -74,9 +73,6 @@ public class LoginActivity extends AppCompatActivity {
 
     //Função que realiza as validações de login, verifica se irá manter-se conectado e entra no aplicativo.
     private void acaoLogar (SharedPreferences.Editor edit){
-
-
-
         String campoUser = usuario.getText().toString();
         String campoSenha = senha.getText().toString();
 
@@ -111,8 +107,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void setarIds(){
-        //Atribuições por id
+    private void setarIds() {
         chkBoxManterConectado = findViewById(R.id.chkBoxManterConectado);
         cadastro = findViewById(R.id.mensagemCadastro);
         loginBtn = findViewById(R.id.loginButton);
