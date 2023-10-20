@@ -1,21 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="activities.fragments.configuracoes.ConfiguracoesFragment">
 
-    <TextView
-        android:id="@+id/text_home"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:gravity="center"
-        android:layout_centerVertical="true"
-        />
+        android:layout_gravity="center"
+        android:orientation="vertical">
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/fotoConfig"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:contentDescription="@string/nav_header_desc"
+            android:paddingTop="@dimen/nav_header_vertical_spacing"
+            android:src="@mipmap/ic_launcher_round"
+            />
+        <Button
+            android:id="@+id/btnAlterarFoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/alterarFotoBtn"
+            android:textColor="@color/white">
+        </Button>
+
+    </LinearLayout>
+
+
+</LinearLayout>
