@@ -1,7 +1,5 @@
 package activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,11 +9,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cheaptrip.R;
 import com.google.android.material.textfield.TextInputEditText;
 
 import database.dao.UsuarioDAO;
+import database.model.UsuarioModel;
 import util.KeysUtil;
 
 public class LoginActivity extends AppCompatActivity {
@@ -84,15 +84,19 @@ public class LoginActivity extends AppCompatActivity {
         }
         else{
             dao = new UsuarioDAO(LoginActivity.this);
-            Boolean usuarioExiste = dao.select(campoUser, campoSenha);
+            UsuarioModel usuario = dao.selectUserPassword(campoUser, campoSenha);
 
 
-            if(usuarioExiste){
+            if(usuario != null){
                 if(chkBoxManterConectado.isChecked()){
                     edit.putBoolean(KeysUtil.MANTER_CONEXAO, true);
                     edit.apply();
                 }
 
+                Integer idUser = usuario.getId();
+
+                edit.putInt(KeysUtil.ID_USER_LOGIN,idUser);
+                edit.apply();
                 Intent it = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(it);
                 finish();
@@ -103,8 +107,7 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void setarIds(){
-        //Atribuições por id
+    private void setarIds() {
         chkBoxManterConectado = findViewById(R.id.chkBoxManterConectado);
         cadastro = findViewById(R.id.mensagemCadastro);
         loginBtn = findViewById(R.id.loginButton);

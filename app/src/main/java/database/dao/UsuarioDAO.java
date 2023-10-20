@@ -34,9 +34,9 @@ public class UsuarioDAO extends Base {
         return linhasAfetadas;
     }
 
-    public boolean select(String usuario, String senha) {
+    public UsuarioModel selectUserPassword(String usuario, String senha) {
 
-        boolean isExisteUsuario = false;
+        UsuarioModel usuarioRetornado = null;
 
         try {
             Open();
@@ -52,7 +52,7 @@ public class UsuarioDAO extends Base {
                             null
                     );
             if (cursor.moveToFirst()) {
-                isExisteUsuario = cursor.getCount() > 0;
+                usuarioRetornado = CursorParaUsuario(cursor);
                 cursor.close();
             }
         }
@@ -60,7 +60,7 @@ public class UsuarioDAO extends Base {
             Close();
         }
 
-        return isExisteUsuario;
+        return usuarioRetornado;
     }
 
     public UsuarioModel selectByUsuario(String usuario) {
@@ -91,6 +91,26 @@ public class UsuarioDAO extends Base {
             Open();
 
             Cursor cursor = db.query(UsuarioModel.TABELA, UsuarioModel.getColunas(), UsuarioModel.COLUNA_EMAIL + " = ?", params, null, null, null);
+
+            if (cursor.moveToFirst()) {
+                usuarioRetornado = CursorParaUsuario(cursor);
+            }
+        }
+        finally {
+            Close();
+        }
+
+        return usuarioRetornado;
+    }
+
+    public UsuarioModel selectById(Integer id) {
+        UsuarioModel usuarioRetornado = null;
+        String[] params = { id.toString() };
+
+        try {
+            Open();
+
+            Cursor cursor = db.query(UsuarioModel.TABELA, UsuarioModel.getColunas(), UsuarioModel.COLUNA_ID + " = ?", params, null, null, null);
 
             if (cursor.moveToFirst()) {
                 usuarioRetornado = CursorParaUsuario(cursor);

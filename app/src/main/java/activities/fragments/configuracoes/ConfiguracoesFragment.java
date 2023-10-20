@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +15,8 @@ import com.example.cheaptrip.databinding.FragmentConfiguracoesBinding;
 
 public class ConfiguracoesFragment extends Fragment {
     private FragmentConfiguracoesBinding binding;
+
+    private Button btnAlterarFoto;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentConfiguracoesBinding.inflate(inflater, container, false);
@@ -27,9 +29,13 @@ public class ConfiguracoesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        TextView textView = view.findViewById(R.id.text_home);
-        textView.setText("This is config fragment");
+        btnAlterarFoto = view.findViewById(R.id.btnAlterarFoto);
+        btnAlterarFoto.setOnClickListener(view1 -> {
+        });
+
     }
+
+
 
     @Override
     public void onDestroyView() {
