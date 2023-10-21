@@ -1,15 +1,15 @@
-package listeners.gasolina;
+package listeners.geral;
 
 import android.app.Activity;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
-public class ListenerCheckBoxGasolina implements CompoundButton.OnCheckedChangeListener {
+public class ListenerCheckBox implements CompoundButton.OnCheckedChangeListener {
     private EditText[] editTexts;
     private EditText editTextTotal;
     private Activity activity;
 
-    public ListenerCheckBoxGasolina(EditText[] editTexts, EditText editTextTotal, Activity activity) {
+    public ListenerCheckBox(EditText[] editTexts, EditText editTextTotal, Activity activity) {
         this.editTexts = editTexts;
         this.editTextTotal = editTextTotal;
         this.activity = activity;
@@ -24,7 +24,8 @@ public class ListenerCheckBoxGasolina implements CompoundButton.OnCheckedChangeL
         } else {
             for (EditText eT : editTexts) {
                 eT.setEnabled(false);
-                eT.setText("0");
+                eT.setError(null);
+                eT.setText("");
             }
 
             editTextTotal.setText("0");

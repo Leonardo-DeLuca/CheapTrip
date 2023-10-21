@@ -19,27 +19,53 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashMap;
 
-import listeners.gasolina.ListenerCheckBoxGasolina;
+import listeners.geral.ListenerCheckBox;
 import listeners.gasolina.ListenerEditTextGasolina;
+import listeners.hospedagem.ListenerEditTextHospedagem;
+import listeners.refeicoes.ListenerEditTextRefeicoes;
+import listeners.tarifaAerea.ListenerEditTextTarifaAerea;
+import validators.IValidator;
+import validators.ValidatorGasolina;
+import validators.ValidatorHospedagem;
+import validators.ValidatorInicio;
+import validators.ValidatorRefeicoes;
+import validators.ValidatorTarifaAerea;
 
 public class CadastroViagensActivity extends AppCompatActivity {
     // Controle de etapas
     private int etapaAtual = 0;
     private HashMap<Integer, LinearLayout> etapas;
+    private HashMap<Integer, IValidator> validatorsEtapas;
     private final int RETORNOU_ETAPA = 1;
     private final int AVANCOU_ETAPA = 2;
 
     // Elementos gerais
     private LinearLayout layoutAtual, layoutAnterior;
-    private LinearLayout containerInicio, containerGasolina, containerTarifaAerea, containerEntretenimento;
+    private LinearLayout containerInicio, containerGasolina, containerTarifaAerea, containerRefeicoes, containerHospedagem, containerEntretenimento;
     private FloatingActionButton btnVoltar, btnAvancar;
-    private EditText editTextTituloViagem;
+
+    // Elementos etapa inicial
+    private EditText editTextTituloViagem, editTextTotalViajantes, editTextDuracaoViagem;
 
     // Elementos etapa gasolina
     private EditText editTextTotalEstimadoKms, editTextMediaKmsLitro, editTextCustoMediaLitro, editTextTotalVeiculos, editTextTotalGasolina;
     private CheckBox checkBoxAddViagemGasolina;
     private EditText[] editTextsGasolina;
 
+    // Elementos etapa tarifa aérea
+    private EditText editTextCustoEstimadoTarifaAerea, editTextAluguelVeiculo, editTextTotalTarifaAerea;
+    private CheckBox checkBoxAddViagemTarifaAerea;
+    private EditText[] editTextsTarifaAerea;
+
+    // Elementos etapa refeições
+    private EditText editTextCustoEstimadoRefeicao, editTextRefeicoesDia, editTextTotalRefeicoes;
+    private CheckBox checkBoxAddViagemRefeicoes;
+    private EditText[] editTextsRefeicoes;
+
+    // Elementos etapa hospedagem
+    private EditText editTextCustoMedioNoite, editTextTotalNoites, editTextTotalQuartos, editTextTotalHospedagem;
+    private CheckBox checkBoxAddViagemHospedagem;
+    private EditText[] editTextsHospedagem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,12 +118,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
     }
 
     private void avancaEtapa() {
-        String tituloViagem = editTextTituloViagem.getText().toString();
-
-        if ("".equals(tituloViagem.trim())) {
-            editTextTituloViagem.setError(getResources().getString(R.string.validacaoTituloTxt));
-            return;
-        }
+        if (!validaEtapaAntesDeAvancar()) return;
 
         layoutAnterior = etapas.get(etapaAtual);
         etapaAtual++;
@@ -120,7 +141,22 @@ public class CadastroViagensActivity extends AppCompatActivity {
         etapas.put(0, containerInicio);
         etapas.put(1, containerGasolina);
         etapas.put(2, containerTarifaAerea);
-        etapas.put(3, containerEntretenimento);
+        etapas.put(3, containerRefeicoes);
+        etapas.put(4, containerHospedagem);
+
+        validatorsEtapas = new HashMap<>();
+
+        validatorsEtapas.put(0, new ValidatorInicio(this));
+        validatorsEtapas.put(1, new ValidatorGasolina(this));
+        validatorsEtapas.put(2, new ValidatorTarifaAerea(this));
+        validatorsEtapas.put(3, new ValidatorRefeicoes(this));
+        validatorsEtapas.put(4, new ValidatorHospedagem(this));
+    }
+
+    private boolean validaEtapaAntesDeAvancar() {
+        IValidator validatorEtapaAtual = validatorsEtapas.get(etapaAtual);
+
+        return validatorEtapaAtual == null || validatorEtapaAtual.valida();
     }
 
     private boolean isUltimaEtapa() {
@@ -129,11 +165,18 @@ public class CadastroViagensActivity extends AppCompatActivity {
 
     private void setaElementos() {
         setaElementosGerais();
+        setaElementosInicio();
         setaElementosGasolina();
+        setaElementosTarifaAerea();
+        setaElementosRefeicoes();
+        setaElementosHospedagem();
     }
 
     private void setaListeners() {
         setaListenersGasolina();
+        setaListenersTarifaAerea();
+        setaListenersRefeicoes();
+        setaListenersHospedagem();
     }
 
     private void setaElementosGerais() {
@@ -142,8 +185,15 @@ public class CadastroViagensActivity extends AppCompatActivity {
         containerInicio = findViewById(R.id.container_inicio);
         containerGasolina = findViewById(R.id.container_gasolina);
         containerTarifaAerea = findViewById(R.id.container_tarifa_aerea);
+        containerRefeicoes = findViewById(R.id.container_refeicoes);
+        containerHospedagem = findViewById(R.id.container_hospedagem);
         containerEntretenimento = findViewById(R.id.container_entretenimento);
+    }
+
+    private void setaElementosInicio() {
         editTextTituloViagem = findViewById(R.id.edit_text_titulo_viagem);
+        editTextTotalViajantes = findViewById(R.id.edit_text_numero_viajantes);
+        editTextDuracaoViagem = findViewById(R.id.edit_text_duracao_viagem);
     }
 
     private void setaElementosGasolina() {
@@ -162,7 +212,54 @@ public class CadastroViagensActivity extends AppCompatActivity {
         editTextMediaKmsLitro.addTextChangedListener(new ListenerEditTextGasolina(editTextMediaKmsLitro, this));
         editTextCustoMediaLitro.addTextChangedListener(new ListenerEditTextGasolina(editTextCustoMediaLitro, this));
         editTextTotalVeiculos.addTextChangedListener(new ListenerEditTextGasolina(editTextTotalVeiculos, this));
-        checkBoxAddViagemGasolina.setOnCheckedChangeListener(new ListenerCheckBoxGasolina(editTextsGasolina, editTextTotalGasolina, this));
+        checkBoxAddViagemGasolina.setOnCheckedChangeListener(new ListenerCheckBox(editTextsGasolina, editTextTotalGasolina, this));
+    }
+
+    private void setaElementosTarifaAerea() {
+        editTextCustoEstimadoTarifaAerea = findViewById(R.id.edit_text_custo_estimado_tarifa_aerea);
+        editTextAluguelVeiculo = findViewById(R.id.edit_text_custo_aluguel_veiculo);
+        checkBoxAddViagemTarifaAerea = findViewById(R.id.check_tarifa_aerea);
+        editTextTotalTarifaAerea = findViewById(R.id.edit_text_total_tarifa_aerea);
+
+        editTextsTarifaAerea = new EditText[]{ editTextCustoEstimadoTarifaAerea, editTextAluguelVeiculo };
+    }
+
+    private void setaListenersTarifaAerea() {
+        editTextCustoEstimadoTarifaAerea.addTextChangedListener(new ListenerEditTextTarifaAerea(editTextCustoEstimadoTarifaAerea, this));
+        editTextAluguelVeiculo.addTextChangedListener(new ListenerEditTextTarifaAerea(editTextAluguelVeiculo, this));
+        checkBoxAddViagemTarifaAerea.setOnCheckedChangeListener(new ListenerCheckBox(editTextsTarifaAerea, editTextTotalTarifaAerea, this));
+    }
+
+    private void setaElementosRefeicoes() {
+        editTextCustoEstimadoRefeicao = findViewById(R.id.edit_text_custo_estimado_refeicao);
+        editTextRefeicoesDia = findViewById(R.id.edit_text_refeicoes_dia);
+        checkBoxAddViagemRefeicoes = findViewById(R.id.check_refeicoes);
+        editTextTotalRefeicoes = findViewById(R.id.edit_text_total_refeicoes);
+
+        editTextsRefeicoes = new EditText[]{ editTextCustoEstimadoRefeicao, editTextRefeicoesDia };
+    }
+
+    private void setaListenersRefeicoes() {
+        editTextCustoEstimadoRefeicao.addTextChangedListener(new ListenerEditTextRefeicoes(editTextCustoEstimadoRefeicao, this));
+        editTextRefeicoesDia.addTextChangedListener(new ListenerEditTextRefeicoes(editTextRefeicoesDia, this));
+        checkBoxAddViagemRefeicoes.setOnCheckedChangeListener(new ListenerCheckBox(editTextsRefeicoes, editTextTotalRefeicoes, this));
+    }
+
+    private void setaElementosHospedagem() {
+        editTextCustoMedioNoite = findViewById(R.id.edit_text_custo_medio_noite);
+        editTextTotalNoites = findViewById(R.id.edit_text_total_noites);
+        editTextTotalQuartos = findViewById(R.id.edit_text_total_quartos);
+        checkBoxAddViagemHospedagem = findViewById(R.id.check_hospedagem);
+        editTextTotalHospedagem = findViewById(R.id.edit_text_total_hospedagem);
+
+        editTextsHospedagem = new EditText[]{ editTextCustoMedioNoite, editTextTotalNoites, editTextTotalQuartos };
+    }
+
+    private void setaListenersHospedagem() {
+        editTextCustoMedioNoite.addTextChangedListener(new ListenerEditTextHospedagem(editTextCustoMedioNoite, this));
+        editTextTotalNoites.addTextChangedListener(new ListenerEditTextHospedagem(editTextTotalNoites, this));
+        editTextTotalQuartos.addTextChangedListener(new ListenerEditTextHospedagem(editTextTotalQuartos, this));
+        checkBoxAddViagemHospedagem.setOnCheckedChangeListener(new ListenerCheckBox(editTextsHospedagem, editTextTotalHospedagem, this));
     }
 
     private void finalizaCadastro() {

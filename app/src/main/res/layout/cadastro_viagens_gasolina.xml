@@ -38,7 +38,8 @@
                 android:id="@+id/edit_text_total_estimado_kms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"/>
+                android:inputType="numberDecimal"
+                android:maxLength="5"/>
         </LinearLayout>
 
         <LinearLayout
@@ -58,7 +59,8 @@
                 android:id="@+id/edit_text_media_kms_litro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="numberDecimal"/>
+                android:inputType="numberDecimal"
+                android:maxLength="5"/>
         </LinearLayout>
 
 
@@ -94,7 +96,8 @@
                     android:layout_weight="1.0"
                     android:textSize="18sp"
                     android:inputType="numberDecimal"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center"
+                    android:maxLength="5"/>
 
             </LinearLayout>
 
@@ -118,7 +121,8 @@
                 android:id="@+id/edit_text_total_veiculos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="number"/>
+                android:inputType="number"
+                android:maxLength="5"/>
         </LinearLayout>
 
         <LinearLayout
