@@ -26,6 +26,10 @@ public class UsuarioModel {
     }
 
     private int id;
+    private String nomeCompleto;
+    private String usuario;
+    private String email;
+    private String senha;
 
     public int getId() {
         return id;
@@ -66,9 +70,4 @@ public class UsuarioModel {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
-    private String nomeCompleto;
-    private String usuario;
-    private String email;
-    private String senha;
 }

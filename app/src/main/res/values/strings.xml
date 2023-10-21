@@ -66,4 +66,13 @@
     <string name="custoMedioNoiteTxt">Custo médio (por noite)</string>
     <string name="totalNoitesTxt">Total de noites</string>
     <string name="totalQuartosTxt">Total de quartos</string>
+
+    <!--  Etapa de entretenimento do cadastro de novas viagens  -->
+    <string name="entretenimentoNovaViagemTxt">Por fim, adicione algumas atrações:</string>
+    <string name="entretenimento1Txt">Nome da atração 1</string>
+    <string name="entretenimento2Txt">Nome da atração 2</string>
+    <string name="entretenimento3Txt">Nome da atração 3</string>
+    <string name="valorEntretenimento1Txt">Valor da atração 1</string>
+    <string name="valorEntretenimento2Txt">Valor da atração 2</string>
+    <string name="valorEntretenimento3Txt">Valor da atração 3</string>
 </resources>
