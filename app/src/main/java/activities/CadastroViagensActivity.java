@@ -19,12 +19,15 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashMap;
 
+import listeners.entretenimento.ListenerCheckBoxEntretenimento;
+import listeners.entretenimento.ListenerEditTextEntretenimento;
 import listeners.geral.ListenerCheckBox;
 import listeners.gasolina.ListenerEditTextGasolina;
 import listeners.hospedagem.ListenerEditTextHospedagem;
 import listeners.refeicoes.ListenerEditTextRefeicoes;
 import listeners.tarifaAerea.ListenerEditTextTarifaAerea;
 import validators.IValidator;
+import validators.ValidatorEntretenimento;
 import validators.ValidatorGasolina;
 import validators.ValidatorHospedagem;
 import validators.ValidatorInicio;
@@ -66,6 +69,14 @@ public class CadastroViagensActivity extends AppCompatActivity {
     private EditText editTextCustoMedioNoite, editTextTotalNoites, editTextTotalQuartos, editTextTotalHospedagem;
     private CheckBox checkBoxAddViagemHospedagem;
     private EditText[] editTextsHospedagem;
+
+    // Elementos etapa entretenimento
+    private EditText editTextEntretenimento1, editTextValorEntretenimento1,
+            editTextEntretenimento2, editTextValorEntretenimento2,
+            editTextEntretenimento3, editTextValorEntretenimento3, editTextTotalEntretenimento;
+    private CheckBox checkBoxEntretenimento1, checkBoxEntretenimento2, checkBoxEntretenimento3, checkBoxAddViagemEntretenimento;
+    private EditText[] editTextsEntretenimento;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +96,8 @@ public class CadastroViagensActivity extends AppCompatActivity {
         });
 
         btnAvancar.setOnClickListener(v -> {
+            if (!validaEtapaAntesDeAvancar()) return;
+
             if (isUltimaEtapa()) {
                 finalizaCadastro();
             } else {
@@ -118,8 +131,6 @@ public class CadastroViagensActivity extends AppCompatActivity {
     }
 
     private void avancaEtapa() {
-        if (!validaEtapaAntesDeAvancar()) return;
-
         layoutAnterior = etapas.get(etapaAtual);
         etapaAtual++;
         layoutAtual = etapas.get(etapaAtual);
@@ -143,6 +154,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
         etapas.put(2, containerTarifaAerea);
         etapas.put(3, containerRefeicoes);
         etapas.put(4, containerHospedagem);
+        etapas.put(5, containerEntretenimento);
 
         validatorsEtapas = new HashMap<>();
 
@@ -151,6 +163,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
         validatorsEtapas.put(2, new ValidatorTarifaAerea(this));
         validatorsEtapas.put(3, new ValidatorRefeicoes(this));
         validatorsEtapas.put(4, new ValidatorHospedagem(this));
+        validatorsEtapas.put(5, new ValidatorEntretenimento(this));
     }
 
     private boolean validaEtapaAntesDeAvancar() {
@@ -170,6 +183,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
         setaElementosTarifaAerea();
         setaElementosRefeicoes();
         setaElementosHospedagem();
+        setaElementosEntretenimento();
     }
 
     private void setaListeners() {
@@ -177,6 +191,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
         setaListenersTarifaAerea();
         setaListenersRefeicoes();
         setaListenersHospedagem();
+        setaListenersEntretenimento();
     }
 
     private void setaElementosGerais() {
@@ -260,6 +275,37 @@ public class CadastroViagensActivity extends AppCompatActivity {
         editTextTotalNoites.addTextChangedListener(new ListenerEditTextHospedagem(editTextTotalNoites, this));
         editTextTotalQuartos.addTextChangedListener(new ListenerEditTextHospedagem(editTextTotalQuartos, this));
         checkBoxAddViagemHospedagem.setOnCheckedChangeListener(new ListenerCheckBox(editTextsHospedagem, editTextTotalHospedagem, this));
+    }
+
+    private void setaElementosEntretenimento() {
+        editTextEntretenimento1 = findViewById(R.id.edit_text_entretenimento_1);
+        editTextValorEntretenimento1 = findViewById(R.id.edit_text_valor_entretenimento_1);
+        editTextEntretenimento2 = findViewById(R.id.edit_text_entretenimento_2);
+        editTextValorEntretenimento2 = findViewById(R.id.edit_text_valor_entretenimento_2);
+        editTextEntretenimento3 = findViewById(R.id.edit_text_entretenimento_3);
+        editTextValorEntretenimento3 = findViewById(R.id.edit_text_valor_entretenimento_3);
+        editTextTotalEntretenimento = findViewById(R.id.edit_text_total_entretenimento);
+        checkBoxEntretenimento1 = findViewById(R.id.check_entretenimento_1);
+        checkBoxEntretenimento2 = findViewById(R.id.check_entretenimento_2);
+        checkBoxEntretenimento3 = findViewById(R.id.check_entretenimento_3);
+        checkBoxAddViagemEntretenimento = findViewById(R.id.check_entretenimento);
+
+        editTextsEntretenimento = new EditText[]{ editTextEntretenimento1, editTextEntretenimento2, editTextEntretenimento3,
+                editTextValorEntretenimento1, editTextValorEntretenimento2, editTextValorEntretenimento3 };
+    }
+
+    private void setaListenersEntretenimento() {
+        EditText[] editTextsEntretenimento1 = new EditText[]{ editTextValorEntretenimento1, editTextEntretenimento1 };
+        EditText[] editTextsEntretenimento2 = new EditText[]{ editTextValorEntretenimento2, editTextEntretenimento2 };
+        EditText[] editTextsEntretenimento3 = new EditText[]{ editTextValorEntretenimento3, editTextEntretenimento3 };
+
+        editTextValorEntretenimento1.addTextChangedListener(new ListenerEditTextEntretenimento(editTextValorEntretenimento1, this));
+        editTextValorEntretenimento2.addTextChangedListener(new ListenerEditTextEntretenimento(editTextValorEntretenimento2, this));
+        editTextValorEntretenimento3.addTextChangedListener(new ListenerEditTextEntretenimento(editTextValorEntretenimento3, this));
+        checkBoxEntretenimento1.setOnCheckedChangeListener(new ListenerCheckBox(editTextsEntretenimento1, editTextTotalEntretenimento, this));
+        checkBoxEntretenimento2.setOnCheckedChangeListener(new ListenerCheckBox(editTextsEntretenimento2, editTextTotalEntretenimento, this));
+        checkBoxEntretenimento3.setOnCheckedChangeListener(new ListenerCheckBox(editTextsEntretenimento3, editTextTotalEntretenimento, this));
+        checkBoxAddViagemEntretenimento.setOnCheckedChangeListener(new ListenerCheckBoxEntretenimento(editTextsEntretenimento, editTextTotalEntretenimento, this));
     }
 
     private void finalizaCadastro() {

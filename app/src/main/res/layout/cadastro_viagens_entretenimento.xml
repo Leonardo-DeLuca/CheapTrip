@@ -14,20 +14,213 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="página 6"
+            android:text="@string/entretenimentoNovaViagemTxt"
             android:gravity="center_horizontal"
-            android:layout_marginTop="200dp"/>
+            android:textSize="18sp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="80dp"
+            android:layout_marginBottom="50dp"/>
 
-        <EditText
-            android:id="@+id/inputTeste2"
-            android:layout_width="315dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="TESTE"/>
+            android:orientation="vertical"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="10dp">
+
+            <EditText
+                android:id="@+id/edit_text_entretenimento_1"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.0"
+                android:textSize="18sp"
+                android:inputType="text"
+                android:layout_gravity="center"
+                android:hint="@string/entretenimento1Txt"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="@string/reais"
+                    android:layout_gravity="center"/>
+
+                <EditText
+                    android:id="@+id/edit_text_valor_entretenimento_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:textSize="18sp"
+                    android:inputType="numberDecimal"
+                    android:layout_gravity="center"
+                    android:maxLength="5"
+                    android:hint="@string/valorEntretenimento1Txt"/>
+
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/check_entretenimento_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/adicionarViagem"
+                android:checked="true"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="10dp">
+
+            <EditText
+                android:id="@+id/edit_text_entretenimento_2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.0"
+                android:textSize="18sp"
+                android:inputType="text"
+                android:layout_gravity="center"
+                android:hint="@string/entretenimento2Txt"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="@string/reais"
+                    android:layout_gravity="center"/>
+
+                <EditText
+                    android:id="@+id/edit_text_valor_entretenimento_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:textSize="18sp"
+                    android:inputType="numberDecimal"
+                    android:layout_gravity="center"
+                    android:maxLength="5"
+                    android:hint="@string/valorEntretenimento2Txt"/>
+
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/check_entretenimento_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/adicionarViagem"
+                android:checked="true"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="10dp">
+
+            <EditText
+                android:id="@+id/edit_text_entretenimento_3"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.0"
+                android:textSize="18sp"
+                android:inputType="text"
+                android:layout_gravity="center"
+                android:hint="@string/entretenimento3Txt"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="@string/reais"
+                    android:layout_gravity="center"/>
+
+                <EditText
+                    android:id="@+id/edit_text_valor_entretenimento_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:textSize="18sp"
+                    android:inputType="numberDecimal"
+                    android:layout_gravity="center"
+                    android:maxLength="5"
+                    android:hint="@string/valorEntretenimento3Txt"/>
+
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/check_entretenimento_3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/adicionarViagem"
+                android:checked="true"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/total"
+                android:textSize="18sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:text="@string/reais"
+                    android:layout_gravity="center"/>
+
+                <EditText
+                    android:id="@+id/edit_text_total_entretenimento"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:textSize="18sp"
+                    android:inputType="numberDecimal"
+                    android:layout_gravity="center"
+                    android:enabled="false"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/check_entretenimento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/adicionarViagem"
+            android:layout_marginHorizontal="20dp"
+            android:checked="true"/>
 
     </LinearLayout>
-
-
-
-
 
 </LinearLayout>
