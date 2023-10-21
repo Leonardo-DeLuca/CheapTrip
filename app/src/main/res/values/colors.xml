@@ -7,5 +7,7 @@
     <color name="azul">#3A506B</color>
     <color name="azulClaro">#5BC0BE</color>
     <color name="roxo">#D7673AB7</color>
+    <color name="cinzaClaro">#D7ECECEC</color>
+    <color name="vermelho">#D7F80000</color>
 
 </resources>

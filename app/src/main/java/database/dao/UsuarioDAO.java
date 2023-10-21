@@ -34,6 +34,25 @@ public class UsuarioDAO extends Base {
         return linhasAfetadas;
     }
 
+    public long editarSenha(UsuarioModel usuarioModel) {
+        long linhasAfetadas = 0;
+        String[] params = {String.valueOf(usuarioModel.getId())};
+
+        try {
+            Open();
+
+            ContentValues values = new ContentValues();
+            values.put(UsuarioModel.COLUNA_SENHA, usuarioModel.getSenha());
+
+            linhasAfetadas = db.update(UsuarioModel.TABELA, values, UsuarioModel.COLUNA_ID + " = ?", params);
+        }
+        finally {
+            Close();
+        }
+
+        return linhasAfetadas;
+    }
+
     public UsuarioModel selectBy(String colunaParametro, String valorParametro) {
         UsuarioModel usuarioRetornado = null;
         String[] params = { valorParametro };

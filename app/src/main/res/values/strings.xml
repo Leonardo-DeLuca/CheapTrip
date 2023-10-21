@@ -21,11 +21,21 @@
     <string name="emailCadastro">E-Mail</string>
     <string name="senhaRepeat">Repita a Senha</string>
     <string name="conectadoChkTxt">Manter-se conectado</string>
-    <string name="logoutBtn">Deslogar-se</string>
 
     <!--  Menu lateral  -->
     <string name="menu_viagens">Viagens</string>
     <string name="menu_config">Configurações</string>
+
+    <!--  Tela Configurações  -->
+    <string name="logoutBtn">Deslogar-se</string>
+    <string name="alterarSenhaBtn">Alterar Senha</string>
+    <string name="alterarFotoBtn">Alterar foto</string>
+    <string name="tituloDialogSenha">Alterar Senha</string>
+    <string name="cancelarDialogBtn">Cancelar</string>
+    <string name="salvarAlteracaoSenhaBtn">Alterar</string>
+    <string name="toastSenhaEmpty">Campo senha necessário!!</string>
+    <string name="toastSenhasDiferentes">Os campos de senha não coincidem!</string>
+    <string name="toastSenhaAlterada">Salvo com sucesso!</string>
 
     <!--  Etapa inicial do cadastro de novas viagens  -->
     <string name="inicioNovaViagemTxt">Antes de planejar sua viagem, defina algumas informações gerais:</string>
@@ -39,7 +49,7 @@
     <string name="mediaKmsLitroTxt">Média de quilômetros por litro</string>
     <string name="custoMedioLitroTxt">Custo médio por litro</string>
     <string name="totalVeiculosTxt">Total de veículos</string>
-    <string name="alterarFotoBtn">Alterar foto</string>
+
 
     <!--  Etapa de tarifa aérea do cadastro de novas viagens  -->
     <string name="tarifaAereaNovaViagemTxt">Em relação aos gastos com tarifa aérea:</string>

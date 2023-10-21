@@ -1,35 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/cinzaClaro"
+    android:weightSum="100"
+    android:orientation="vertical"
+    android:gravity="center"
     tools:context="activities.fragments.configuracoes.ConfiguracoesFragment">
 
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_margin="30dp"
+        app:cardElevation="20dp"
+        android:layout_weight="90"
+        app:cardCornerRadius="30dp"
+        app:cardBackgroundColor="@color/white">
 
-        <ImageView
-            android:id="@+id/fotoConfig"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:contentDescription="@string/nav_header_desc"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:src="@mipmap/ic_launcher_round"
-            />
-        <Button
-            android:id="@+id/btnAlterarFoto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/alterarFotoBtn"
-            android:textColor="@color/white">
-        </Button>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
 
-    </LinearLayout>
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:src="@drawable/user_1"
+                android:layout_marginTop="70dp"
+                android:layout_marginBottom="50dp"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/usuarioConfig"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="50dp">
+            </TextView>
+
+            <Button
+                android:id="@+id/btnAlterarFoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/alterarFotoBtn"
+                android:textColor="@color/white"
+                android:layout_marginHorizontal="50dp">
+            </Button>
+            <Button
+                android:id="@+id/btnAlterarSenha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/alterarSenhaBtn"
+                android:textColor="@color/white"
+                android:layout_marginHorizontal="50dp">
+            </Button>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="bottom">
+                <Button
+                    android:id="@+id/btnDeslogar"
+                    android:backgroundTint="@color/cinzaClaro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/logoutBtn"
+                    android:textColor="@color/vermelho"
+                    android:layout_marginHorizontal="50dp"
+                    android:layout_marginBottom="30dp">
+                </Button>
+            </LinearLayout>
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
 
 
 </LinearLayout>
