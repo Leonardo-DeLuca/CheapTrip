@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">CheapTrip</string>
 
+    <!--  Geral  -->
+    <string name="title_activity_main">MainActivity</string>
+    <string name="nav_header_desc">Cabeçalho de navegação</string>
+    <string name="reais">R$</string>
+    <string name="total">Total</string>
+    <string name="adicionarViagem">Adicionar à viagem</string>
+    <string name="valorInvalido">Valor inválido</string>
+    <string name="campoObrigatorio">Campo obrigatório</string>
+
     <!--  Login/Registrar  -->
     <string name="logarTxt">Logar</string>
     <string name="usuarioHint">Usuario</string>
@@ -19,23 +28,32 @@
     <string name="menu_config">Configurações</string>
 
     <!--  Etapa inicial do cadastro de novas viagens  -->
-    <string name="inicioNovaViagemTxt">Antes de planejar sua viagem, defina um título:</string>
+    <string name="inicioNovaViagemTxt">Antes de planejar sua viagem, defina algumas informações gerais:</string>
     <string name="tituloViagem">Título</string>
-    <string name="validacaoTituloTxt">Título não pode ser vazio</string>
+    <string name="numeroViajantes">Total de viajantes</string>
+    <string name="duracaoViagem">Duração da viagem (em dias)</string>
 
     <!--  Etapa de gasolina do cadastro de novas viagens  -->
-    <string name="gasolinaNovaViagemTxt">Agora vamos aos gastos de gasolina:</string>
+    <string name="gasolinaNovaViagemTxt">Perfeito! Vamos aos gastos de gasolina:</string>
     <string name="totalKmsTxt">Total estimado de quilômetros</string>
     <string name="mediaKmsLitroTxt">Média de quilômetros por litro</string>
     <string name="custoMedioLitroTxt">Custo médio por litro</string>
     <string name="totalVeiculosTxt">Total de veículos</string>
     <string name="alterarFotoBtn">Alterar foto</string>
 
-    <!--  Geral  -->
-    <string name="title_activity_main">MainActivity</string>
-    <string name="nav_header_desc">Cabeçalho de navegação</string>
-    <string name="reais">R$</string>
-    <string name="total">Total</string>
-    <string name="adicionarViagem">Adicionar à viagem</string>
-    <string name="valorInvalido">Valor inválido</string>
+    <!--  Etapa de tarifa aérea do cadastro de novas viagens  -->
+    <string name="tarifaAereaNovaViagemTxt">Em relação aos gastos com tarifa aérea:</string>
+    <string name="custoEstimadoPorPessoaTxt">Custo estimado por pessoa</string>
+    <string name="aluguelVeiculoTxt">Aluguel de veículo</string>
+
+    <!--  Etapa de refeições do cadastro de novas viagens  -->
+    <string name="refeicoesNovaViagemTxt">Quanto pretende gastar com as refeições?</string>
+    <string name="custoEstimadoRefeicaoTxt">Custo estimado por refeição</string>
+    <string name="refeicoesPorDiaTxt">Refeições por dia</string>
+
+    <!--  Etapa de hospedagem do cadastro de novas viagens  -->
+    <string name="hospedagemNovaViagemTxt">Estamos quase lá! Informe os custos com hospedagem:</string>
+    <string name="custoMedioNoiteTxt">Custo médio (por noite)</string>
+    <string name="totalNoitesTxt">Total de noites</string>
+    <string name="totalQuartosTxt">Total de quartos</string>
 </resources>

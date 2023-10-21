@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tarifaAereaNovaViagemTxt"
+            android:text="@string/hospedagemNovaViagemTxt"
             android:gravity="center_horizontal"
             android:textSize="18sp"
             android:layout_marginHorizontal="20dp"
@@ -31,7 +31,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/custoEstimadoPorPessoaTxt"
+                android:text="@string/custoMedioNoiteTxt"
                 android:textSize="18sp"/>
 
             <LinearLayout
@@ -47,7 +47,7 @@
                     android:layout_gravity="center"/>
 
                 <EditText
-                    android:id="@+id/edit_text_custo_estimado_tarifa_aerea"
+                    android:id="@+id/edit_text_custo_medio_noite"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
@@ -70,33 +70,36 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/aluguelVeiculoTxt"
+                android:text="@string/totalNoitesTxt"
                 android:textSize="18sp"/>
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/edit_text_total_noites"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:inputType="number"
+                android:maxLength="5"/>
+        </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:text="@string/reais"
-                    android:layout_gravity="center"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginBottom="20dp">
 
-                <EditText
-                    android:id="@+id/edit_text_custo_aluguel_veiculo"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:textSize="18sp"
-                    android:inputType="numberDecimal"
-                    android:layout_gravity="center"
-                    android:maxLength="5"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/totalQuartosTxt"
+                android:textSize="18sp"/>
 
-            </LinearLayout>
-
+            <EditText
+                android:id="@+id/edit_text_total_quartos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="5"/>
         </LinearLayout>
 
         <LinearLayout
@@ -125,7 +128,7 @@
                     android:layout_gravity="center"/>
 
                 <EditText
-                    android:id="@+id/edit_text_total_tarifa_aerea"
+                    android:id="@+id/edit_text_total_hospedagem"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1.0"
@@ -139,7 +142,7 @@
         </LinearLayout>
 
         <CheckBox
-            android:id="@+id/check_tarifa_aerea"
+            android:id="@+id/check_hospedagem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/adicionarViagem"

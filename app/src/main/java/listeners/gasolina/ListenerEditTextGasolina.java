@@ -36,7 +36,13 @@ public class ListenerEditTextGasolina implements TextWatcher {
     @Override
     public void afterTextChanged(Editable editable) {
         String valorString = editText.getText().toString();
-        Double valorDouble = Double.valueOf(StringUtil.isEmpty(valorString) ? "0" : valorString);
+        Double valorDouble;
+
+        try {
+            valorDouble = Double.valueOf(StringUtil.isEmpty(valorString) ? "0" : valorString);
+        } catch (NumberFormatException e) {
+            return;
+        }
 
         atualizaVariaveis();
 
@@ -78,9 +84,14 @@ public class ListenerEditTextGasolina implements TextWatcher {
         String custoMediaLitroString = editTextCustoMediaLitro.getText().toString();
         String totalVeiculosString = editTextTotalVeiculos.getText().toString();
 
-        totalEstimadoKms = Double.valueOf(StringUtil.isEmpty(totalEstimadoKmsString) ? "0" : totalEstimadoKmsString);
-        mediaKmsLitro = Double.valueOf(StringUtil.isEmpty(mediaKmsLitroString) ? "0" : mediaKmsLitroString);
-        custoMediaLitro = Double.valueOf(StringUtil.isEmpty(custoMediaLitroString) ? "0" : custoMediaLitroString);
-        totalVeiculos = Double.valueOf(StringUtil.isEmpty(totalVeiculosString) ? "0" : totalVeiculosString);
+        try {
+            totalEstimadoKms = Double.valueOf(StringUtil.isEmpty(totalEstimadoKmsString) ? "0" : totalEstimadoKmsString);
+            mediaKmsLitro = Double.valueOf(StringUtil.isEmpty(mediaKmsLitroString) ? "0" : mediaKmsLitroString);
+            custoMediaLitro = Double.valueOf(StringUtil.isEmpty(custoMediaLitroString) ? "0" : custoMediaLitroString);
+            totalVeiculos = Double.valueOf(StringUtil.isEmpty(totalVeiculosString) ? "0" : totalVeiculosString);
+        } catch (NumberFormatException ignored) {
+            editTextTotalGasolina.setText(activity.getResources().getString(R.string.valorInvalido));
+        }
+
     }
 }

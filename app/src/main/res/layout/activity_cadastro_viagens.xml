@@ -26,6 +26,8 @@
         <include layout="@layout/cadastro_viagens_inicio" android:visibility="invisible" android:id="@+id/container_inicio" />
         <include layout="@layout/cadastro_viagens_gasolina" android:visibility="invisible" android:id="@+id/container_gasolina" />
         <include layout="@layout/cadastro_viagens_tarifa_aerea" android:visibility="invisible" android:id="@+id/container_tarifa_aerea" />
+        <include layout="@layout/cadastro_viagens_refeicoes" android:visibility="invisible" android:id="@+id/container_refeicoes" />
+        <include layout="@layout/cadastro_viagens_hospedagem" android:visibility="invisible" android:id="@+id/container_hospedagem" />
         <include layout="@layout/cadastro_viagens_entretenimento" android:visibility="invisible" android:id="@+id/container_entretenimento" />
     </LinearLayout>
 
