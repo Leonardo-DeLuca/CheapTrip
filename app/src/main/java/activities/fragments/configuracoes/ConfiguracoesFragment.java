@@ -3,8 +3,11 @@ package activities.fragments.configuracoes;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +24,14 @@ import com.example.cheaptrip.R;
 import com.example.cheaptrip.databinding.FragmentConfiguracoesBinding;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import activities.LoginActivity;
 import database.dao.UsuarioDAO;
 import database.model.UsuarioModel;
+import de.hdodenhof.circleimageview.CircleImageView;
 import util.KeysUtil;
 
 public class ConfiguracoesFragment extends Fragment {
@@ -39,6 +47,9 @@ public class ConfiguracoesFragment extends Fragment {
     private TextInputEditText senha;
     private TextInputEditText repeteSenha;
     private EditText alterarSenha;
+    private CircleImageView fotoPerfil;
+
+    private static final int PICK_IMAGE = 1;
 
     private boolean validado = false;
 
@@ -99,8 +110,11 @@ public class ConfiguracoesFragment extends Fragment {
                                 }
                             }
             });
+        });
 
-
+        btnAlterarFoto.setOnClickListener(view1 -> {
+            Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
         });
     }
 
@@ -115,6 +129,7 @@ public class ConfiguracoesFragment extends Fragment {
         btnAlterarSenha = view.findViewById(R.id.btnAlterarSenha);
         btnDeslogar = view.findViewById(R.id.btnDeslogar);
         user = view.findViewById(R.id.usuarioConfig);
+        fotoPerfil = view.findViewById(R.id.profile_image);
     }
 
     private void alterarSenha(String senha, View view){
@@ -124,7 +139,59 @@ public class ConfiguracoesFragment extends Fragment {
         usuario.setId(preferences.getInt(KeysUtil.ID_USER_LOGIN, -1));
         usuario.setSenha(senha);
         dao.editarSenha(usuario);
+    }
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE) {
+            if (resultCode == getActivity().RESULT_OK) {
+                if (data != null) {
+                    try {
+                        // Obter o bitmap da imagem selecionada
+                        Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
+
+                        // Converte o bitmap em um array de bytes
+                        byte[] imageBytes = imageToBytes(bitmap);
+
+                        // Salva a imagem no banco de dados SQLite
+                        saveImageToDatabase(imageBytes);
+
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            } else if (resultCode == getActivity().RESULT_CANCELED) {
+                Toast.makeText(getActivity(), "Canceled", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    public byte[] imageToBytes(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        return stream.toByteArray();
+    }
+
+    public void saveImageToDatabase(byte[] imageBytes) {
+//        dao = new UsuarioDAO(getContext());
+//
+//        UsuarioModel usuario = new UsuarioModel();
+//        usuario.setId(preferences.getInt(KeysUtil.ID_USER_LOGIN, -1));
+//        usuario.setImagem(imageBytes);
+//        dao.editarImagem(usuario);
+
+//        Bitmap imageFromBytes = bytesToImage(usuario.getImagem());
+//        preferences = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
+//        SharedPreferences.Editor edit = preferences.edit();
+
+//        fotoPerfil.setImageBitmap(imageFromBytes);
 
     }
+
+    public Bitmap bytesToImage(byte[] imageBytes) {
+        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+    }
 }
+

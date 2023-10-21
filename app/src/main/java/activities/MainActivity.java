@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +20,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import database.dao.UsuarioDAO;
 import database.model.UsuarioModel;
+import de.hdodenhof.circleimageview.CircleImageView;
 import util.KeysUtil;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView nomeHeader, usuarioHeader, emailHeader;
     private View cabecalho;
+    private CircleImageView fotoPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,5 +93,8 @@ public class MainActivity extends AppCompatActivity {
         emailHeader.setText(preferences.getString(KeysUtil.EMAIL_LOGADO, "email"));
         usuarioHeader = cabecalho.findViewById(R.id.usuarioHeader);
         usuarioHeader.setText(preferences.getString(KeysUtil.USER_LOGADO, "usuario"));
+        fotoPerfil = cabecalho.findViewById(R.id.profile_image);
+//        fotoPerfil.setImageBitmap();
+
     }
 }

@@ -8,7 +8,8 @@ public class UsuarioModel {
             COLUNA_NOME_COMPLETO = "nome_completo",
             COLUNA_USUARIO = "usuario",
             COLUNA_EMAIL = "email",
-            COLUNA_SENHA = "senha";
+            COLUNA_SENHA = "senha",
+            COLUNA_IMAGEM = "imagem";
 
     public static final String CREATE_TABLE = "create table " + TABELA
             + "("
@@ -16,13 +17,14 @@ public class UsuarioModel {
             + COLUNA_NOME_COMPLETO + " text not null, "
             + COLUNA_USUARIO + " text not null, "
             + COLUNA_EMAIL + " text not null, "
-            + COLUNA_SENHA + " text not null"
+            + COLUNA_SENHA + " text not null, "
+            + COLUNA_IMAGEM + " blob"
             + ")";
 
     public static final String DROP_TABLE = "drop table if exists " + TABELA + ";";
 
     public static final String[] getColunas() {
-        return new String[] { COLUNA_ID, COLUNA_NOME_COMPLETO, COLUNA_USUARIO, COLUNA_EMAIL, COLUNA_SENHA };
+        return new String[] { COLUNA_ID, COLUNA_NOME_COMPLETO, COLUNA_USUARIO, COLUNA_EMAIL, COLUNA_SENHA, COLUNA_IMAGEM };
     }
 
     private int id;
@@ -30,6 +32,10 @@ public class UsuarioModel {
     private String usuario;
     private String email;
     private String senha;
+<<<<<<< Updated upstream
+=======
+    private byte[] imagem;
+>>>>>>> Stashed changes
 
     public int getId() {
         return id;
@@ -70,4 +76,15 @@ public class UsuarioModel {
     public void setSenha(String senha) {
         this.senha = senha;
     }
+<<<<<<< Updated upstream
+=======
+
+    public byte[] getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(byte[] imagem) {
+        this.imagem = imagem;
+    }
+>>>>>>> Stashed changes
 }
