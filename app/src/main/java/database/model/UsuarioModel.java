@@ -24,7 +24,7 @@ public class UsuarioModel {
     public static final String DROP_TABLE = "drop table if exists " + TABELA + ";";
 
     public static final String[] getColunas() {
-        return new String[] { COLUNA_ID, COLUNA_NOME_COMPLETO, COLUNA_USUARIO, COLUNA_EMAIL, COLUNA_SENHA, COLUNA_IMAGEM };
+        return new String[] { COLUNA_ID, COLUNA_NOME_COMPLETO, COLUNA_USUARIO, COLUNA_EMAIL, COLUNA_SENHA };
     }
 
     private int id;
@@ -32,6 +32,11 @@ public class UsuarioModel {
     private String usuario;
     private String email;
     private String senha;
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
     private byte[] imagem;
 
     public int getId() {
@@ -81,4 +86,8 @@ public class UsuarioModel {
     public void setImagem(byte[] imagem) {
         this.imagem = imagem;
     }
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 }
