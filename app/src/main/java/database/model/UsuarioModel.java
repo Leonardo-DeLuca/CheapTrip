@@ -32,10 +32,7 @@ public class UsuarioModel {
     private String usuario;
     private String email;
     private String senha;
-<<<<<<< Updated upstream
-=======
     private byte[] imagem;
->>>>>>> Stashed changes
 
     public int getId() {
         return id;
@@ -76,8 +73,6 @@ public class UsuarioModel {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-<<<<<<< Updated upstream
-=======
 
     public byte[] getImagem() {
         return imagem;
@@ -86,5 +81,4 @@ public class UsuarioModel {
     public void setImagem(byte[] imagem) {
         this.imagem = imagem;
     }
->>>>>>> Stashed changes
 }

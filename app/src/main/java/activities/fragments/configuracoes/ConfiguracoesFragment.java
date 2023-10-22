@@ -1,5 +1,6 @@
 package activities.fragments.configuracoes;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +33,6 @@ import java.io.IOException;
 import activities.LoginActivity;
 import database.dao.UsuarioDAO;
 import database.model.UsuarioModel;
-import de.hdodenhof.circleimageview.CircleImageView;
 import util.KeysUtil;
 
 public class ConfiguracoesFragment extends Fragment {
@@ -47,7 +48,7 @@ public class ConfiguracoesFragment extends Fragment {
     private TextInputEditText senha;
     private TextInputEditText repeteSenha;
     private EditText alterarSenha;
-    private CircleImageView fotoPerfil;
+    private ImageView fotoPerfil;
 
     private static final int PICK_IMAGE = 1;
 
@@ -144,25 +145,18 @@ public class ConfiguracoesFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE) {
-            if (resultCode == getActivity().RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
                     try {
-                        // Obter o bitmap da imagem selecionada
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
-
-                        // Converte o bitmap em um array de bytes
                         byte[] imageBytes = imageToBytes(bitmap);
 
-                        // Salva a imagem no banco de dados SQLite
                         saveImageToDatabase(imageBytes);
-
-                    } catch (FileNotFoundException e) {
-                        throw new RuntimeException(e);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+                    } catch (Exception e) {
+                        Toast.makeText(getActivity(), "Ocorreu um erro ao processar a imagem.", Toast.LENGTH_SHORT).show();
                     }
                 }
-            } else if (resultCode == getActivity().RESULT_CANCELED) {
+            } else if (resultCode == Activity.RESULT_CANCELED) {
                 Toast.makeText(getActivity(), "Canceled", Toast.LENGTH_SHORT).show();
             }
         }
@@ -170,24 +164,21 @@ public class ConfiguracoesFragment extends Fragment {
 
     public byte[] imageToBytes(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, stream);
         return stream.toByteArray();
     }
 
     public void saveImageToDatabase(byte[] imageBytes) {
-//        dao = new UsuarioDAO(getContext());
-//
-//        UsuarioModel usuario = new UsuarioModel();
-//        usuario.setId(preferences.getInt(KeysUtil.ID_USER_LOGIN, -1));
-//        usuario.setImagem(imageBytes);
-//        dao.editarImagem(usuario);
+        dao = new UsuarioDAO(getContext());
 
-//        Bitmap imageFromBytes = bytesToImage(usuario.getImagem());
-//        preferences = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
-//        SharedPreferences.Editor edit = preferences.edit();
+        UsuarioModel usuario = new UsuarioModel();
+        usuario.setId(preferences.getInt(KeysUtil.ID_USER_LOGIN, -1));
+        usuario.setImagem(imageBytes);
+        dao.editarImagem(usuario);
 
-//        fotoPerfil.setImageBitmap(imageFromBytes);
+        Bitmap imageFromBytes = bytesToImage(usuario.getImagem());
 
+        fotoPerfil.setImageBitmap(imageFromBytes);
     }
 
     public Bitmap bytesToImage(byte[] imageBytes) {
