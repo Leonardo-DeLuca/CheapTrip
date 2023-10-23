@@ -24,7 +24,7 @@ public class TarifaAereaModel {
     public static final String DROP_TABLE = "drop table if exists " + TABELA + ";";
 
     public static final String[] getColunas() {
-        return new String[] { COLUNA_ID, COLUNA_ID_VIAGEM, COLUNA_CUSTO_ESTIMADO_PESSOA, COLUNA_ALUGUEL_VEICULO, COLUNA_ADICIONOU_NA_VIAGEM };
+        return new String[] { COLUNA_ID, COLUNA_ID_VIAGEM, COLUNA_CUSTO_ESTIMADO_PESSOA, COLUNA_ALUGUEL_VEICULO, COLUNA_TOTAL, COLUNA_ADICIONOU_NA_VIAGEM };
     }
 
     private int id;

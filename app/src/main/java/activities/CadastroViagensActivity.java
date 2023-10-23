@@ -1,6 +1,8 @@
 package activities;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +21,19 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashMap;
 
+import database.dao.EntretenimentoDAO;
+import database.dao.GasolinaDAO;
+import database.dao.HospedagemDAO;
+import database.dao.RefeicoesDAO;
+import database.dao.TarifaAereaDAO;
+import database.dao.UsuarioDAO;
+import database.dao.ViagemDAO;
+import database.model.EntretenimentoModel;
+import database.model.GasolinaModel;
+import database.model.HospedagemModel;
+import database.model.RefeicoesModel;
+import database.model.TarifaAereaModel;
+import database.model.ViagemModel;
 import listeners.entretenimento.ListenerCheckBoxEntretenimento;
 import listeners.entretenimento.ListenerEditTextEntretenimento;
 import listeners.geral.ListenerCheckBox;
@@ -26,6 +41,7 @@ import listeners.gasolina.ListenerEditTextGasolina;
 import listeners.hospedagem.ListenerEditTextHospedagem;
 import listeners.refeicoes.ListenerEditTextRefeicoes;
 import listeners.tarifaAerea.ListenerEditTextTarifaAerea;
+import util.KeysUtil;
 import validators.IValidator;
 import validators.ValidatorEntretenimento;
 import validators.ValidatorGasolina;
@@ -309,6 +325,160 @@ public class CadastroViagensActivity extends AppCompatActivity {
     }
 
     private void finalizaCadastro() {
-        Toast.makeText(CadastroViagensActivity.this, "Teste", Toast.LENGTH_SHORT).show();
+        ViagemModel viagemModel = getViagemModel();
+        ViagemDAO viagemDAO = new ViagemDAO(CadastroViagensActivity.this);
+        long idViagem = 0;
+
+        idViagem = viagemDAO.insert(viagemModel);
+
+        if (idViagem == 0) {
+            Toast.makeText(CadastroViagensActivity.this, "Ocorreu um problema ao salvar no Banco de Dados.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        GasolinaModel gasolinaModel = getGasolinaModel(idViagem);
+        GasolinaDAO gasolinaDAO = new GasolinaDAO(CadastroViagensActivity.this);
+        gasolinaDAO.insert(gasolinaModel);
+
+        TarifaAereaModel tarifaAereaModel = getTarifaAereaModel(idViagem);
+        TarifaAereaDAO tarifaAereaDAO = new TarifaAereaDAO(CadastroViagensActivity.this);
+        tarifaAereaDAO.insert(tarifaAereaModel);
+
+        RefeicoesModel refeicoesModel = getRefeicoesModel(idViagem);
+        RefeicoesDAO refeicoesDAO = new RefeicoesDAO(CadastroViagensActivity.this);
+        refeicoesDAO.insert(refeicoesModel);
+
+        HospedagemModel hospedagemModel = getHospedagemModel(idViagem);
+        HospedagemDAO hospedagemDAO = new HospedagemDAO(CadastroViagensActivity.this);
+        hospedagemDAO.insert(hospedagemModel);
+
+        EntretenimentoModel entretenimentoModel = getEntretenimentoModel(idViagem);
+        EntretenimentoDAO entretenimentoDAO = new EntretenimentoDAO(CadastroViagensActivity.this);
+        entretenimentoDAO.insert(entretenimentoModel);
+
+        Toast.makeText(CadastroViagensActivity.this, "Viagem cadastrada com sucesso!", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    private ViagemModel getViagemModel() {
+        ViagemModel viagemModel = new ViagemModel();
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        viagemModel.setTitulo(editTextTituloViagem.getText().toString());
+        viagemModel.setIdUsuario(preferences.getInt(KeysUtil.ID_USER_LOGIN, -1));
+        viagemModel.setTotalViajantes(Integer.parseInt(editTextTotalViajantes.getText().toString()));
+        viagemModel.setDuracao(Integer.parseInt(editTextDuracaoViagem.getText().toString()));
+
+        double totalGasolina = Double.parseDouble(editTextTotalGasolina.getText().toString());
+        double totalTarifaAerea = Double.parseDouble(editTextTotalTarifaAerea.getText().toString());
+        double totalRefeicoes = Double.parseDouble(editTextTotalRefeicoes.getText().toString());
+        double totalHospedagem = Double.parseDouble(editTextTotalHospedagem.getText().toString());
+        double totalEntretenimento = Double.parseDouble(editTextTotalEntretenimento.getText().toString());
+
+        double total = totalGasolina + totalTarifaAerea + totalRefeicoes + totalHospedagem + totalEntretenimento;
+
+        viagemModel.setTotal(total);
+
+        return viagemModel;
+    }
+
+    private GasolinaModel getGasolinaModel(long idViagem) {
+        GasolinaModel gasolinaModel = new GasolinaModel();
+
+        gasolinaModel.setIdViagem((int) idViagem);
+
+        if (checkBoxAddViagemGasolina.isChecked()) {
+            gasolinaModel.setTotalEstimadoKms(Double.parseDouble(editTextTotalEstimadoKms.getText().toString()));
+            gasolinaModel.setCustoMedioLitro(Double.parseDouble(editTextCustoMediaLitro.getText().toString()));
+            gasolinaModel.setTotalVeiculos(Integer.parseInt(editTextTotalVeiculos.getText().toString()));
+            gasolinaModel.setTotal(Double.parseDouble(editTextTotalGasolina.getText().toString()));
+            gasolinaModel.setAdicionouViagem(1);
+        } else {
+            gasolinaModel.setAdicionouViagem(0);
+        }
+
+        return gasolinaModel;
+    }
+
+    private TarifaAereaModel getTarifaAereaModel(long idViagem) {
+        TarifaAereaModel tarifaAereaModel = new TarifaAereaModel();
+
+        tarifaAereaModel.setIdViagem((int) idViagem);
+
+        if (checkBoxAddViagemTarifaAerea.isChecked()) {
+            tarifaAereaModel.setCustoEstimadoPessoa(Double.parseDouble(editTextCustoEstimadoTarifaAerea.getText().toString()));
+            tarifaAereaModel.setAluguelVeiculo(Double.parseDouble(editTextAluguelVeiculo.getText().toString()));
+            tarifaAereaModel.setTotal(Double.parseDouble(editTextTotalTarifaAerea.getText().toString()));
+            tarifaAereaModel.setAdicionouViagem(1);
+        } else {
+            tarifaAereaModel.setAdicionouViagem(0);
+        }
+
+        return tarifaAereaModel;
+    }
+
+    private RefeicoesModel getRefeicoesModel(long idViagem) {
+        RefeicoesModel refeicoesModel = new RefeicoesModel();
+
+        refeicoesModel.setIdViagem((int) idViagem);
+
+        if (checkBoxAddViagemRefeicoes.isChecked()) {
+            refeicoesModel.setCustoEstimadoRefeicao(Double.parseDouble(editTextCustoEstimadoRefeicao.getText().toString()));
+            refeicoesModel.setRefeicoesDia(Integer.parseInt(editTextRefeicoesDia.getText().toString()));
+            refeicoesModel.setTotal(Double.parseDouble(editTextTotalRefeicoes.getText().toString()));
+            refeicoesModel.setAdicionouViagem(1);
+        } else {
+            refeicoesModel.setAdicionouViagem(0);
+        }
+
+        return refeicoesModel;
+    }
+
+    private HospedagemModel getHospedagemModel(long idViagem) {
+        HospedagemModel hospedagemModel = new HospedagemModel();
+
+        hospedagemModel.setIdViagem((int) idViagem);
+
+        if (checkBoxAddViagemHospedagem.isChecked()) {
+            hospedagemModel.setCustoMedioNoite(Double.parseDouble(editTextCustoMedioNoite.getText().toString()));
+            hospedagemModel.setTotalNoites(Integer.parseInt(editTextTotalNoites.getText().toString()));
+            hospedagemModel.setTotalQuartos(Integer.parseInt(editTextTotalNoites.getText().toString()));
+            hospedagemModel.setTotal(Double.parseDouble(editTextTotalHospedagem.getText().toString()));
+            hospedagemModel.setAdicionouViagem(1);
+        } else {
+            hospedagemModel.setAdicionouViagem(0);
+        }
+
+        return hospedagemModel;
+    }
+
+    private EntretenimentoModel getEntretenimentoModel(long idViagem) {
+        EntretenimentoModel entretenimentoModel = new EntretenimentoModel();
+
+        entretenimentoModel.setIdViagem((int) idViagem);
+
+        if (checkBoxAddViagemEntretenimento.isChecked()) {
+            if (checkBoxEntretenimento1.isChecked()) {
+                entretenimentoModel.setEntretenimento1(editTextEntretenimento1.getText().toString());
+                entretenimentoModel.setValorEntretenimento1(Double.parseDouble(editTextValorEntretenimento1.getText().toString()));
+            }
+
+            if (checkBoxEntretenimento2.isChecked()) {
+                entretenimentoModel.setEntretenimento2(editTextEntretenimento2.getText().toString());
+                entretenimentoModel.setValorEntretenimento2(Double.parseDouble(editTextValorEntretenimento2.getText().toString()));
+            }
+
+            if (checkBoxEntretenimento3.isChecked()) {
+                entretenimentoModel.setEntretenimento3(editTextEntretenimento3.getText().toString());
+                entretenimentoModel.setValorEntretenimento3(Double.parseDouble(editTextValorEntretenimento3.getText().toString()));
+            }
+
+            entretenimentoModel.setTotal(Double.parseDouble(editTextTotalEntretenimento.getText().toString()));
+            entretenimentoModel.setAdicionouViagem(1);
+        } else {
+            entretenimentoModel.setAdicionouViagem(0);
+        }
+
+        return entretenimentoModel;
     }
 }
