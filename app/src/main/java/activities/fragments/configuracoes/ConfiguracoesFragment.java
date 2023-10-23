@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
@@ -26,13 +25,10 @@ import com.example.cheaptrip.R;
 import com.example.cheaptrip.databinding.FragmentConfiguracoesBinding;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import activities.LoginActivity;
 import database.dao.UsuarioDAO;
 import database.model.UsuarioModel;
+import util.ImageUtil;
 import util.KeysUtil;
 
 public class ConfiguracoesFragment extends Fragment {
@@ -49,6 +45,9 @@ public class ConfiguracoesFragment extends Fragment {
     private TextInputEditText repeteSenha;
     private EditText alterarSenha;
     private ImageView fotoPerfil;
+    private UsuarioModel usuario;
+
+    private ImageUtil imageUtil;
 
     private static final int PICK_IMAGE = 1;
 
@@ -58,6 +57,8 @@ public class ConfiguracoesFragment extends Fragment {
         binding = FragmentConfiguracoesBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        imageUtil = new ImageUtil();
+
         return root;
     }
 
@@ -65,12 +66,21 @@ public class ConfiguracoesFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
         preferences = PreferenceManager.getDefaultSharedPreferences(getContext().getApplicationContext());
         SharedPreferences.Editor edit = preferences.edit();
         setarIds(view);
 
-        user.setText(preferences.getString(KeysUtil.USER_LOGADO, "user"));
+        dao = new UsuarioDAO(getContext());
+        usuario = dao.selectBy(UsuarioModel.COLUNA_ID, String.valueOf(preferences.getInt(KeysUtil.ID_USER_LOGIN, -1)));
+
+        byte[] userImageBlob = usuario.getImagem();
+
+        if(userImageBlob != null){
+            Bitmap imagemBytes = imageUtil.bytesToImage(userImageBlob);
+            fotoPerfil.setImageBitmap(imagemBytes);
+        }
+
+        user.setText(usuario.getUsuario());
 
         btnDeslogar.setOnClickListener(view1 -> {
             edit.clear();
@@ -149,7 +159,7 @@ public class ConfiguracoesFragment extends Fragment {
                 if (data != null) {
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
-                        byte[] imageBytes = imageToBytes(bitmap);
+                        byte[] imageBytes = imageUtil.imageToBytes(bitmap);
 
                         saveImageToDatabase(imageBytes);
                     } catch (Exception e) {
@@ -162,27 +172,15 @@ public class ConfiguracoesFragment extends Fragment {
         }
     }
 
-    public byte[] imageToBytes(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 85, stream);
-        return stream.toByteArray();
-    }
-
     public void saveImageToDatabase(byte[] imageBytes) {
-        dao = new UsuarioDAO(getContext());
-
-        UsuarioModel usuario = new UsuarioModel();
-        usuario.setId(preferences.getInt(KeysUtil.ID_USER_LOGIN, -1));
         usuario.setImagem(imageBytes);
         dao.editarImagem(usuario);
 
-        Bitmap imageFromBytes = bytesToImage(usuario.getImagem());
+        Bitmap bitmap = imageUtil.bytesToImage(imageBytes);
 
-        fotoPerfil.setImageBitmap(imageFromBytes);
+        fotoPerfil.setImageBitmap(bitmap);
+
     }
 
-    public Bitmap bytesToImage(byte[] imageBytes) {
-        return BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-    }
 }
 

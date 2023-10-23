@@ -21,6 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 import database.dao.UsuarioDAO;
 import database.model.UsuarioModel;
 import de.hdodenhof.circleimageview.CircleImageView;
+import util.ImageUtil;
 import util.KeysUtil;
 
 public class MainActivity extends AppCompatActivity {
@@ -30,14 +31,19 @@ public class MainActivity extends AppCompatActivity {
 
     private SharedPreferences preferences;
     private UsuarioDAO dao;
+    private UsuarioModel usuario;
 
     private TextView nomeHeader, usuarioHeader, emailHeader;
     private View cabecalho;
     private CircleImageView fotoPerfil;
 
+    private ImageUtil imageUtil;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        imageUtil = new ImageUtil();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -75,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         dao = new UsuarioDAO(MainActivity.this);
 
         Integer id = preferences.getInt(KeysUtil.ID_USER_LOGIN, -1);
-        UsuarioModel usuario = dao.selectBy(UsuarioModel.COLUNA_ID, String.valueOf(id));
+        usuario = dao.selectBy(UsuarioModel.COLUNA_ID, String.valueOf(id));
 
         SharedPreferences.Editor edit = preferences.edit();
         edit.putString(KeysUtil.USER_LOGADO, usuario.getUsuario());
@@ -94,7 +100,9 @@ public class MainActivity extends AppCompatActivity {
         usuarioHeader = cabecalho.findViewById(R.id.usuarioHeader);
         usuarioHeader.setText(preferences.getString(KeysUtil.USER_LOGADO, "usuario"));
         fotoPerfil = cabecalho.findViewById(R.id.profile_image);
-//        fotoPerfil.setImageBitmap();
+        fotoPerfil.setImageBitmap(imageUtil.bytesToImage(usuario.getImagem()));
 
     }
+
+
 }

@@ -101,6 +101,7 @@ public class UsuarioDAO extends Base {
         u.setUsuario(cursor.getString(2));
         u.setEmail(cursor.getString(3));
         u.setSenha(cursor.getString(4));
+        u.setImagem(cursor.getBlob(5));
 
         return u;
     }
