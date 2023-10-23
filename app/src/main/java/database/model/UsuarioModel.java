@@ -32,11 +32,6 @@ public class UsuarioModel {
     private String usuario;
     private String email;
     private String senha;
-<<<<<<< Updated upstream
-=======
-
-
->>>>>>> Stashed changes
     private byte[] imagem;
 
     public int getId() {
@@ -86,8 +81,4 @@ public class UsuarioModel {
     public void setImagem(byte[] imagem) {
         this.imagem = imagem;
     }
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 }
