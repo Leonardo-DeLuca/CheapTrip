@@ -99,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
         emailHeader.setText(preferences.getString(KeysUtil.EMAIL_LOGADO, "email"));
         usuarioHeader = cabecalho.findViewById(R.id.usuarioHeader);
         usuarioHeader.setText(preferences.getString(KeysUtil.USER_LOGADO, "usuario"));
-        fotoPerfil = cabecalho.findViewById(R.id.profile_image);
+        fotoPerfil = cabecalho.findViewById(R.id.profile_image_drawer);
 
-        if(usuario.getImagem() != null){
+        if (usuario.getImagem() != null) {
             fotoPerfil.setImageBitmap(imageUtil.bytesToImage(usuario.getImagem()));
         }
     }

@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.cheaptrip.R;
 import com.example.cheaptrip.databinding.FragmentConfiguracoesBinding;
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.textfield.TextInputEditText;
 
 import activities.LoginActivity;
@@ -44,7 +45,7 @@ public class ConfiguracoesFragment extends Fragment {
     private TextInputEditText senha;
     private TextInputEditText repeteSenha;
     private EditText alterarSenha;
-    private CircleImageView fotoPerfil;
+    private CircleImageView fotoPerfil, fotoPerfilDrawer;
     private UsuarioModel usuario;
 
     private ImageUtil imageUtil;
@@ -141,6 +142,12 @@ public class ConfiguracoesFragment extends Fragment {
         btnDeslogar = view.findViewById(R.id.btnDeslogar);
         user = view.findViewById(R.id.usuarioConfig);
         fotoPerfil = view.findViewById(R.id.profile_image);
+
+        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+
+        View headerView = navigationView.getHeaderView(0);
+
+        fotoPerfilDrawer = headerView.findViewById(R.id.profile_image_drawer);
     }
 
     private void alterarSenha(String senha, View view){
@@ -179,7 +186,7 @@ public class ConfiguracoesFragment extends Fragment {
         Bitmap bitmap = imageUtil.bytesToImage(imageBytes);
 
         fotoPerfil.setImageBitmap(bitmap);
-
+        fotoPerfilDrawer.setImageBitmap(bitmap);
     }
 
 }

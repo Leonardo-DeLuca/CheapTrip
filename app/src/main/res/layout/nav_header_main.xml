@@ -48,7 +48,7 @@
         </LinearLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
+            android:id="@+id/profile_image_drawer"
             android:layout_width="0dp"
             android:layout_height="140dp"
             android:src="@drawable/baseline_face_24"
