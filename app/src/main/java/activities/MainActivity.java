@@ -100,8 +100,10 @@ public class MainActivity extends AppCompatActivity {
         usuarioHeader = cabecalho.findViewById(R.id.usuarioHeader);
         usuarioHeader.setText(preferences.getString(KeysUtil.USER_LOGADO, "usuario"));
         fotoPerfil = cabecalho.findViewById(R.id.profile_image);
-        fotoPerfil.setImageBitmap(imageUtil.bytesToImage(usuario.getImagem()));
 
+        if(usuario.getImagem() != null){
+            fotoPerfil.setImageBitmap(imageUtil.bytesToImage(usuario.getImagem()));
+        }
     }
 
 

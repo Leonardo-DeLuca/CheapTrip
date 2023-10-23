@@ -13,7 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +27,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import activities.LoginActivity;
 import database.dao.UsuarioDAO;
 import database.model.UsuarioModel;
+import de.hdodenhof.circleimageview.CircleImageView;
 import util.ImageUtil;
 import util.KeysUtil;
 
@@ -44,7 +44,7 @@ public class ConfiguracoesFragment extends Fragment {
     private TextInputEditText senha;
     private TextInputEditText repeteSenha;
     private EditText alterarSenha;
-    private ImageView fotoPerfil;
+    private CircleImageView fotoPerfil;
     private UsuarioModel usuario;
 
     private ImageUtil imageUtil;
