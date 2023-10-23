@@ -7,6 +7,8 @@ public class ViagemModel {
         COLUNA_ID = "_id",
         COLUNA_ID_USUARIO = "id_usuario",
         COLUNA_TITULO = "titulo",
+        COLUNA_TOTAL_VIAJANTES = "total_viajantes",
+        COLUNA_DURACAO = "duracao",
         COLUNA_DATA_CRIACAO = "data_criacao",
         COLUNA_TOTAL = "total";
 
@@ -15,6 +17,8 @@ public class ViagemModel {
             + COLUNA_ID + " integer primary key autoincrement, "
             + COLUNA_ID_USUARIO + " integer not null, "
             + COLUNA_TITULO + " text not null, "
+            + COLUNA_TOTAL_VIAJANTES + " integer not null, "
+            + COLUNA_DURACAO + " integer not null, "
             + COLUNA_DATA_CRIACAO + " integer not null, "
             + COLUNA_TOTAL + " real not null"
             + ")";
@@ -22,12 +26,14 @@ public class ViagemModel {
     public static final String DROP_TABLE = "drop table if exists " + TABELA + ";";
 
     public static final String[] getColunas() {
-        return new String[] { COLUNA_ID, COLUNA_ID_USUARIO, COLUNA_TITULO, COLUNA_TOTAL };
+        return new String[] { COLUNA_ID, COLUNA_ID_USUARIO, COLUNA_TITULO, COLUNA_TOTAL_VIAJANTES, COLUNA_DURACAO, COLUNA_DATA_CRIACAO, COLUNA_TOTAL };
     }
 
     private int id;
     private int idUsuario;
     private String titulo;
+    private int totalViajantes;
+    private int duracao;
     private int dataCriacao;
     private double total;
 
@@ -54,6 +60,22 @@ public class ViagemModel {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public int getTotalViajantes() {
+        return totalViajantes;
+    }
+
+    public void setTotalViajantes(int totalViajantes) {
+        this.totalViajantes = totalViajantes;
+    }
+
+    public int getDuracao() {
+        return duracao;
+    }
+
+    public void setDuracao(int duracao) {
+        this.duracao = duracao;
     }
 
     public int getDataCriacao() {

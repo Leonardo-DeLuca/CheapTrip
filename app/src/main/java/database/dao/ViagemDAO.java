@@ -25,8 +25,10 @@ public class ViagemDAO extends Base {
             Open();
 
             ContentValues values = new ContentValues();
-            values.put(ViagemModel.COLUNA_TITULO, viagemModel.getTitulo());
             values.put(ViagemModel.COLUNA_ID_USUARIO, viagemModel.getIdUsuario());
+            values.put(ViagemModel.COLUNA_TITULO, viagemModel.getTitulo());
+            values.put(ViagemModel.COLUNA_TOTAL_VIAJANTES, viagemModel.getTotalViajantes());
+            values.put(ViagemModel.COLUNA_DURACAO, viagemModel.getDuracao());
             values.put(ViagemModel.COLUNA_DATA_CRIACAO, viagemModel.getDataCriacao());
             values.put(ViagemModel.COLUNA_TOTAL, viagemModel.getTotal());
 
@@ -69,8 +71,10 @@ public class ViagemDAO extends Base {
         v.setId(cursor.getInt(0));
         v.setIdUsuario(cursor.getInt(1));
         v.setTitulo(cursor.getString(2));
-        v.setDataCriacao(cursor.getInt(3));
-        v.setTotal(cursor.getDouble(4));
+        v.setTotalViajantes(cursor.getInt(3));
+        v.setDuracao(cursor.getInt(4));
+        v.setDataCriacao(cursor.getInt(5));
+        v.setTotal(cursor.getDouble(6));
 
         return v;
     }
