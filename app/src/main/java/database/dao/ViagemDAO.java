@@ -62,7 +62,20 @@ public class ViagemDAO extends Base {
             Close();
         }
 
-        return viagensRetornadas.isEmpty() ? null : viagensRetornadas;
+        return viagensRetornadas;
+    }
+
+    public void deleteBy(String colunaParametro, String valorParametro) {
+        String[] params = { valorParametro };
+
+        try {
+            Open();
+
+            db.delete(ViagemModel.TABELA, colunaParametro + " = ?", params);
+        }
+        finally {
+            Close();
+        }
     }
 
     private ViagemModel CursorParaViagem(Cursor cursor) {

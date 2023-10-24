@@ -3,6 +3,7 @@ package activities;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -326,38 +327,42 @@ public class CadastroViagensActivity extends AppCompatActivity {
 
     private void finalizaCadastro() {
         ViagemModel viagemModel = getViagemModel();
-        ViagemDAO viagemDAO = new ViagemDAO(CadastroViagensActivity.this);
         long idViagem = 0;
 
-        idViagem = viagemDAO.insert(viagemModel);
-
-        if (idViagem == 0) {
-            Toast.makeText(CadastroViagensActivity.this, "Ocorreu um problema ao salvar no Banco de Dados.", Toast.LENGTH_SHORT).show();
+        if (viagemModel.getTotal() == 0.0) {
+            Toast.makeText(CadastroViagensActivity.this, "Valor total da viagem é zero.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        GasolinaModel gasolinaModel = getGasolinaModel(idViagem);
-        GasolinaDAO gasolinaDAO = new GasolinaDAO(CadastroViagensActivity.this);
-        gasolinaDAO.insert(gasolinaModel);
+        ViagemDAO viagemDAO = new ViagemDAO(CadastroViagensActivity.this);
+        idViagem = viagemDAO.insert(viagemModel);
 
-        TarifaAereaModel tarifaAereaModel = getTarifaAereaModel(idViagem);
-        TarifaAereaDAO tarifaAereaDAO = new TarifaAereaDAO(CadastroViagensActivity.this);
-        tarifaAereaDAO.insert(tarifaAereaModel);
+        if (idViagem != 0) {
+            GasolinaModel gasolinaModel = getGasolinaModel(idViagem);
+            GasolinaDAO gasolinaDAO = new GasolinaDAO(CadastroViagensActivity.this);
+            gasolinaDAO.insert(gasolinaModel);
 
-        RefeicoesModel refeicoesModel = getRefeicoesModel(idViagem);
-        RefeicoesDAO refeicoesDAO = new RefeicoesDAO(CadastroViagensActivity.this);
-        refeicoesDAO.insert(refeicoesModel);
+            TarifaAereaModel tarifaAereaModel = getTarifaAereaModel(idViagem);
+            TarifaAereaDAO tarifaAereaDAO = new TarifaAereaDAO(CadastroViagensActivity.this);
+            tarifaAereaDAO.insert(tarifaAereaModel);
 
-        HospedagemModel hospedagemModel = getHospedagemModel(idViagem);
-        HospedagemDAO hospedagemDAO = new HospedagemDAO(CadastroViagensActivity.this);
-        hospedagemDAO.insert(hospedagemModel);
+            RefeicoesModel refeicoesModel = getRefeicoesModel(idViagem);
+            RefeicoesDAO refeicoesDAO = new RefeicoesDAO(CadastroViagensActivity.this);
+            refeicoesDAO.insert(refeicoesModel);
 
-        EntretenimentoModel entretenimentoModel = getEntretenimentoModel(idViagem);
-        EntretenimentoDAO entretenimentoDAO = new EntretenimentoDAO(CadastroViagensActivity.this);
-        entretenimentoDAO.insert(entretenimentoModel);
+            HospedagemModel hospedagemModel = getHospedagemModel(idViagem);
+            HospedagemDAO hospedagemDAO = new HospedagemDAO(CadastroViagensActivity.this);
+            hospedagemDAO.insert(hospedagemModel);
 
-        Toast.makeText(CadastroViagensActivity.this, "Viagem cadastrada com sucesso!", Toast.LENGTH_SHORT).show();
-        finish();
+            EntretenimentoModel entretenimentoModel = getEntretenimentoModel(idViagem);
+            EntretenimentoDAO entretenimentoDAO = new EntretenimentoDAO(CadastroViagensActivity.this);
+            entretenimentoDAO.insert(entretenimentoModel);
+
+            Toast.makeText(CadastroViagensActivity.this, "Viagem cadastrada com sucesso!", Toast.LENGTH_SHORT).show();
+            finish();
+        } else {
+            Toast.makeText(CadastroViagensActivity.this, "Ocorreu um problema ao salvar no Banco de Dados.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private ViagemModel getViagemModel() {
@@ -368,6 +373,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
         viagemModel.setIdUsuario(preferences.getInt(KeysUtil.ID_USER_LOGIN, -1));
         viagemModel.setTotalViajantes(Integer.parseInt(editTextTotalViajantes.getText().toString()));
         viagemModel.setDuracao(Integer.parseInt(editTextDuracaoViagem.getText().toString()));
+        viagemModel.setDataCriacao(System.currentTimeMillis());
 
         double totalGasolina = Double.parseDouble(editTextTotalGasolina.getText().toString());
         double totalTarifaAerea = Double.parseDouble(editTextTotalTarifaAerea.getText().toString());
