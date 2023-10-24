@@ -1,5 +1,6 @@
 package activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -7,8 +8,10 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -18,6 +21,9 @@ import com.example.cheaptrip.R;
 import com.example.cheaptrip.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.List;
+
+import activities.fragments.viagens.ViagensFragment;
 import database.dao.UsuarioDAO;
 import database.model.UsuarioModel;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -36,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView nomeHeader, usuarioHeader, emailHeader;
     private View cabecalho;
     private CircleImageView fotoPerfil;
-
     private ImageUtil imageUtil;
+    private String FragManage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +111,4 @@ public class MainActivity extends AppCompatActivity {
             fotoPerfil.setImageBitmap(imageUtil.bytesToImage(usuario.getImagem()));
         }
     }
-
-
 }

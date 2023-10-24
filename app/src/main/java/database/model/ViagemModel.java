@@ -1,5 +1,10 @@
 package database.model;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class ViagemModel {
     public static final String TABELA = "viagem";
 
@@ -34,7 +39,7 @@ public class ViagemModel {
     private String titulo;
     private int totalViajantes;
     private int duracao;
-    private int dataCriacao;
+    private long dataCriacao;
     private double total;
 
 
@@ -78,11 +83,11 @@ public class ViagemModel {
         this.duracao = duracao;
     }
 
-    public int getDataCriacao() {
+    public long getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(int dataCriacao) {
+    public void setDataCriacao(long dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
@@ -92,5 +97,13 @@ public class ViagemModel {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public String getDataCriacaoString() {
+        Locale locale = new Locale("pt", "BR");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", locale);
+        Date dataCriacao = new Date(getDataCriacao());
+
+        return dateFormat.format(dataCriacao);
     }
 }

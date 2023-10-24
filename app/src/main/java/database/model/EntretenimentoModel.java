@@ -27,7 +27,7 @@ public class EntretenimentoModel {
             + COLUNA_VALOR_ENTRETENIMENTO3 + " real, "
             + COLUNA_TOTAL + " real not null, "
             + COLUNA_ADICIONOU_NA_VIAGEM + " integer not null, "
-            + "foreign key (" + COLUNA_ID_VIAGEM + ") references viagem (_id))";
+            + "foreign key (" + COLUNA_ID_VIAGEM + ") references viagem (_id) ON DELETE CASCADE)";
 
     public static final String DROP_TABLE = "drop table if exists " + TABELA + ";";
 
