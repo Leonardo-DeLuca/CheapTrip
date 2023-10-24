@@ -76,4 +76,7 @@
     <string name="valorEntretenimento1Txt">Valor da atração 1</string>
     <string name="valorEntretenimento2Txt">Valor da atração 2</string>
     <string name="valorEntretenimento3Txt">Valor da atração 3</string>
+
+    <!--    Etapa resumo de viagem já cadastrada-->
+    <string name="tituloResumoViagem">Resumo viagem</string>
 </resources>

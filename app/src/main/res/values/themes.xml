@@ -14,6 +14,10 @@
         <item name="colorSecondaryContainer">@color/azulClaro</item>
     </style>
 
+    <style name="ToolbarColoredBackArrow">
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
     <style name="AlertDialogTheme">
         <item name="buttonBarPositiveButtonStyle">@style/Alert.Button.Positive</item>
     </style>

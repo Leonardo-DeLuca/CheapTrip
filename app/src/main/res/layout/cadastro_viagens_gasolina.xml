@@ -18,15 +18,32 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/gasolinaNovaViagemTxt"
-            android:gravity="center_horizontal"
-            android:textSize="18sp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginBottom="50dp"/>
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/aviao"
+                android:layout_weight="40"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/gasolinaNovaViagemTxt"
+                android:gravity="center_horizontal"
+                android:textSize="18sp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="50dp"
+                android:layout_weight="60"/>
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

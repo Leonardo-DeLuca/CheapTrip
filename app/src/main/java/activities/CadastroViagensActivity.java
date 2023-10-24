@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -12,7 +13,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.transition.Slide;
 import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
@@ -63,6 +66,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
     private LinearLayout layoutAtual, layoutAnterior;
     private LinearLayout containerInicio, containerGasolina, containerTarifaAerea, containerRefeicoes, containerHospedagem, containerEntretenimento;
     private FloatingActionButton btnVoltar, btnAvancar;
+    private Toolbar toolbar;
 
     // Elementos etapa inicial
     private EditText editTextTituloViagem, editTextTotalViajantes, editTextDuracaoViagem;
@@ -103,6 +107,9 @@ public class CadastroViagensActivity extends AppCompatActivity {
         setaListeners();
         montaEtapas();
 
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         layoutAtual = etapas.get(0);
         mostraEtapaAtual(AVANCOU_ETAPA);
 
@@ -121,6 +128,12 @@ public class CadastroViagensActivity extends AppCompatActivity {
                 avancaEtapa();
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 
     private void mostraEtapaAtual(int acaoEtapa) {
@@ -220,6 +233,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
         containerRefeicoes = findViewById(R.id.container_refeicoes);
         containerHospedagem = findViewById(R.id.container_hospedagem);
         containerEntretenimento = findViewById(R.id.container_entretenimento);
+        toolbar = findViewById(R.id.toolbarViagem);
     }
 
     private void setaElementosInicio() {
