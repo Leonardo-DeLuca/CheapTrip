@@ -5,54 +5,122 @@
     android:layout_height="wrap_content"
     android:weightSum="100"
     android:orientation="horizontal"
-    android:background="@drawable/borda_redonda">
+    android:background="@drawable/borda_redonda"
+    android:padding="15dp">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp"
+        android:showDividers="middle"
+        android:divider="@drawable/empty_tall_divider"
         android:layout_weight="90">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tituloViagem"/>
+                android:src="@drawable/ic_title" />
 
             <TextView
                 android:id="@+id/textTituloViagem"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18dp"
+                android:ellipsize="end"
+                android:maxLines="1"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="100">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_people"
+                android:layout_weight="10"/>
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/textNumeroViajantesViagem"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/total"/>
+                android:text=""
+                android:textSize="18dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_weight="40"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_hourglass_empty"
+                android:layout_weight="10"/>
+
+            <TextView
+                android:id="@+id/textDuracaoViagem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_weight="40" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="100">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_money"
+                android:layout_weight="10"/>
 
             <TextView
                 android:id="@+id/textTotalViagem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_weight="40"
+                android:textColor="@color/verde"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_calendar_month"
+                android:layout_weight="10"/>
+
+            <TextView
+                android:id="@+id/textDataCriacaoViagem"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="18dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:layout_weight="40" />
 
         </LinearLayout>
+
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="5dp"
         android:layout_weight="10"

@@ -54,11 +54,14 @@ public class ViagensAdapter extends BaseAdapter {
         TextView textTotal = view.findViewById(R.id.textTotalViagem);
         textTotal.setText(total);
 
-//        TextView textNumeroViajantes = view.findViewById(R.id.textNumeroViajantesViagem);
-//        textNumeroViajantes.setText(numeroViajantes);
-//
-//        TextView textDuracao = view.findViewById(R.id.textDuracaoViagem);
-//        textDuracao.setText(duracao);
+        TextView textNumeroViajantes = view.findViewById(R.id.textNumeroViajantesViagem);
+        textNumeroViajantes.setText(numeroViajantes);
+
+        TextView textDuracao = view.findViewById(R.id.textDuracaoViagem);
+        textDuracao.setText(duracao);
+
+        TextView textCriacao = view.findViewById(R.id.textDataCriacaoViagem);
+        textCriacao.setText(data);
 
         return view;
     }
