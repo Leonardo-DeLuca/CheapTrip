@@ -39,6 +39,8 @@ public class ViagensFragment extends Fragment {
     private ViagensAdapter adapter;
     private ViagemDAO viagemDAO;
     private List<ViagemModel> viagensUsuario;
+    private SharedPreferences preferences;
+    private int idUsuario;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentViagensBinding.inflate(inflater, container, false);
@@ -53,7 +55,7 @@ public class ViagensFragment extends Fragment {
 
         btnAdd = view.findViewById(R.id.btn_add_viagem);
         btnAdd.setOnClickListener(view1 -> {
-            Intent i = new Intent(getContext(), CadastroViagensActivity.class);
+            Intent i = new Intent(getActivity(), CadastroViagensActivity.class);
             startActivityForResult(i, 1);
         });
 
@@ -62,14 +64,17 @@ public class ViagensFragment extends Fragment {
             Toast.makeText(getContext(), "ID Viagem: " + idViagem, Toast.LENGTH_SHORT).show();
         });
 
+        setaVariaveisExtras();
         recuperarViagensUsuario();
     }
 
-    private void recuperarViagensUsuario() {
+    private void setaVariaveisExtras() {
         viagemDAO = new ViagemDAO(getContext());
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-        int idUsuario = preferences.getInt(KeysUtil.ID_USER_LOGIN, -1);
+        preferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        idUsuario = preferences.getInt(KeysUtil.ID_USER_LOGIN, -1);
+    }
 
+    private void recuperarViagensUsuario() {
         viagensUsuario = viagemDAO.selectBy(ViagemModel.COLUNA_ID_USUARIO, String.valueOf(idUsuario));
 
         adapter = new ViagensAdapter(getActivity(), viagensUsuario);
@@ -83,6 +88,15 @@ public class ViagensFragment extends Fragment {
         viagensUsuario = viagemDAO.selectBy(ViagemModel.COLUNA_ID_USUARIO, String.valueOf(idViagem));
 
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == 1 && requestCode == 1) {
+            recuperarViagensUsuario();
+        }
     }
 
     @Override
