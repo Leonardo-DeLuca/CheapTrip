@@ -373,6 +373,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
             entretenimentoDAO.insert(entretenimentoModel);
 
             Toast.makeText(CadastroViagensActivity.this, "Viagem cadastrada com sucesso!", Toast.LENGTH_SHORT).show();
+            setResult(1);
             finish();
         } else {
             Toast.makeText(CadastroViagensActivity.this, "Ocorreu um problema ao salvar no Banco de Dados.", Toast.LENGTH_SHORT).show();
