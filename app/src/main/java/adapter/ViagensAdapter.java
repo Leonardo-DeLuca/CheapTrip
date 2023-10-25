@@ -10,15 +10,18 @@ import com.example.cheaptrip.R;
 
 import java.util.List;
 
+import database.dao.ViagemDAO;
 import database.model.ViagemModel;
 
 public class ViagensAdapter extends BaseAdapter {
     private Activity activity;
     private List<ViagemModel> listaViagens;
+    private ViagemDAO viagemDAO;
 
-    public ViagensAdapter(Activity activity, List<ViagemModel> listaViagens) {
+    public ViagensAdapter(Activity activity, List<ViagemModel> listaViagens, ViagemDAO viagemDAO) {
         this.activity = activity;
         this.listaViagens = listaViagens;
+        this.viagemDAO = viagemDAO;
     }
 
     @Override
@@ -64,5 +67,13 @@ public class ViagensAdapter extends BaseAdapter {
         textCriacao.setText(data);
 
         return view;
+    }
+
+    private void excluirViagem(long idViagem) {
+        viagemDAO.deleteBy(ViagemModel.COLUNA_ID, String.valueOf(idViagem));
+
+        listaViagens = viagemDAO.selectBy(ViagemModel.COLUNA_ID_USUARIO, String.valueOf(idViagem));
+
+        notifyDataSetChanged();
     }
 }

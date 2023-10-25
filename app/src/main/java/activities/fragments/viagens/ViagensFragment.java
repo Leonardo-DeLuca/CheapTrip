@@ -77,18 +77,12 @@ public class ViagensFragment extends Fragment {
     private void recuperarViagensUsuario() {
         viagensUsuario = viagemDAO.selectBy(ViagemModel.COLUNA_ID_USUARIO, String.valueOf(idUsuario));
 
-        adapter = new ViagensAdapter(getActivity(), viagensUsuario);
+        adapter = new ViagensAdapter(getActivity(), viagensUsuario, viagemDAO);
         listaViagens.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
 
-    private void excluirViagem(long idViagem) {
-        viagemDAO.deleteBy(ViagemModel.COLUNA_ID, String.valueOf(idViagem));
 
-        viagensUsuario = viagemDAO.selectBy(ViagemModel.COLUNA_ID_USUARIO, String.valueOf(idViagem));
-
-        adapter.notifyDataSetChanged();
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
