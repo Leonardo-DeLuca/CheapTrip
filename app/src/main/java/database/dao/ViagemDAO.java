@@ -86,7 +86,7 @@ public class ViagemDAO extends Base {
         v.setTitulo(cursor.getString(2));
         v.setTotalViajantes(cursor.getInt(3));
         v.setDuracao(cursor.getInt(4));
-        v.setDataCriacao(cursor.getInt(5));
+        v.setDataCriacao(cursor.getString(5));
         v.setTotal(cursor.getDouble(6));
 
         return v;

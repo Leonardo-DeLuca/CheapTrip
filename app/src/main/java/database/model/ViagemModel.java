@@ -24,7 +24,7 @@ public class ViagemModel {
             + COLUNA_TITULO + " text not null, "
             + COLUNA_TOTAL_VIAJANTES + " integer not null, "
             + COLUNA_DURACAO + " integer not null, "
-            + COLUNA_DATA_CRIACAO + " integer not null, "
+            + COLUNA_DATA_CRIACAO + " text not null, "
             + COLUNA_TOTAL + " real not null"
             + ")";
 
@@ -39,7 +39,7 @@ public class ViagemModel {
     private String titulo;
     private int totalViajantes;
     private int duracao;
-    private long dataCriacao;
+    private String dataCriacao;
     private double total;
 
 
@@ -83,11 +83,11 @@ public class ViagemModel {
         this.duracao = duracao;
     }
 
-    public long getDataCriacao() {
+    public String getDataCriacao() {
         return dataCriacao;
     }
 
-    public void setDataCriacao(long dataCriacao) {
+    public void setDataCriacao(String dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
 
@@ -97,13 +97,5 @@ public class ViagemModel {
 
     public void setTotal(double total) {
         this.total = total;
-    }
-
-    public String getDataCriacaoString() {
-        Locale locale = new Locale("pt", "BR");
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", locale);
-        Date dataCriacao = new Date(getDataCriacao());
-
-        return dateFormat.format(dataCriacao);
     }
 }
