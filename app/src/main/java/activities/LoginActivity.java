@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         if (mantemConexao) {
             Intent it = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(it);
+            finish();
         } else {
             setContentView(R.layout.activity_login);
 

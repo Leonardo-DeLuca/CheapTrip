@@ -2,16 +2,17 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:weightSum="100"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="@drawable/borda_redonda">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp"
-        android:layout_weight="50">
+        android:layout_weight="90">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,45 +51,25 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp"
-        android:layout_weight="50">
+        android:padding="5dp"
+        android:layout_weight="10"
+        android:weightSum="100">
 
-        <LinearLayout
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="0dp"
+            android:layout_weight="50"
+            android:src="@drawable/ic_edit"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/numeroViajantes"/>
 
-            <TextView
-                android:id="@+id/textNumeroViajantesViagem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-        <LinearLayout
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dias"/>
-
-            <TextView
-                android:id="@+id/textDuracaoViagem"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
+            android:layout_height="0dp"
+            android:layout_weight="50"
+            android:src="@drawable/ic_delete"/>
 
     </LinearLayout>
 
