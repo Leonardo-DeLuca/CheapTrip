@@ -1,5 +1,6 @@
 package activities;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -23,7 +24,11 @@ import androidx.transition.TransitionManager;
 import com.example.cheaptrip.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import database.dao.EntretenimentoDAO;
 import database.dao.GasolinaDAO;
@@ -98,6 +103,20 @@ public class CadastroViagensActivity extends AppCompatActivity {
     private CheckBox checkBoxEntretenimento1, checkBoxEntretenimento2, checkBoxEntretenimento3, checkBoxAddViagemEntretenimento;
     private EditText[] editTextsEntretenimento;
 
+    // Variáveis extras
+    private ViagemModel viagemModel;
+    private GasolinaModel gasolinaModel;
+    private TarifaAereaModel tarifaAereaModel;
+    private RefeicoesModel refeicoesModel;
+    private HospedagemModel hospedagemModel;
+    private EntretenimentoModel entretenimentoModel;
+    private ViagemDAO viagemDAO;
+    private GasolinaDAO gasolinaDAO;
+    private TarifaAereaDAO tarifaAereaDAO;
+    private RefeicoesDAO refeicoesDAO;
+    private HospedagemDAO hospedagemDAO;
+    private EntretenimentoDAO entretenimentoDAO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +124,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
 
         setaElementos();
         setaListeners();
+        setaVariaveisExtras();
         montaEtapas();
 
         setSupportActionBar(toolbar);
@@ -204,6 +224,24 @@ public class CadastroViagensActivity extends AppCompatActivity {
 
     private boolean isUltimaEtapa() {
         return etapaAtual == etapas.entrySet().size() - 1;
+    }
+
+    private void setaVariaveisExtras() {
+        Context context = CadastroViagensActivity.this;
+
+        viagemModel = new ViagemModel();
+        gasolinaModel = new GasolinaModel();
+        tarifaAereaModel = new TarifaAereaModel();
+        refeicoesModel = new RefeicoesModel();
+        hospedagemModel = new HospedagemModel();
+        entretenimentoModel = new EntretenimentoModel();
+
+        viagemDAO = new ViagemDAO(context);
+        gasolinaDAO = new GasolinaDAO(context);
+        tarifaAereaDAO = new TarifaAereaDAO(context);
+        refeicoesDAO = new RefeicoesDAO(context);
+        hospedagemDAO = new HospedagemDAO(context);
+        entretenimentoDAO = new EntretenimentoDAO(context);
     }
 
     private void setaElementos() {
@@ -340,7 +378,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
     }
 
     private void finalizaCadastro() {
-        ViagemModel viagemModel = getViagemModel();
+        viagemModel = getViagemModel();
         long idViagem = 0;
 
         if (viagemModel.getTotal() == 0.0) {
@@ -348,28 +386,22 @@ public class CadastroViagensActivity extends AppCompatActivity {
             return;
         }
 
-        ViagemDAO viagemDAO = new ViagemDAO(CadastroViagensActivity.this);
         idViagem = viagemDAO.insert(viagemModel);
 
         if (idViagem != 0) {
-            GasolinaModel gasolinaModel = getGasolinaModel(idViagem);
-            GasolinaDAO gasolinaDAO = new GasolinaDAO(CadastroViagensActivity.this);
+            gasolinaModel = getGasolinaModel(idViagem);
             gasolinaDAO.insert(gasolinaModel);
 
-            TarifaAereaModel tarifaAereaModel = getTarifaAereaModel(idViagem);
-            TarifaAereaDAO tarifaAereaDAO = new TarifaAereaDAO(CadastroViagensActivity.this);
+            tarifaAereaModel = getTarifaAereaModel(idViagem);
             tarifaAereaDAO.insert(tarifaAereaModel);
 
-            RefeicoesModel refeicoesModel = getRefeicoesModel(idViagem);
-            RefeicoesDAO refeicoesDAO = new RefeicoesDAO(CadastroViagensActivity.this);
+            refeicoesModel = getRefeicoesModel(idViagem);
             refeicoesDAO.insert(refeicoesModel);
 
-            HospedagemModel hospedagemModel = getHospedagemModel(idViagem);
-            HospedagemDAO hospedagemDAO = new HospedagemDAO(CadastroViagensActivity.this);
+            hospedagemModel = getHospedagemModel(idViagem);
             hospedagemDAO.insert(hospedagemModel);
 
-            EntretenimentoModel entretenimentoModel = getEntretenimentoModel(idViagem);
-            EntretenimentoDAO entretenimentoDAO = new EntretenimentoDAO(CadastroViagensActivity.this);
+            entretenimentoModel = getEntretenimentoModel(idViagem);
             entretenimentoDAO.insert(entretenimentoModel);
 
             Toast.makeText(CadastroViagensActivity.this, "Viagem cadastrada com sucesso!", Toast.LENGTH_SHORT).show();
@@ -380,15 +412,22 @@ public class CadastroViagensActivity extends AppCompatActivity {
         }
     }
 
+    private String getDataCriacaoViagem() {
+        Locale locale = new Locale("pt", "BR");
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", locale);
+        Date dataCriacao = new Date(System.currentTimeMillis());
+
+        return dateFormat.format(dataCriacao);
+    }
+
     private ViagemModel getViagemModel() {
-        ViagemModel viagemModel = new ViagemModel();
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         viagemModel.setTitulo(editTextTituloViagem.getText().toString());
         viagemModel.setIdUsuario(preferences.getInt(KeysUtil.ID_USER_LOGIN, -1));
         viagemModel.setTotalViajantes(Integer.parseInt(editTextTotalViajantes.getText().toString()));
         viagemModel.setDuracao(Integer.parseInt(editTextDuracaoViagem.getText().toString()));
-        viagemModel.setDataCriacao(System.currentTimeMillis());
+        viagemModel.setDataCriacao(getDataCriacaoViagem());
 
         double totalGasolina = Double.parseDouble(editTextTotalGasolina.getText().toString());
         double totalTarifaAerea = Double.parseDouble(editTextTotalTarifaAerea.getText().toString());
@@ -404,8 +443,6 @@ public class CadastroViagensActivity extends AppCompatActivity {
     }
 
     private GasolinaModel getGasolinaModel(long idViagem) {
-        GasolinaModel gasolinaModel = new GasolinaModel();
-
         gasolinaModel.setIdViagem((int) idViagem);
 
         if (checkBoxAddViagemGasolina.isChecked()) {
@@ -422,8 +459,6 @@ public class CadastroViagensActivity extends AppCompatActivity {
     }
 
     private TarifaAereaModel getTarifaAereaModel(long idViagem) {
-        TarifaAereaModel tarifaAereaModel = new TarifaAereaModel();
-
         tarifaAereaModel.setIdViagem((int) idViagem);
 
         if (checkBoxAddViagemTarifaAerea.isChecked()) {
@@ -439,8 +474,6 @@ public class CadastroViagensActivity extends AppCompatActivity {
     }
 
     private RefeicoesModel getRefeicoesModel(long idViagem) {
-        RefeicoesModel refeicoesModel = new RefeicoesModel();
-
         refeicoesModel.setIdViagem((int) idViagem);
 
         if (checkBoxAddViagemRefeicoes.isChecked()) {
@@ -456,8 +489,6 @@ public class CadastroViagensActivity extends AppCompatActivity {
     }
 
     private HospedagemModel getHospedagemModel(long idViagem) {
-        HospedagemModel hospedagemModel = new HospedagemModel();
-
         hospedagemModel.setIdViagem((int) idViagem);
 
         if (checkBoxAddViagemHospedagem.isChecked()) {
@@ -474,8 +505,6 @@ public class CadastroViagensActivity extends AppCompatActivity {
     }
 
     private EntretenimentoModel getEntretenimentoModel(long idViagem) {
-        EntretenimentoModel entretenimentoModel = new EntretenimentoModel();
-
         entretenimentoModel.setIdViagem((int) idViagem);
 
         if (checkBoxAddViagemEntretenimento.isChecked()) {
