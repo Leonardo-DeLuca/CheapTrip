@@ -3,6 +3,7 @@ package listeners.entretenimento;
 import android.app.Activity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.EditText;
 
 import com.example.cheaptrip.R;
@@ -64,6 +65,7 @@ public class ListenerEditTextEntretenimento implements TextWatcher {
             return;
         }
 
+        Log.d("SDIH", String.valueOf(totalEntretenimento));
         editTextTotalEntretenimento.setText(String.valueOf(totalEntretenimento));
     }
 

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 
 import database.DBHelper;
-import database.model.EntretenimentoModel;
 import database.model.HospedagemModel;
 import database.model.RefeicoesModel;
 
@@ -20,15 +19,7 @@ public class HospedagemDAO extends Base {
         try {
             Open();
 
-            ContentValues values = new ContentValues();
-            values.put(HospedagemModel.COLUNA_ID_VIAGEM, hospedagemModel.getIdViagem());
-            values.put(HospedagemModel.COLUNA_CUSTO_MEDIO_NOITE, hospedagemModel.getCustoMedioNoite());
-            values.put(HospedagemModel.COLUNA_TOTAL_NOITES, hospedagemModel.getTotalNoites());
-            values.put(HospedagemModel.COLUNA_TOTAL_QUARTOS, hospedagemModel.getTotalQuartos());
-            values.put(HospedagemModel.COLUNA_TOTAL, hospedagemModel.getTotal());
-            values.put(HospedagemModel.COLUNA_ADICIONOU_NA_VIAGEM, hospedagemModel.getAdicionouViagem());
-
-            db.insert(HospedagemModel.TABELA, null, values);
+            db.insert(HospedagemModel.TABELA, null, getContentValues(hospedagemModel));
         } finally {
             Close();
         }
@@ -55,6 +46,32 @@ public class HospedagemDAO extends Base {
         }
 
         return hospedagemRetornada;
+    }
+
+    public void update(HospedagemModel hospedagemModel) {
+        String[] params = { String.valueOf(hospedagemModel.getIdViagem()) };
+
+        try {
+            Open();
+
+            db.update(HospedagemModel.TABELA, getContentValues(hospedagemModel), HospedagemModel.COLUNA_ID_VIAGEM + " = ?", params);
+        }
+        finally {
+            Close();
+        }
+    }
+
+    private ContentValues getContentValues(HospedagemModel hospedagemModel) {
+        ContentValues values = new ContentValues();
+
+        values.put(HospedagemModel.COLUNA_ID_VIAGEM, hospedagemModel.getIdViagem());
+        values.put(HospedagemModel.COLUNA_CUSTO_MEDIO_NOITE, hospedagemModel.getCustoMedioNoite());
+        values.put(HospedagemModel.COLUNA_TOTAL_NOITES, hospedagemModel.getTotalNoites());
+        values.put(HospedagemModel.COLUNA_TOTAL_QUARTOS, hospedagemModel.getTotalQuartos());
+        values.put(HospedagemModel.COLUNA_TOTAL, hospedagemModel.getTotal());
+        values.put(HospedagemModel.COLUNA_ADICIONOU_NA_VIAGEM, hospedagemModel.getAdicionouViagem());
+
+        return values;
     }
 
     private HospedagemModel CursorParaHospedagem(Cursor cursor) {

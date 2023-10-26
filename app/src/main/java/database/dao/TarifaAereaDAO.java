@@ -5,7 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 
 import database.DBHelper;
-import database.model.EntretenimentoModel;
+import database.model.GasolinaModel;
+import database.model.RefeicoesModel;
 import database.model.TarifaAereaModel;
 
 public class TarifaAereaDAO extends Base {
@@ -20,14 +21,7 @@ public class TarifaAereaDAO extends Base {
         try {
             Open();
 
-            ContentValues values = new ContentValues();
-            values.put(TarifaAereaModel.COLUNA_ID_VIAGEM, tarifaAereaModel.getIdViagem());
-            values.put(TarifaAereaModel.COLUNA_CUSTO_ESTIMADO_PESSOA, tarifaAereaModel.getCustoEstimadoPessoa());
-            values.put(TarifaAereaModel.COLUNA_ALUGUEL_VEICULO, tarifaAereaModel.getAluguelVeiculo());
-            values.put(TarifaAereaModel.COLUNA_TOTAL, tarifaAereaModel.getTotal());
-            values.put(TarifaAereaModel.COLUNA_ADICIONOU_NA_VIAGEM, tarifaAereaModel.getAdicionouViagem());
-
-            db.insert(TarifaAereaModel.TABELA, null, values);
+            db.insert(TarifaAereaModel.TABELA, null, getContentValues(tarifaAereaModel));
         } finally {
             Close();
         }
@@ -54,6 +48,31 @@ public class TarifaAereaDAO extends Base {
         }
 
         return tarifaAereaRetornada;
+    }
+
+    public void update(TarifaAereaModel tarifaAereaModel) {
+        String[] params = { String.valueOf(tarifaAereaModel.getIdViagem()) };
+
+        try {
+            Open();
+
+            db.update(TarifaAereaModel.TABELA, getContentValues(tarifaAereaModel), TarifaAereaModel.COLUNA_ID_VIAGEM + " = ?", params);
+        }
+        finally {
+            Close();
+        }
+    }
+
+    private ContentValues getContentValues(TarifaAereaModel tarifaAereaModel) {
+        ContentValues values = new ContentValues();
+
+        values.put(TarifaAereaModel.COLUNA_ID_VIAGEM, tarifaAereaModel.getIdViagem());
+        values.put(TarifaAereaModel.COLUNA_CUSTO_ESTIMADO_PESSOA, tarifaAereaModel.getCustoEstimadoPessoa());
+        values.put(TarifaAereaModel.COLUNA_ALUGUEL_VEICULO, tarifaAereaModel.getAluguelVeiculo());
+        values.put(TarifaAereaModel.COLUNA_TOTAL, tarifaAereaModel.getTotal());
+        values.put(TarifaAereaModel.COLUNA_ADICIONOU_NA_VIAGEM, tarifaAereaModel.getAdicionouViagem());
+
+        return values;
     }
 
     private TarifaAereaModel CursorParaTarifaAerea(Cursor cursor) {

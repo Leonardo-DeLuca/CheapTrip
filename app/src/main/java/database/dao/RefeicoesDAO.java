@@ -7,6 +7,7 @@ import android.database.Cursor;
 import database.DBHelper;
 import database.model.EntretenimentoModel;
 import database.model.RefeicoesModel;
+import database.model.TarifaAereaModel;
 
 public class RefeicoesDAO extends Base {
     public RefeicoesDAO(Context context) {
@@ -19,14 +20,7 @@ public class RefeicoesDAO extends Base {
         try {
             Open();
 
-            ContentValues values = new ContentValues();
-            values.put(RefeicoesModel.COLUNA_ID_VIAGEM, refeicoesModel.getIdViagem());
-            values.put(RefeicoesModel.COLUNA_CUSTO_ESTIMADO_REFEICAO, refeicoesModel.getCustoEstimadoRefeicao());
-            values.put(RefeicoesModel.COLUNA_REFEICOES_DIA, refeicoesModel.getRefeicoesDia());
-            values.put(RefeicoesModel.COLUNA_TOTAL, refeicoesModel.getTotal());
-            values.put(RefeicoesModel.COLUNA_ADICIONOU_NA_VIAGEM, refeicoesModel.getAdicionouViagem());
-
-            db.insert(RefeicoesModel.TABELA, null, values);
+            db.insert(RefeicoesModel.TABELA, null, getContentValues(refeicoesModel));
         } finally {
             Close();
         }
@@ -53,6 +47,31 @@ public class RefeicoesDAO extends Base {
         }
 
         return refeicoesRetornada;
+    }
+
+    public void update(RefeicoesModel refeicoesModel) {
+        String[] params = { String.valueOf(refeicoesModel.getIdViagem()) };
+
+        try {
+            Open();
+
+            db.update(RefeicoesModel.TABELA, getContentValues(refeicoesModel), RefeicoesModel.COLUNA_ID_VIAGEM + " = ?", params);
+        }
+        finally {
+            Close();
+        }
+    }
+
+    private ContentValues getContentValues(RefeicoesModel refeicoesModel) {
+        ContentValues values = new ContentValues();
+
+        values.put(RefeicoesModel.COLUNA_ID_VIAGEM, refeicoesModel.getIdViagem());
+        values.put(RefeicoesModel.COLUNA_CUSTO_ESTIMADO_REFEICAO, refeicoesModel.getCustoEstimadoRefeicao());
+        values.put(RefeicoesModel.COLUNA_REFEICOES_DIA, refeicoesModel.getRefeicoesDia());
+        values.put(RefeicoesModel.COLUNA_TOTAL, refeicoesModel.getTotal());
+        values.put(RefeicoesModel.COLUNA_ADICIONOU_NA_VIAGEM, refeicoesModel.getAdicionouViagem());
+
+        return values;
     }
 
     private RefeicoesModel CursorParaRefeicoes(Cursor cursor) {
