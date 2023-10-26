@@ -3,36 +3,38 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:weightSum="100"
     android:orientation="horizontal"
     android:background="@drawable/borda_redonda"
     android:padding="15dp">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:showDividers="middle"
         android:divider="@drawable/empty_tall_divider"
-        android:layout_weight="90">
+>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="100">
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_title" />
+                android:src="@drawable/ic_title"
+                android:layout_weight="10"/>
 
             <TextView
                 android:id="@+id/textTituloViagem"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text=""
                 android:textSize="18dp"
                 android:ellipsize="end"
-                android:maxLines="1"/>
+                android:maxLines="1"
+                android:layout_weight="90"/>
 
         </LinearLayout>
 
@@ -52,7 +54,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:layout_weight="40"/>
@@ -68,7 +70,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:layout_weight="40" />
@@ -91,7 +93,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:layout_weight="40"
@@ -108,7 +110,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="18dp"
+                android:textSize="16dp"
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:layout_weight="40" />
@@ -118,27 +120,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="5dp"
-        android:layout_weight="10"
-        android:weightSum="100">
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="50"
-            android:src="@drawable/ic_edit"/>
-
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="50"
-            android:src="@drawable/ic_delete"/>
-
-    </LinearLayout>
 
 </LinearLayout>

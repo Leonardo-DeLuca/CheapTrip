@@ -16,12 +16,10 @@ import database.model.ViagemModel;
 public class ViagensAdapter extends BaseAdapter {
     private Activity activity;
     private List<ViagemModel> listaViagens;
-    private ViagemDAO viagemDAO;
 
-    public ViagensAdapter(Activity activity, List<ViagemModel> listaViagens, ViagemDAO viagemDAO) {
+    public ViagensAdapter(Activity activity, List<ViagemModel> listaViagens) {
         this.activity = activity;
         this.listaViagens = listaViagens;
-        this.viagemDAO = viagemDAO;
     }
 
     @Override
@@ -69,11 +67,4 @@ public class ViagensAdapter extends BaseAdapter {
         return view;
     }
 
-    private void excluirViagem(long idViagem) {
-        viagemDAO.deleteBy(ViagemModel.COLUNA_ID, String.valueOf(idViagem));
-
-        listaViagens = viagemDAO.selectBy(ViagemModel.COLUNA_ID_USUARIO, String.valueOf(idViagem));
-
-        notifyDataSetChanged();
-    }
 }
