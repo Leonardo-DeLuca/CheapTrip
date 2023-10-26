@@ -30,7 +30,7 @@
             android:layout_margin="10dp"
             app:cardElevation="10dp">
 
-            <!-- This is a ConstraintLayout for the entire CardView including the expandable portion -->
+            <!--    constraintLayout para o CardView, incluindo a parte expansível -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -41,8 +41,7 @@
                 android:background="@drawable/shape_resumo_viagem"
                 >
 
-                <!-- This is a ConstraintLayout for the fixed portion of the CardView. The elements that
-                lie within the fixed portion of the CardView can be constrained to this layout -->
+                <!-- Este é um ConstraintLayout para a parte fixa do CardView. -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/fixed_layout"
                     android:layout_width="match_parent"
@@ -73,10 +72,9 @@
                         android:gravity="left|center"
                         android:layout_weight="70"/>
 
-                    <!-- This is ImageButton for the expansion icon -->
                     <ImageButton
                         android:id="@+id/arrow_button1"
-                        android:layout_width="0dp"
+                        android:layout_width="5dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="10"
                         android:layout_marginEnd="20dp"
@@ -86,8 +84,7 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- The following is the expandable portion whose visibility is initially set to 'gone'
-                The parent LinearLayout contains 3 child LinearLayouts that hold a subject name and an icon each -->
+                <!-- Parte expansível cuja visibilidade está inicialmente definida como 'gone' -->
                 <LinearLayout
                     android:id="@+id/hidden_view1"
                     android:layout_width="match_parent"
@@ -194,6 +191,32 @@
                             android:layout_marginBottom="10dp"
                             android:textSize="18dp" />
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/azulClaro"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/total"
+                            android:textSize="20dp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/resumo_totalFinalGasolina"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18dp"/>
+                    </LinearLayout>
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -207,7 +230,6 @@
             android:layout_margin="10dp"
             app:cardElevation="10dp">
 
-            <!-- This is a ConstraintLayout for the entire CardView including the expandable portion -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -218,8 +240,6 @@
                 android:background="@drawable/shape_resumo_viagem"
                 >
 
-                <!-- This is a ConstraintLayout for the fixed portion of the CardView. The elements that
-                lie within the fixed portion of the CardView can be constrained to this layout -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/fixed_layout2"
                     android:layout_width="match_parent"
@@ -249,10 +269,9 @@
                             android:gravity="left|center"
                             android:layout_weight="70"/>
 
-                        <!-- This is ImageButton for the expansion icon -->
                         <ImageButton
                             android:id="@+id/arrow_button2"
-                            android:layout_width="0dp"
+                            android:layout_width="5dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="10"
                             android:layout_marginEnd="20dp"
@@ -262,8 +281,6 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- The following is the expandable portion whose visibility is initially set to 'gone'
-                The parent LinearLayout contains 3 child LinearLayouts that hold a subject name and an icon each -->
                 <LinearLayout
                     android:id="@+id/hidden_view2"
                     android:layout_width="match_parent"
@@ -275,80 +292,80 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fixed_layout2">
 
-                    <!-- Child LinearLayout 1 -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:src="@drawable/ic_money" />
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Database Management"
-                            android:textColor="#000000"
-                            android:textSize="20dp" />
+                            android:layout_marginTop="10dp"
+                            android:text="@string/custoEstimadoPorPessoaTxt"
+                            android:textSize="20dp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/resumo_custoEstimadoPessoa"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18dp" />
                     </LinearLayout>
 
-                    <!-- Child LinearLayout 2 -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:src="@drawable/ic_title" />
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Data Structures"
-                            android:textColor="#000000"
-                            android:textSize="20dp" />
+                            android:layout_marginTop="10dp"
+                            android:text="@string/aluguelVeiculoTxt"
+                            android:textSize="20dp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/resumo_aluguelVeiculos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18dp" />
                     </LinearLayout>
 
-                    <!-- Child LinearLayout 3 -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:src="@drawable/ic_finish" />
+                        android:orientation="vertical"
+                        android:background="@color/azulClaro"
+                        >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Operating Systems"
-                            android:textColor="#000000"
-                            android:textSize="20dp" />
+                            android:layout_marginTop="10dp"
+                            android:text="@string/total"
+                            android:textSize="20dp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/resumo_totalFinalTarifasAereas"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18dp"/>
                     </LinearLayout>
+
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -362,7 +379,6 @@
             android:layout_margin="10dp"
             app:cardElevation="10dp">
 
-            <!-- This is a ConstraintLayout for the entire CardView including the expandable portion -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -373,8 +389,6 @@
                 android:background="@drawable/shape_resumo_viagem"
                 >
 
-                <!-- This is a ConstraintLayout for the fixed portion of the CardView. The elements that
-                lie within the fixed portion of the CardView can be constrained to this layout -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/fixed_layout3"
                     android:layout_width="match_parent"
@@ -405,10 +419,9 @@
                             android:gravity="left|center"
                             android:layout_weight="70"/>
 
-                        <!-- This is ImageButton for the expansion icon -->
                         <ImageButton
                             android:id="@+id/arrow_button3"
-                            android:layout_width="0dp"
+                            android:layout_width="5dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="10"
                             android:layout_marginEnd="20dp"
@@ -418,8 +431,6 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- The following is the expandable portion whose visibility is initially set to 'gone'
-                The parent LinearLayout contains 3 child LinearLayouts that hold a subject name and an icon each -->
                 <LinearLayout
                     android:id="@+id/hidden_view3"
                     android:layout_width="match_parent"
@@ -431,80 +442,80 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fixed_layout3">
 
-                    <!-- Child LinearLayout 1 -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:src="@drawable/ic_money" />
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Database Management"
-                            android:textColor="#000000"
-                            android:textSize="20dp" />
+                            android:layout_marginTop="10dp"
+                            android:text="@string/custoEstimadoRefeicaoTxt"
+                            android:textSize="20dp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/resumo_custoEstimadoRefeicao"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18dp" />
                     </LinearLayout>
 
-                    <!-- Child LinearLayout 2 -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:src="@drawable/ic_title" />
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Data Structures"
-                            android:textColor="#000000"
-                            android:textSize="20dp" />
+                            android:layout_marginTop="10dp"
+                            android:text="@string/refeicoesPorDiaTxt"
+                            android:textSize="20dp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/resumo_refeicoesPorDia"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18dp" />
                     </LinearLayout>
 
-                    <!-- Child LinearLayout 3 -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:src="@drawable/ic_finish" />
+                        android:orientation="vertical"
+                        android:background="@color/azulClaro"
+                        >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Operating Systems"
-                            android:textColor="#000000"
-                            android:textSize="20dp" />
+                            android:layout_marginTop="10dp"
+                            android:text="@string/total"
+                            android:textSize="20dp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/resumo_totalFinalRefeicoes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18dp"/>
                     </LinearLayout>
+
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -518,7 +529,6 @@
             android:layout_margin="10dp"
             app:cardElevation="10dp">
 
-            <!-- This is a ConstraintLayout for the entire CardView including the expandable portion -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -529,8 +539,6 @@
                 android:background="@drawable/shape_resumo_viagem"
                 >
 
-                <!-- This is a ConstraintLayout for the fixed portion of the CardView. The elements that
-                lie within the fixed portion of the CardView can be constrained to this layout -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/fixed_layout4"
                     android:layout_width="match_parent"
@@ -561,10 +569,9 @@
                             android:gravity="left|center"
                             android:layout_weight="70"/>
 
-                        <!-- This is ImageButton for the expansion icon -->
                         <ImageButton
                             android:id="@+id/arrow_button4"
-                            android:layout_width="0dp"
+                            android:layout_width="5dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="10"
                             android:layout_marginEnd="20dp"
@@ -574,8 +581,6 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- The following is the expandable portion whose visibility is initially set to 'gone'
-                The parent LinearLayout contains 3 child LinearLayouts that hold a subject name and an icon each -->
                 <LinearLayout
                     android:id="@+id/hidden_view4"
                     android:layout_width="match_parent"
@@ -587,80 +592,104 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fixed_layout4">
 
-                    <!-- Child LinearLayout 1 -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:src="@drawable/ic_money" />
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Database Management"
-                            android:textColor="#000000"
-                            android:textSize="20dp" />
+                            android:layout_marginTop="10dp"
+                            android:text="@string/custoMedioNoiteTxt"
+                            android:textSize="20dp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/resumo_custoMedioNoite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18dp" />
                     </LinearLayout>
 
-                    <!-- Child LinearLayout 2 -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:src="@drawable/ic_title" />
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Data Structures"
-                            android:textColor="#000000"
-                            android:textSize="20dp" />
+                            android:layout_marginTop="10dp"
+                            android:text="@string/totalNoitesTxt"
+                            android:textSize="20dp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/resumo_totalNoites"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18dp" />
                     </LinearLayout>
 
-                    <!-- Child LinearLayout 3 -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:src="@drawable/ic_finish" />
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Operating Systems"
-                            android:textColor="#000000"
-                            android:textSize="20dp" />
+                            android:layout_marginTop="10dp"
+                            android:text="@string/totalQuartosTxt"
+                            android:textSize="20dp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/resumo_totalQuartos"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18dp" />
                     </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:background="@color/azulClaro"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/total"
+                            android:textSize="20dp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/resumo_totalFinalHospedagem"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18dp"/>
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -674,7 +703,6 @@
             android:layout_margin="10dp"
             app:cardElevation="10dp">
 
-            <!-- This is a ConstraintLayout for the entire CardView including the expandable portion -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -685,8 +713,6 @@
                 android:background="@drawable/shape_resumo_viagem"
                 >
 
-                <!-- This is a ConstraintLayout for the fixed portion of the CardView. The elements that
-                lie within the fixed portion of the CardView can be constrained to this layout -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/fixed_layout5"
                     android:layout_width="match_parent"
@@ -718,10 +744,9 @@
                             android:gravity="left|center"
                             android:layout_weight="70"/>
 
-                        <!-- This is ImageButton for the expansion icon -->
                         <ImageButton
                             android:id="@+id/arrow_button5"
-                            android:layout_width="0dp"
+                            android:layout_width="5dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="10"
                             android:layout_marginEnd="20dp"
@@ -731,8 +756,6 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <!-- The following is the expandable portion whose visibility is initially set to 'gone'
-                The parent LinearLayout contains 3 child LinearLayouts that hold a subject name and an icon each -->
                 <LinearLayout
                     android:id="@+id/hidden_view5"
                     android:layout_width="match_parent"
@@ -744,80 +767,107 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/fixed_layout5">
 
-                    <!-- Child LinearLayout 1 -->
+                    <LinearLayout
+                        android:id="@+id/resumo_LinearEnt1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/resumo_txtEntreterimento1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="20dp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/resumo_valorEntreterimento1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/resumo_LinearEnt2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/resumo_txtEntreterimento2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="20dp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/resumo_valorEntreterimento2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/resumo_LinearEnt3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/resumo_txtEntreterimento3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:textSize="20dp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/resumo_valorEntreterimento3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="10dp"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:src="@drawable/ic_money" />
+                        android:orientation="vertical"
+                        android:background="@color/azulClaro"
+                        >
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Database Management"
-                            android:textColor="#000000"
-                            android:textSize="20dp" />
-                    </LinearLayout>
-
-                    <!-- Child LinearLayout 2 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
                             android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginBottom="10dp"
-                            android:src="@drawable/ic_title" />
+                            android:text="@string/total"
+                            android:textSize="20dp"
+                            android:textStyle="bold"/>
 
                         <TextView
+                            android:id="@+id/resumo_totalFinalEntreterimento"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Data Structures"
-                            android:textColor="#000000"
-                            android:textSize="20dp" />
-                    </LinearLayout>
-
-                    <!-- Child LinearLayout 3 -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginEnd="10dp"
+                            android:layout_marginTop="5dp"
                             android:layout_marginBottom="10dp"
-                            android:src="@drawable/ic_finish" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:layout_marginTop="20dp"
-                            android:text="Operating Systems"
-                            android:textColor="#000000"
-                            android:textSize="20dp" />
+                            android:textSize="18dp"/>
                     </LinearLayout>
+
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
