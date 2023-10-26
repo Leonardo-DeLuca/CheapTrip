@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import database.DBHelper;
+import database.model.GasolinaModel;
 import database.model.UsuarioModel;
 import database.model.ViagemModel;
 
@@ -24,15 +25,7 @@ public class ViagemDAO extends Base {
         try {
             Open();
 
-            ContentValues values = new ContentValues();
-            values.put(ViagemModel.COLUNA_ID_USUARIO, viagemModel.getIdUsuario());
-            values.put(ViagemModel.COLUNA_TITULO, viagemModel.getTitulo());
-            values.put(ViagemModel.COLUNA_TOTAL_VIAJANTES, viagemModel.getTotalViajantes());
-            values.put(ViagemModel.COLUNA_DURACAO, viagemModel.getDuracao());
-            values.put(ViagemModel.COLUNA_DATA_CRIACAO, viagemModel.getDataCriacao());
-            values.put(ViagemModel.COLUNA_TOTAL, viagemModel.getTotal());
-
-            linhasAfetadas = db.insert(ViagemModel.TABELA, null, values);
+            linhasAfetadas = db.insert(ViagemModel.TABELA, null, getContentValues(viagemModel));
         } finally {
             Close();
         }
@@ -65,6 +58,43 @@ public class ViagemDAO extends Base {
         return viagensRetornadas;
     }
 
+    public ViagemModel selectById(String idViagem) {
+        ViagemModel viagemRetornada = null;
+        String[] params = { idViagem };
+
+        try {
+            Open();
+
+            Cursor cursor = db.query(ViagemModel.TABELA, ViagemModel.getColunas(), ViagemModel.COLUNA_ID + " = ?", params, null, null, null);
+
+            if (cursor.moveToFirst()) {
+                viagemRetornada = CursorParaViagem(cursor);
+                cursor.close();
+            }
+        }
+        finally {
+            Close();
+        }
+
+        return viagemRetornada;
+    }
+
+    public void update(ViagemModel viagemModel) {
+        String[] params = { String.valueOf(viagemModel.getId()) };
+        ContentValues values = getContentValues(viagemModel);
+
+        values.put(ViagemModel.COLUNA_ID, viagemModel.getId());
+
+        try {
+            Open();
+
+            db.update(ViagemModel.TABELA, values, ViagemModel.COLUNA_ID + " = ?", params);
+        }
+        finally {
+            Close();
+        }
+    }
+
     public void deleteBy(String colunaParametro, String valorParametro) {
         String[] params = { valorParametro };
 
@@ -76,6 +106,19 @@ public class ViagemDAO extends Base {
         finally {
             Close();
         }
+    }
+
+    private ContentValues getContentValues(ViagemModel viagemModel) {
+        ContentValues values = new ContentValues();
+
+        values.put(ViagemModel.COLUNA_ID_USUARIO, viagemModel.getIdUsuario());
+        values.put(ViagemModel.COLUNA_TITULO, viagemModel.getTitulo());
+        values.put(ViagemModel.COLUNA_TOTAL_VIAJANTES, viagemModel.getTotalViajantes());
+        values.put(ViagemModel.COLUNA_DURACAO, viagemModel.getDuracao());
+        values.put(ViagemModel.COLUNA_DATA_CRIACAO, viagemModel.getDataCriacao());
+        values.put(ViagemModel.COLUNA_TOTAL, viagemModel.getTotal());
+
+        return values;
     }
 
     private ViagemModel CursorParaViagem(Cursor cursor) {

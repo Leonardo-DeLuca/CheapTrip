@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 
+import com.example.cheaptrip.R;
+
 public class ListenerCheckBox implements CompoundButton.OnCheckedChangeListener {
     private EditText[] editTexts;
     private EditText editTextTotal;
@@ -28,7 +30,9 @@ public class ListenerCheckBox implements CompoundButton.OnCheckedChangeListener 
                 eT.setText("");
             }
 
-            editTextTotal.setText("0");
+            if (editTextTotal.getId() != R.id.edit_text_total_entretenimento) {
+                editTextTotal.setText("0");
+            }
         }
     }
 }

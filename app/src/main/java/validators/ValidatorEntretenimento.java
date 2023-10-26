@@ -3,8 +3,11 @@ package validators;
 import android.app.Activity;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.cheaptrip.R;
+
+import activities.CadastroViagensActivity;
 
 public class ValidatorEntretenimento implements IValidator {
     private EditText editTextEntretenimento1, editTextEntretenimento2, editTextEntretenimento3;
@@ -55,6 +58,9 @@ public class ValidatorEntretenimento implements IValidator {
                 editTextValorEntretenimento3.setError(activity.getResources().getString(R.string.campoObrigatorio));
                 return false;
             }
+        } else if (checkBoxAddViagemEntretenimento.isChecked()) {
+            Toast.makeText(activity, "Adicione ao menos uma atração!", Toast.LENGTH_SHORT).show();
+            return false;
         }
 
          if (editTextTotalEntretenimento.getText().toString().equals(activity.getResources().getString(R.string.valorInvalido))) {

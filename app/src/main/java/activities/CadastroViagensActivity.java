@@ -1,6 +1,7 @@
 package activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -148,6 +149,11 @@ public class CadastroViagensActivity extends AppCompatActivity {
                 avancaEtapa();
             }
         });
+
+        if (isEditando()) {
+            alteraTituloToolbar();
+            setaInformacoesParaEdicao();
+        }
     }
 
     @Override
@@ -380,36 +386,53 @@ public class CadastroViagensActivity extends AppCompatActivity {
     private void finalizaCadastro() {
         viagemModel = getViagemModel();
         long idViagem = 0;
+        String editadaOuCadastrada = isEditando() ? "editada" : "cadastrada";
 
-        if (viagemModel.getTotal() == 0.0) {
-            Toast.makeText(CadastroViagensActivity.this, "Valor total da viagem é zero.", Toast.LENGTH_SHORT).show();
+//        if (viagemModel.getTotal() == 0.0) {
+//            Toast.makeText(CadastroViagensActivity.this, "Valor total da viagem é zero.", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+
+        idViagem = isEditando() ? getIdViagemEditando() : viagemDAO.insert(viagemModel);
+
+        if (idViagem == 0) {
+            Toast.makeText(CadastroViagensActivity.this, "Ocorreu um problema ao salvar/editar no Banco de Dados.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        idViagem = viagemDAO.insert(viagemModel);
+        gasolinaModel = getGasolinaModel(idViagem);
+        tarifaAereaModel = getTarifaAereaModel(idViagem);
+        refeicoesModel = getRefeicoesModel(idViagem);
+        hospedagemModel = getHospedagemModel(idViagem);
+        entretenimentoModel = getEntretenimentoModel(idViagem);
 
-        if (idViagem != 0) {
-            gasolinaModel = getGasolinaModel(idViagem);
-            gasolinaDAO.insert(gasolinaModel);
-
-            tarifaAereaModel = getTarifaAereaModel(idViagem);
-            tarifaAereaDAO.insert(tarifaAereaModel);
-
-            refeicoesModel = getRefeicoesModel(idViagem);
-            refeicoesDAO.insert(refeicoesModel);
-
-            hospedagemModel = getHospedagemModel(idViagem);
-            hospedagemDAO.insert(hospedagemModel);
-
-            entretenimentoModel = getEntretenimentoModel(idViagem);
-            entretenimentoDAO.insert(entretenimentoModel);
-
-            Toast.makeText(CadastroViagensActivity.this, "Viagem cadastrada com sucesso!", Toast.LENGTH_SHORT).show();
-            setResult(1);
-            finish();
+        if (isEditando()) {
+            viagemModel.setId((int) idViagem);
+            executaUpdates();
         } else {
-            Toast.makeText(CadastroViagensActivity.this, "Ocorreu um problema ao salvar no Banco de Dados.", Toast.LENGTH_SHORT).show();
+            executaInserts();
         }
+
+        Toast.makeText(CadastroViagensActivity.this, "Viagem " + editadaOuCadastrada + " com sucesso!", Toast.LENGTH_SHORT).show();
+        setResult(1);
+        finish();
+    }
+
+    private void executaInserts() {
+        gasolinaDAO.insert(gasolinaModel);
+        tarifaAereaDAO.insert(tarifaAereaModel);
+        refeicoesDAO.insert(refeicoesModel);
+        hospedagemDAO.insert(hospedagemModel);
+        entretenimentoDAO.insert(entretenimentoModel);
+    }
+
+    private void executaUpdates() {
+        viagemDAO.update(viagemModel);
+        gasolinaDAO.update(gasolinaModel);
+        tarifaAereaDAO.update(tarifaAereaModel);
+        refeicoesDAO.update(refeicoesModel);
+        hospedagemDAO.update(hospedagemModel);
+        entretenimentoDAO.update(entretenimentoModel);
     }
 
     private String getDataCriacaoViagem() {
@@ -447,6 +470,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
 
         if (checkBoxAddViagemGasolina.isChecked()) {
             gasolinaModel.setTotalEstimadoKms(Double.parseDouble(editTextTotalEstimadoKms.getText().toString()));
+            gasolinaModel.setMediaKmsLitro(Double.parseDouble(editTextMediaKmsLitro.getText().toString()));
             gasolinaModel.setCustoMedioLitro(Double.parseDouble(editTextCustoMediaLitro.getText().toString()));
             gasolinaModel.setTotalVeiculos(Integer.parseInt(editTextTotalVeiculos.getText().toString()));
             gasolinaModel.setTotal(Double.parseDouble(editTextTotalGasolina.getText().toString()));
@@ -511,16 +535,25 @@ public class CadastroViagensActivity extends AppCompatActivity {
             if (checkBoxEntretenimento1.isChecked()) {
                 entretenimentoModel.setEntretenimento1(editTextEntretenimento1.getText().toString());
                 entretenimentoModel.setValorEntretenimento1(Double.parseDouble(editTextValorEntretenimento1.getText().toString()));
+            } else {
+                entretenimentoModel.setEntretenimento1("");
+                entretenimentoModel.setValorEntretenimento1(0);
             }
 
             if (checkBoxEntretenimento2.isChecked()) {
                 entretenimentoModel.setEntretenimento2(editTextEntretenimento2.getText().toString());
                 entretenimentoModel.setValorEntretenimento2(Double.parseDouble(editTextValorEntretenimento2.getText().toString()));
+            } else {
+                entretenimentoModel.setEntretenimento2("");
+                entretenimentoModel.setValorEntretenimento2(0);
             }
 
             if (checkBoxEntretenimento3.isChecked()) {
                 entretenimentoModel.setEntretenimento3(editTextEntretenimento3.getText().toString());
                 entretenimentoModel.setValorEntretenimento3(Double.parseDouble(editTextValorEntretenimento3.getText().toString()));
+            } else {
+                entretenimentoModel.setEntretenimento3("");
+                entretenimentoModel.setValorEntretenimento3(0);
             }
 
             entretenimentoModel.setTotal(Double.parseDouble(editTextTotalEntretenimento.getText().toString()));
@@ -530,5 +563,120 @@ public class CadastroViagensActivity extends AppCompatActivity {
         }
 
         return entretenimentoModel;
+    }
+
+    private boolean isEditando() {
+        return getIntent().getBooleanExtra("EDITAR", false);
+    }
+
+    private int getIdViagemEditando() {
+        return getIntent().getIntExtra("ID_VIAGEM", 0);
+    }
+
+    private void alteraTituloToolbar() {
+        toolbar.setTitle(R.string.tituloEditarViagem);
+    }
+
+    private void setaInformacoesParaEdicao() {
+        int idViagem = getIdViagemEditando();
+
+        if (idViagem != 0) {
+            viagemModel = viagemDAO.selectById(String.valueOf(idViagem));
+            gasolinaModel = gasolinaDAO.selectBy(GasolinaModel.COLUNA_ID_VIAGEM, String.valueOf(idViagem));
+            tarifaAereaModel = tarifaAereaDAO.selectBy(TarifaAereaModel.COLUNA_ID_VIAGEM, String.valueOf(idViagem));
+            refeicoesModel = refeicoesDAO.selectBy(RefeicoesModel.COLUNA_ID_VIAGEM, String.valueOf(idViagem));
+            hospedagemModel = hospedagemDAO.selectBy(HospedagemModel.COLUNA_ID_VIAGEM, String.valueOf(idViagem));
+            entretenimentoModel = entretenimentoDAO.selectBy(EntretenimentoModel.COLUNA_ID_VIAGEM, String.valueOf(idViagem));
+
+            setaInformacoesViagemParaEdicao(viagemModel);
+            setaInformacoesGasolinaParaEdicao(gasolinaModel);
+            setaInformacoesTarifaAereaParaEdicao(tarifaAereaModel);
+            setaInformacoesRefeicoesParaEdicao(refeicoesModel);
+            setaInformacoesHospedagemParaEdicao(hospedagemModel);
+            setaInformacoesEntretenimentoParaEdicao(entretenimentoModel);
+        } else {
+            Toast.makeText(CadastroViagensActivity.this, "Erro.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void setaInformacoesViagemParaEdicao(ViagemModel viagemEditando) {
+        editTextTituloViagem.setText(viagemEditando.getTitulo());
+        editTextTotalViajantes.setText(String.valueOf(viagemEditando.getTotalViajantes()));
+        editTextDuracaoViagem.setText(String.valueOf(viagemEditando.getDuracao()));
+    }
+
+    private void setaInformacoesGasolinaParaEdicao(GasolinaModel gasolinaEditando) {
+        if (gasolinaEditando.getAdicionouViagem() != 0) {
+            checkBoxAddViagemGasolina.setChecked(true);
+            editTextTotalEstimadoKms.setText(String.valueOf(gasolinaEditando.getTotalEstimadoKms()));
+            editTextMediaKmsLitro.setText(String.valueOf(gasolinaEditando.getMediaKmsLitro()));
+            editTextCustoMediaLitro.setText(String.valueOf(gasolinaEditando.getCustoMedioLitro()));
+            editTextTotalVeiculos.setText(String.valueOf(gasolinaEditando.getTotalVeiculos()));
+        } else {
+            checkBoxAddViagemGasolina.setChecked(false);
+        }
+    }
+
+    private void setaInformacoesTarifaAereaParaEdicao(TarifaAereaModel tarifaAereaEditando) {
+        if (tarifaAereaEditando.getAdicionouViagem() != 0) {
+            checkBoxAddViagemTarifaAerea.setChecked(true);
+            editTextCustoEstimadoTarifaAerea.setText(String.valueOf(tarifaAereaEditando.getCustoEstimadoPessoa()));
+            editTextAluguelVeiculo.setText(String.valueOf(tarifaAereaEditando.getAluguelVeiculo()));
+        } else {
+            checkBoxAddViagemTarifaAerea.setChecked(false);
+        }
+    }
+
+    private void setaInformacoesRefeicoesParaEdicao(RefeicoesModel refeicoesEditando) {
+        if (refeicoesEditando.getAdicionouViagem() != 0) {
+            checkBoxAddViagemRefeicoes.setChecked(true);
+            editTextCustoEstimadoRefeicao.setText(String.valueOf(refeicoesEditando.getCustoEstimadoRefeicao()));
+            editTextRefeicoesDia.setText(String.valueOf(refeicoesEditando.getRefeicoesDia()));
+        } else {
+            checkBoxAddViagemRefeicoes.setChecked(false);
+        }
+    }
+
+    private void setaInformacoesHospedagemParaEdicao(HospedagemModel hospedagemEditando) {
+        if (hospedagemEditando.getAdicionouViagem() != 0) {
+            checkBoxAddViagemHospedagem.setChecked(true);
+            editTextCustoMedioNoite.setText(String.valueOf(hospedagemEditando.getCustoMedioNoite()));
+            editTextTotalNoites.setText(String.valueOf(hospedagemEditando.getTotalNoites()));
+            editTextTotalQuartos.setText(String.valueOf(hospedagemEditando.getTotalQuartos()));
+        } else {
+            checkBoxAddViagemHospedagem.setChecked(false);
+        }
+    }
+
+    private void setaInformacoesEntretenimentoParaEdicao(EntretenimentoModel entretenimentoEditando) {
+        if (entretenimentoEditando.getAdicionouViagem() != 0) {
+            checkBoxAddViagemEntretenimento.setChecked(true);
+
+            if (entretenimentoEditando.getEntretenimento1() != null && !"".equals(entretenimentoEditando.getEntretenimento1())) {
+                checkBoxEntretenimento1.setChecked(true);
+                editTextEntretenimento1.setText(entretenimentoEditando.getEntretenimento1());
+                editTextValorEntretenimento1.setText(String.valueOf(entretenimentoEditando.getValorEntretenimento1()));
+            } else {
+                checkBoxEntretenimento1.setChecked(false);
+            }
+
+            if (entretenimentoEditando.getEntretenimento2() != null && !"".equals(entretenimentoEditando.getEntretenimento2())) {
+                checkBoxEntretenimento2.setChecked(true);
+                editTextEntretenimento2.setText(entretenimentoEditando.getEntretenimento2());
+                editTextValorEntretenimento2.setText(String.valueOf(entretenimentoEditando.getValorEntretenimento2()));
+            } else {
+                checkBoxEntretenimento2.setChecked(false);
+            }
+
+            if (entretenimentoEditando.getEntretenimento3() != null && !"".equals(entretenimentoEditando.getEntretenimento3())) {
+                checkBoxEntretenimento3.setChecked(true);
+                editTextEntretenimento3.setText(entretenimentoEditando.getEntretenimento3());
+                editTextValorEntretenimento3.setText(String.valueOf(entretenimentoEditando.getValorEntretenimento3()));
+            } else {
+                checkBoxEntretenimento3.setChecked(false);
+            }
+        } else {
+            checkBoxAddViagemEntretenimento.setChecked(false);
+        }
     }
 }

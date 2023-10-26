@@ -7,6 +7,7 @@ public class GasolinaModel {
             COLUNA_ID = "_id",
             COLUNA_ID_VIAGEM = "id_viagem",
             COLUNA_TOTAL_ESTIMADO_KMS = "total_estimado_kms",
+            COLUNA_MEDIA_KMS_LITRO = "media_kms_litro",
             COLUNA_CUSTO_MEDIO_LITRO = "custo_medio_litro",
             COLUNA_TOTAL_VEICULOS = "total_veiculos",
             COLUNA_ADICIONOU_NA_VIAGEM = "adicionou_viagem",
@@ -17,6 +18,7 @@ public class GasolinaModel {
             + COLUNA_ID + " integer primary key autoincrement, "
             + COLUNA_ID_VIAGEM + " integer not null, "
             + COLUNA_TOTAL_ESTIMADO_KMS + " real, "
+            + COLUNA_MEDIA_KMS_LITRO + " real, "
             + COLUNA_CUSTO_MEDIO_LITRO + " real, "
             + COLUNA_ADICIONOU_NA_VIAGEM + " integer not null, "
             + COLUNA_TOTAL + " real not null, "
@@ -26,12 +28,13 @@ public class GasolinaModel {
     public static final String DROP_TABLE = "drop table if exists " + TABELA + ";";
 
     public static final String[] getColunas() {
-        return new String[] { COLUNA_ID, COLUNA_ID_VIAGEM, COLUNA_TOTAL_ESTIMADO_KMS, COLUNA_CUSTO_MEDIO_LITRO, COLUNA_TOTAL_VEICULOS, COLUNA_TOTAL, COLUNA_ADICIONOU_NA_VIAGEM };
+        return new String[] { COLUNA_ID, COLUNA_ID_VIAGEM, COLUNA_TOTAL_ESTIMADO_KMS, COLUNA_MEDIA_KMS_LITRO, COLUNA_CUSTO_MEDIO_LITRO, COLUNA_TOTAL_VEICULOS, COLUNA_TOTAL, COLUNA_ADICIONOU_NA_VIAGEM };
     }
 
     private int id;
     private int idViagem;
     private double totalEstimadoKms;
+    private double mediaKmsLitro;
     private double custoMedioLitro;
     private int totalVeiculos;
     private double total;
@@ -59,6 +62,14 @@ public class GasolinaModel {
 
     public void setTotalEstimadoKms(double totalEstimadoKms) {
         this.totalEstimadoKms = totalEstimadoKms;
+    }
+
+    public double getMediaKmsLitro() {
+        return mediaKmsLitro;
+    }
+
+    public void setMediaKmsLitro(double mediaKmsLitro) {
+        this.mediaKmsLitro = mediaKmsLitro;
     }
 
     public double getCustoMedioLitro() {

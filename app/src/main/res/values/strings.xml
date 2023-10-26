@@ -43,6 +43,7 @@
     <string name="numeroViajantes">Total de viajantes</string>
     <string name="duracaoViagem">Duração da viagem (em dias)</string>
     <string name="tituloNovaViagem">Nova viagem</string>
+    <string name="tituloEditarViagem">Editar viagem</string>
 
     <!--  Etapa de gasolina do cadastro de novas viagens  -->
     <string name="gasolinaNovaViagemTxt">Perfeito! Vamos aos gastos de gasolina:</string>
