@@ -21,6 +21,7 @@ import com.example.cheaptrip.R;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 
+import adapter.ViagensAdapter;
 import database.dao.EntretenimentoDAO;
 import database.dao.GasolinaDAO;
 import database.dao.HospedagemDAO;
@@ -49,7 +50,7 @@ public class ResumoViagemActivity extends AppCompatActivity {
     private TarifaAereaModel tarifaAereaModel;
     private EntretenimentoModel entretenimentoModel;
 
-    private ImageButton arrow1, arrow2, arrow3, arrow4, arrow5;
+    private ImageButton arrow1, arrow2, arrow3, arrow4, arrow5, editBtn, deleteBtn;
     private LinearLayout hiddenView1, hiddenView2, hiddenView3, hiddenView4, hiddenView5, resumoLinearEnt1, resumoLinearEnt2, resumoLinearEnt3;
     private CardView cardView1, cardView2, cardView3, cardView4, cardView5;
     private TextView txtTituloViagem, txtNumeroViajantesViagem, txtDuracaoViagem, txtDataCriacaoViagem, txtValorPorPessoa, txtTotalViagem,
@@ -66,6 +67,8 @@ public class ResumoViagemActivity extends AppCompatActivity {
 
     private HashMap<Integer, Object> map;
 
+    private String idViagem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,8 +81,7 @@ public class ResumoViagemActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        String idViagem = intent.getStringExtra("id_viagem");
-
+        idViagem = intent.getStringExtra("id_viagem");
         setModels(idViagem);
         setDadosViagem();
 
@@ -90,6 +92,8 @@ public class ResumoViagemActivity extends AppCompatActivity {
         for (int i = 0; i < hiddenViews.length; i++){
             defineFuncaoArrow(imageButtons[i], hiddenViews[i], cardViews[i], map.get(i));
         }
+
+        edicoesViagem();
     }
 
     private void defineFuncaoArrow(ImageButton arrow, LinearLayout hiddenView, CardView cardView, Object model){
@@ -229,6 +233,8 @@ public class ResumoViagemActivity extends AppCompatActivity {
         resumoLinearEnt1 = findViewById(R.id.resumo_LinearEnt1);
         resumoLinearEnt2 = findViewById(R.id.resumo_LinearEnt2);
         resumoLinearEnt3 = findViewById(R.id.resumo_LinearEnt3);
+        editBtn = findViewById(R.id.resumo_editBtn);
+        deleteBtn = findViewById(R.id.resumo_deleteBtn);
 
     }
 
@@ -313,6 +319,22 @@ public class ResumoViagemActivity extends AppCompatActivity {
             }
 
             txtTotalFinalEntreterimento.setText(String.valueOf(entretenimentoModel.getTotal()));
+    }
+
+    private void edicoesViagem(){
+        editBtn.setOnClickListener(view -> {
+            Integer id = Integer.valueOf(idViagem);
+
+            Intent in = new Intent(ResumoViagemActivity.this, CadastroViagensActivity.class);
+            in.putExtra("EDITAR", true);
+            in.putExtra("ID_VIAGEM", id);
+
+            startActivity(in);
+        });
+
+        deleteBtn.setOnClickListener(view -> {
+
+        });
     }
 
     @Override
