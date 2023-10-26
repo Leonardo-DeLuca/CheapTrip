@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import database.DBHelper;
+import database.model.EntretenimentoModel;
 import database.model.TarifaAereaModel;
 
 public class TarifaAereaDAO extends Base {
@@ -25,6 +26,8 @@ public class TarifaAereaDAO extends Base {
             values.put(TarifaAereaModel.COLUNA_ALUGUEL_VEICULO, tarifaAereaModel.getAluguelVeiculo());
             values.put(TarifaAereaModel.COLUNA_TOTAL, tarifaAereaModel.getTotal());
             values.put(TarifaAereaModel.COLUNA_ADICIONOU_NA_VIAGEM, tarifaAereaModel.getAdicionouViagem());
+
+            db.insert(TarifaAereaModel.TABELA, null, values);
         } finally {
             Close();
         }

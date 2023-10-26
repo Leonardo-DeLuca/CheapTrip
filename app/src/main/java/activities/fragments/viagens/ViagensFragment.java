@@ -25,7 +25,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 import activities.CadastroViagensActivity;
+import activities.LoginActivity;
 import activities.MainActivity;
+import activities.ResumoViagemActivity;
 import adapter.ViagensAdapter;
 import database.dao.ViagemDAO;
 import database.model.ViagemModel;
@@ -61,7 +63,9 @@ public class ViagensFragment extends Fragment {
 
         listaViagens = view.findViewById(R.id.lista_viagens);
         listaViagens.setOnItemClickListener((adapterView, view12, i, idViagem) -> {
-            Toast.makeText(getContext(), "ID Viagem: " + idViagem, Toast.LENGTH_SHORT).show();
+            Intent it = new Intent(getActivity(), ResumoViagemActivity.class);
+            it.putExtra("id_viagem", String.valueOf(idViagem));
+            startActivity(it);
         });
 
         setaVariaveisExtras();
@@ -77,7 +81,7 @@ public class ViagensFragment extends Fragment {
     private void recuperarViagensUsuario() {
         viagensUsuario = viagemDAO.selectBy(ViagemModel.COLUNA_ID_USUARIO, String.valueOf(idUsuario));
 
-        adapter = new ViagensAdapter(getActivity(), viagensUsuario, viagemDAO);
+        adapter = new ViagensAdapter(getActivity(), viagensUsuario);
         listaViagens.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

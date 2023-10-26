@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import database.DBHelper;
+import database.model.EntretenimentoModel;
 import database.model.HospedagemModel;
 import database.model.RefeicoesModel;
 
@@ -26,6 +27,8 @@ public class HospedagemDAO extends Base {
             values.put(HospedagemModel.COLUNA_TOTAL_QUARTOS, hospedagemModel.getTotalQuartos());
             values.put(HospedagemModel.COLUNA_TOTAL, hospedagemModel.getTotal());
             values.put(HospedagemModel.COLUNA_ADICIONOU_NA_VIAGEM, hospedagemModel.getAdicionouViagem());
+
+            db.insert(HospedagemModel.TABELA, null, values);
         } finally {
             Close();
         }

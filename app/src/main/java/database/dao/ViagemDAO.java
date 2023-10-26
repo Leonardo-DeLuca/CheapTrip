@@ -65,6 +65,27 @@ public class ViagemDAO extends Base {
         return viagensRetornadas;
     }
 
+    public ViagemModel selectById(String idViagem) {
+        ViagemModel viagemRetornada = null;
+        String[] params = { idViagem };
+
+        try {
+            Open();
+
+            Cursor cursor = db.query(ViagemModel.TABELA, ViagemModel.getColunas(), ViagemModel.COLUNA_ID + " = ?", params, null, null, null);
+
+            if (cursor.moveToFirst()) {
+                viagemRetornada = CursorParaViagem(cursor);
+                cursor.close();
+            }
+        }
+        finally {
+            Close();
+        }
+
+        return viagemRetornada;
+    }
+
     public void deleteBy(String colunaParametro, String valorParametro) {
         String[] params = { valorParametro };
 

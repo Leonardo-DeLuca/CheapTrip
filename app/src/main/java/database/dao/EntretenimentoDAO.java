@@ -29,6 +29,8 @@ public class EntretenimentoDAO extends Base {
             values.put(EntretenimentoModel.COLUNA_VALOR_ENTRETENIMENTO3, entretenimentoModel.getValorEntretenimento3());
             values.put(EntretenimentoModel.COLUNA_TOTAL, entretenimentoModel.getTotal());
             values.put(EntretenimentoModel.COLUNA_ADICIONOU_NA_VIAGEM, entretenimentoModel.getAdicionouViagem());
+
+            db.insert(EntretenimentoModel.TABELA, null, values);
         } finally {
             Close();
         }

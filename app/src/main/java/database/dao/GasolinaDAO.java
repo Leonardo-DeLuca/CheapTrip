@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import database.DBHelper;
+import database.model.EntretenimentoModel;
 import database.model.GasolinaModel;
 
 public class GasolinaDAO extends Base {
@@ -26,6 +27,8 @@ public class GasolinaDAO extends Base {
             values.put(GasolinaModel.COLUNA_TOTAL_VEICULOS, gasolinaModel.getTotalVeiculos());
             values.put(GasolinaModel.COLUNA_TOTAL, gasolinaModel.getTotal());
             values.put(GasolinaModel.COLUNA_ADICIONOU_NA_VIAGEM, gasolinaModel.getAdicionouViagem());
+
+            db.insert(GasolinaModel.TABELA, null, values);
         } finally {
             Close();
         }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import database.DBHelper;
+import database.model.EntretenimentoModel;
 import database.model.RefeicoesModel;
 
 public class RefeicoesDAO extends Base {
@@ -24,6 +25,8 @@ public class RefeicoesDAO extends Base {
             values.put(RefeicoesModel.COLUNA_REFEICOES_DIA, refeicoesModel.getRefeicoesDia());
             values.put(RefeicoesModel.COLUNA_TOTAL, refeicoesModel.getTotal());
             values.put(RefeicoesModel.COLUNA_ADICIONOU_NA_VIAGEM, refeicoesModel.getAdicionouViagem());
+
+            db.insert(RefeicoesModel.TABELA, null, values);
         } finally {
             Close();
         }

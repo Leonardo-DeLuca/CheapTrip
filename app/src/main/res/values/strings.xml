@@ -79,4 +79,16 @@
 
     <!--    Etapa resumo de viagem já cadastrada-->
     <string name="tituloResumoViagem">Resumo viagem</string>
+    <string name="tituloGasolina">Gasolina</string>
+    <string name="tituloEntreterimento">Entreterimento</string>
+    <string name="tituloAlimentacao">Alimentação</string>
+    <string name="tituloHospedagem">Hospedagem</string>
+    <string name="tituloTarifaAerea">Tarifas aéreas</string>
+    <string name="gasolinaAviso">Gastos com gasolina não cadastrados!</string>
+    <string name="tarifaAereaAviso">Gastos com tarifas aéreas não cadastrados!</string>
+    <string name="refeicoesAviso">Gastos com alimentação não cadastrados!</string>
+    <string name="hospedagemAviso">Gastos com hospedagem não cadastrados!</string>
+    <string name="entreterimentoAviso">Gastos com entreterimento não cadastrados!</string>
+
+
 </resources>
