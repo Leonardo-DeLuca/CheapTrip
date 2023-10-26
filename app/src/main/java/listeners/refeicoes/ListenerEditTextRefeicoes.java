@@ -7,6 +7,8 @@ import android.widget.EditText;
 
 import com.example.cheaptrip.R;
 
+import java.text.DecimalFormat;
+
 import util.StringUtil;
 
 public class ListenerEditTextRefeicoes implements TextWatcher {
@@ -52,13 +54,14 @@ public class ListenerEditTextRefeicoes implements TextWatcher {
 
     private void calcularTotalRefeicoes() {
         Double totalRefeicoes = ((refeicoesDia * totalViajantes) * custoEstimadoRefeicao) * duracaoViagem;
+        DecimalFormat df = new DecimalFormat("0.00");
 
         if (totalRefeicoes.isInfinite() || totalRefeicoes.isNaN()) {
             editTextTotalRefeicoes.setText(R.string.valorInvalido);
             return;
         }
 
-        editTextTotalRefeicoes.setText(String.valueOf(totalRefeicoes));
+        editTextTotalRefeicoes.setText(df.format(totalRefeicoes));
     }
 
     private void populaEditTexts() {

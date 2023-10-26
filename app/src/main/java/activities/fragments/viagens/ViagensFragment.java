@@ -65,7 +65,8 @@ public class ViagensFragment extends Fragment {
         listaViagens.setOnItemClickListener((adapterView, view12, i, idViagem) -> {
             Intent it = new Intent(getActivity(), ResumoViagemActivity.class);
             it.putExtra("id_viagem", String.valueOf(idViagem));
-            startActivity(it);
+
+            startActivityForResult(it, 1);
         });
 
         setaVariaveisExtras();
@@ -85,7 +86,6 @@ public class ViagensFragment extends Fragment {
         listaViagens.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
-
 
 
     @Override

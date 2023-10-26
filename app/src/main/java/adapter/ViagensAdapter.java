@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.cheaptrip.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import database.dao.ViagemDAO;
@@ -16,10 +17,12 @@ import database.model.ViagemModel;
 public class ViagensAdapter extends BaseAdapter {
     private Activity activity;
     private List<ViagemModel> listaViagens;
+    private DecimalFormat df;
 
     public ViagensAdapter(Activity activity, List<ViagemModel> listaViagens) {
         this.activity = activity;
         this.listaViagens = listaViagens;
+        this.df = new DecimalFormat("0.00");
     }
 
     @Override
@@ -44,7 +47,7 @@ public class ViagensAdapter extends BaseAdapter {
         }
 
         String titulo = listaViagens.get(i).getTitulo();
-        String total = "R$ " + listaViagens.get(i).getTotal();
+        String total = "R$ " + df.format(listaViagens.get(i).getTotal());
         String numeroViajantes = listaViagens.get(i).getTotalViajantes() + " " + activity.getString(R.string.viajantes);
         String duracao = listaViagens.get(i).getDuracao() + " " + activity.getString(R.string.dias);
         String data = listaViagens.get(i).getDataCriacao();

@@ -8,6 +8,9 @@ import android.widget.EditText;
 
 import com.example.cheaptrip.R;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+
 import util.StringUtil;
 
 public class ListenerEditTextGasolina implements TextWatcher {
@@ -61,13 +64,14 @@ public class ListenerEditTextGasolina implements TextWatcher {
 
     private void calcularTotalGasolina() {
         Double totalGasolina = ((totalEstimadoKms / mediaKmsLitro) * custoMediaLitro) / totalVeiculos;
+        DecimalFormat df = new DecimalFormat("0.00");
 
         if (totalGasolina.isInfinite() || totalGasolina.isNaN()) {
             editTextTotalGasolina.setText(R.string.valorInvalido);
             return;
         }
 
-        editTextTotalGasolina.setText(String.valueOf(totalGasolina));
+        editTextTotalGasolina.setText(df.format(totalGasolina));
     }
 
     private void populaEditTexts() {

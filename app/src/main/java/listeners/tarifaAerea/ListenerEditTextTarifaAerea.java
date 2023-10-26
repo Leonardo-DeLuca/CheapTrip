@@ -7,6 +7,8 @@ import android.widget.EditText;
 
 import com.example.cheaptrip.R;
 
+import java.text.DecimalFormat;
+
 import util.StringUtil;
 
 public class ListenerEditTextTarifaAerea implements TextWatcher {
@@ -56,13 +58,14 @@ public class ListenerEditTextTarifaAerea implements TextWatcher {
 
     private void calcularTotalTarifaAerea() {
         Double totalTarifaAerea = (custoEstimadoTarifaAerea * totalViajantes) + aluguelVeiculo;
+        DecimalFormat df = new DecimalFormat("0.00");
 
         if (totalTarifaAerea.isInfinite() || totalTarifaAerea.isNaN()) {
             editTextTotalTarifaAerea.setText(R.string.valorInvalido);
             return;
         }
 
-        editTextTotalTarifaAerea.setText(String.valueOf(totalTarifaAerea));
+        editTextTotalTarifaAerea.setText(df.format(totalTarifaAerea));
     }
 
     private void populaEditTexts() {

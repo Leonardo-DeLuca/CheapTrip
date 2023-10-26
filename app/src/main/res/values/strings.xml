@@ -9,9 +9,9 @@
     <string name="adicionarViagem">Adicionar à viagem</string>
     <string name="valorInvalido">Valor inválido</string>
     <string name="campoObrigatorio">Campo obrigatório</string>
-    <string name="viajantes">Viajantes</string>
-    <string name="dias">Dias</string>
-    <string name="porPessoa">Por Pessoa</string>
+    <string name="viajantes">viajantes</string>
+    <string name="dias">dias</string>
+    <string name="porPessoa">por pessoa</string>
 
     <!--  Login/Registrar  -->
     <string name="logarTxt">Logar</string>
@@ -39,6 +39,9 @@
     <string name="toastSenhaEmpty">Campo senha necessário!!</string>
     <string name="toastSenhasDiferentes">Os campos de senha não coincidem!</string>
     <string name="toastSenhaAlterada">Salvo com sucesso!</string>
+    <string name="erroImagem">Ocorreu um erro ao processar a imagem!</string>
+    <string name="imagemCancelada">A seleção de imagem foi cancelada!</string>
+    <string name="selecionar">Selecione o diretório da imagem:</string>
 
     <!--  Etapa inicial do cadastro de novas viagens  -->
     <string name="inicioNovaViagemTxt">Antes de planejar sua viagem, defina algumas informações gerais:</string>
@@ -47,6 +50,10 @@
     <string name="duracaoViagem">Duração da viagem (em dias)</string>
     <string name="tituloNovaViagem">Nova viagem</string>
     <string name="tituloEditarViagem">Editar viagem</string>
+    <string name="cadastradaSucesso">Viagem cadastrada com sucesso!</string>
+    <string name="editadaSucesso">Viagem editada com sucesso!</string>
+    <string name="erroBancoDeDados">Ocorreu um problema no banco de dados.</string>
+    <string name="viagemZerada">Valor total da viagem é zero.</string>
 
     <!--  Etapa de gasolina do cadastro de novas viagens  -->
     <string name="gasolinaNovaViagemTxt">Perfeito! Vamos aos gastos de gasolina:</string>
@@ -84,7 +91,7 @@
     <!--    Etapa resumo de viagem já cadastrada-->
     <string name="tituloResumoViagem">Resumo viagem</string>
     <string name="tituloGasolina">Gasolina</string>
-    <string name="tituloEntreterimento">Entreterimento</string>
+    <string name="tituloEntreterimento">Entretenimento</string>
     <string name="tituloAlimentacao">Alimentação</string>
     <string name="tituloHospedagem">Hospedagem</string>
     <string name="tituloTarifaAerea">Tarifas aéreas</string>
@@ -92,7 +99,6 @@
     <string name="tarifaAereaAviso">Gastos com tarifas aéreas não cadastrados!</string>
     <string name="refeicoesAviso">Gastos com alimentação não cadastrados!</string>
     <string name="hospedagemAviso">Gastos com hospedagem não cadastrados!</string>
-    <string name="entreterimentoAviso">Gastos com entreterimento não cadastrados!</string>
-
-
+    <string name="entreterimentoAviso">Gastos com entretenimento não cadastrados!</string>
+    <string name="viagemExcluida">Viagem excluída com sucesso!</string>
 </resources>

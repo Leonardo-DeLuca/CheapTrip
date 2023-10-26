@@ -7,6 +7,8 @@ import android.widget.EditText;
 
 import com.example.cheaptrip.R;
 
+import java.text.DecimalFormat;
+
 import util.StringUtil;
 
 public class ListenerEditTextHospedagem implements TextWatcher {
@@ -54,13 +56,14 @@ public class ListenerEditTextHospedagem implements TextWatcher {
 
     private void calcularTotalHospedagem() {
         Double totalHospedagem = (custoMedioNoite * totalNoites) * totalQuartos;
+        DecimalFormat df = new DecimalFormat("0.00");
 
         if (totalHospedagem.isInfinite() || totalHospedagem.isNaN()) {
             editTextTotalHospedagem.setText(R.string.valorInvalido);
             return;
         }
 
-        editTextTotalHospedagem.setText(String.valueOf(totalHospedagem));
+        editTextTotalHospedagem.setText(df.format(totalHospedagem));
     }
 
     private void populaEditTexts() {

@@ -386,17 +386,17 @@ public class CadastroViagensActivity extends AppCompatActivity {
     private void finalizaCadastro() {
         viagemModel = getViagemModel();
         long idViagem = 0;
-        String editadaOuCadastrada = isEditando() ? "editada" : "cadastrada";
+        String editadaOuCadastrada = isEditando() ? getString(R.string.editadaSucesso) : getString(R.string.cadastradaSucesso);
 
-//        if (viagemModel.getTotal() == 0.0) {
-//            Toast.makeText(CadastroViagensActivity.this, "Valor total da viagem é zero.", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
+        if (viagemModel.getTotal() == 0.0) {
+            Toast.makeText(CadastroViagensActivity.this, getString(R.string.viagemZerada), Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         idViagem = isEditando() ? getIdViagemEditando() : viagemDAO.insert(viagemModel);
 
         if (idViagem == 0) {
-            Toast.makeText(CadastroViagensActivity.this, "Ocorreu um problema ao salvar/editar no Banco de Dados.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(CadastroViagensActivity.this, getString(R.string.erroBancoDeDados), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -413,7 +413,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
             executaInserts();
         }
 
-        Toast.makeText(CadastroViagensActivity.this, "Viagem " + editadaOuCadastrada + " com sucesso!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(CadastroViagensActivity.this, editadaOuCadastrada, Toast.LENGTH_SHORT).show();
         setResult(1);
         finish();
     }
@@ -452,11 +452,11 @@ public class CadastroViagensActivity extends AppCompatActivity {
         viagemModel.setDuracao(Integer.parseInt(editTextDuracaoViagem.getText().toString()));
         viagemModel.setDataCriacao(getDataCriacaoViagem());
 
-        double totalGasolina = Double.parseDouble(editTextTotalGasolina.getText().toString());
-        double totalTarifaAerea = Double.parseDouble(editTextTotalTarifaAerea.getText().toString());
-        double totalRefeicoes = Double.parseDouble(editTextTotalRefeicoes.getText().toString());
-        double totalHospedagem = Double.parseDouble(editTextTotalHospedagem.getText().toString());
-        double totalEntretenimento = Double.parseDouble(editTextTotalEntretenimento.getText().toString());
+        double totalGasolina = Double.parseDouble(editTextTotalGasolina.getText().toString().replace(",", "."));
+        double totalTarifaAerea = Double.parseDouble(editTextTotalTarifaAerea.getText().toString().replace(",", "."));
+        double totalRefeicoes = Double.parseDouble(editTextTotalRefeicoes.getText().toString().replace(",", "."));
+        double totalHospedagem = Double.parseDouble(editTextTotalHospedagem.getText().toString().replace(",", "."));
+        double totalEntretenimento = Double.parseDouble(editTextTotalEntretenimento.getText().toString().replace(",", "."));
 
         double total = totalGasolina + totalTarifaAerea + totalRefeicoes + totalHospedagem + totalEntretenimento;
 
@@ -473,7 +473,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
             gasolinaModel.setMediaKmsLitro(Double.parseDouble(editTextMediaKmsLitro.getText().toString()));
             gasolinaModel.setCustoMedioLitro(Double.parseDouble(editTextCustoMediaLitro.getText().toString()));
             gasolinaModel.setTotalVeiculos(Integer.parseInt(editTextTotalVeiculos.getText().toString()));
-            gasolinaModel.setTotal(Double.parseDouble(editTextTotalGasolina.getText().toString()));
+            gasolinaModel.setTotal(Double.parseDouble(editTextTotalGasolina.getText().toString().replace(",", ".")));
             gasolinaModel.setAdicionouViagem(1);
         } else {
             gasolinaModel.setAdicionouViagem(0);
@@ -488,7 +488,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
         if (checkBoxAddViagemTarifaAerea.isChecked()) {
             tarifaAereaModel.setCustoEstimadoPessoa(Double.parseDouble(editTextCustoEstimadoTarifaAerea.getText().toString()));
             tarifaAereaModel.setAluguelVeiculo(Double.parseDouble(editTextAluguelVeiculo.getText().toString()));
-            tarifaAereaModel.setTotal(Double.parseDouble(editTextTotalTarifaAerea.getText().toString()));
+            tarifaAereaModel.setTotal(Double.parseDouble(editTextTotalTarifaAerea.getText().toString().replace(",", ".")));
             tarifaAereaModel.setAdicionouViagem(1);
         } else {
             tarifaAereaModel.setAdicionouViagem(0);
@@ -503,7 +503,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
         if (checkBoxAddViagemRefeicoes.isChecked()) {
             refeicoesModel.setCustoEstimadoRefeicao(Double.parseDouble(editTextCustoEstimadoRefeicao.getText().toString()));
             refeicoesModel.setRefeicoesDia(Integer.parseInt(editTextRefeicoesDia.getText().toString()));
-            refeicoesModel.setTotal(Double.parseDouble(editTextTotalRefeicoes.getText().toString()));
+            refeicoesModel.setTotal(Double.parseDouble(editTextTotalRefeicoes.getText().toString().replace(",", ".")));
             refeicoesModel.setAdicionouViagem(1);
         } else {
             refeicoesModel.setAdicionouViagem(0);
@@ -519,7 +519,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
             hospedagemModel.setCustoMedioNoite(Double.parseDouble(editTextCustoMedioNoite.getText().toString()));
             hospedagemModel.setTotalNoites(Integer.parseInt(editTextTotalNoites.getText().toString()));
             hospedagemModel.setTotalQuartos(Integer.parseInt(editTextTotalNoites.getText().toString()));
-            hospedagemModel.setTotal(Double.parseDouble(editTextTotalHospedagem.getText().toString()));
+            hospedagemModel.setTotal(Double.parseDouble(editTextTotalHospedagem.getText().toString().replace(",", ".")));
             hospedagemModel.setAdicionouViagem(1);
         } else {
             hospedagemModel.setAdicionouViagem(0);
@@ -556,7 +556,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
                 entretenimentoModel.setValorEntretenimento3(0);
             }
 
-            entretenimentoModel.setTotal(Double.parseDouble(editTextTotalEntretenimento.getText().toString()));
+            entretenimentoModel.setTotal(Double.parseDouble(editTextTotalEntretenimento.getText().toString().replace(",", ".")));
             entretenimentoModel.setAdicionouViagem(1);
         } else {
             entretenimentoModel.setAdicionouViagem(0);

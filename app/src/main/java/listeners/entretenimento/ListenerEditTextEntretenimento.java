@@ -8,6 +8,8 @@ import android.widget.EditText;
 
 import com.example.cheaptrip.R;
 
+import java.text.DecimalFormat;
+
 import util.StringUtil;
 
 public class ListenerEditTextEntretenimento implements TextWatcher {
@@ -59,6 +61,7 @@ public class ListenerEditTextEntretenimento implements TextWatcher {
 
     private void calcularTotalEntretenimento() {
         Double totalEntretenimento = valorEntretenimento1 + valorEntretenimento2 + valorEntretenimento3;
+        DecimalFormat df = new DecimalFormat("0.00");
 
         if (totalEntretenimento.isInfinite() || totalEntretenimento.isNaN()) {
             editTextTotalEntretenimento.setText(R.string.valorInvalido);
@@ -66,7 +69,7 @@ public class ListenerEditTextEntretenimento implements TextWatcher {
         }
 
         Log.d("SDIH", String.valueOf(totalEntretenimento));
-        editTextTotalEntretenimento.setText(String.valueOf(totalEntretenimento));
+        editTextTotalEntretenimento.setText(df.format(totalEntretenimento));
     }
 
     private void populaEditTexts() {

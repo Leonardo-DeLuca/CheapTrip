@@ -31,7 +31,7 @@ public class ListenerCheckBox implements CompoundButton.OnCheckedChangeListener 
             }
 
             if (editTextTotal.getId() != R.id.edit_text_total_entretenimento) {
-                editTextTotal.setText("0");
+                editTextTotal.setText("0,00");
             }
         }
     }

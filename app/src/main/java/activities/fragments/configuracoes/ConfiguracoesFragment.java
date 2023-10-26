@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,25 +35,16 @@ import util.KeysUtil;
 
 public class ConfiguracoesFragment extends Fragment {
     private FragmentConfiguracoesBinding binding;
-
     private SharedPreferences preferences;
-
-    private Button btnAlterarFoto;
     private TextView user;
-    private Button btnAlterarSenha;
-    private Button btnDeslogar;
+    private Button btnAlterarFoto, btnAlterarSenha, btnDeslogar;
     private UsuarioDAO dao;
-    private TextInputEditText senha;
-    private TextInputEditText repeteSenha;
-    private EditText alterarSenha;
+    private TextInputEditText senha, repeteSenha;
     private CircleImageView fotoPerfil, fotoPerfilDrawer;
     private UsuarioModel usuario;
-
     private ImageUtil imageUtil;
+    private static final int SELECIONAR_IMAGEM = 1;
 
-    private static final int PICK_IMAGE = 1;
-
-    private boolean validado = false;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentConfiguracoesBinding.inflate(inflater, container, false);
@@ -76,7 +68,7 @@ public class ConfiguracoesFragment extends Fragment {
 
         byte[] userImageBlob = usuario.getImagem();
 
-        if(userImageBlob != null){
+        if (userImageBlob != null) {
             Bitmap imagemBytes = imageUtil.bytesToImage(userImageBlob);
             fotoPerfil.setImageBitmap(imagemBytes);
         }
@@ -91,9 +83,9 @@ public class ConfiguracoesFragment extends Fragment {
         });
 
         btnAlterarSenha.setOnClickListener(view1 -> {
-                view1 = LayoutInflater.from(view.getContext()).inflate(R.layout.dialog_layout, null);
-                senha = view1.findViewById(R.id.editarSenha);
-                repeteSenha = view1.findViewById(R.id.editarSenhaRepeat);
+            view1 = LayoutInflater.from(view.getContext()).inflate(R.layout.dialog_layout, null);
+            senha = view1.findViewById(R.id.editarSenha);
+            repeteSenha = view1.findViewById(R.id.editarSenhaRepeat);
 
             final AlertDialog dialog = new AlertDialog.Builder(view1.getContext())
                     .setTitle(R.string.tituloDialogSenha)
@@ -107,26 +99,27 @@ public class ConfiguracoesFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     String senhaNova;
-                                if (senha.getText().toString().isEmpty()) {
-                                    senha.setError("Campo senha obrigatório!");
-                                    Toast.makeText(getContext(), R.string.toastSenhaEmpty, Toast.LENGTH_LONG).show();
-                                    senha.setEnabled(true);
-                                } else if (!senha.getText().toString().equals(repeteSenha.getText().toString())) {
-                                    repeteSenha.requestFocus();
-                                    Toast.makeText(getContext(), R.string.toastSenhasDiferentes, Toast.LENGTH_LONG).show();
-                                } else {
-                                    senhaNova = senha.getText().toString();
-                                    alterarSenha(senhaNova, view);
-                                    Toast.makeText(view.getContext(), R.string.toastSenhaAlterada, Toast.LENGTH_LONG).show();
-                                    dialog.dismiss();
-                                }
-                            }
+
+                    if (senha.getText().toString().isEmpty()) {
+                        senha.setError(getString(R.string.campoObrigatorio));
+                        Toast.makeText(getContext(), R.string.campoObrigatorio, Toast.LENGTH_LONG).show();
+                        senha.setEnabled(true);
+                    } else if (!senha.getText().toString().equals(repeteSenha.getText().toString())) {
+                        repeteSenha.requestFocus();
+                        Toast.makeText(getContext(), R.string.toastSenhasDiferentes, Toast.LENGTH_LONG).show();
+                    } else {
+                        senhaNova = senha.getText().toString();
+                        alterarSenha(senhaNova);
+                        Toast.makeText(view.getContext(), R.string.toastSenhaAlterada, Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                    }
+                }
             });
         });
 
         btnAlterarFoto.setOnClickListener(view1 -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE);
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.selecionar)), SELECIONAR_IMAGEM);
         });
     }
 
@@ -150,36 +143,38 @@ public class ConfiguracoesFragment extends Fragment {
         fotoPerfilDrawer = headerView.findViewById(R.id.profile_image_drawer);
     }
 
-    private void alterarSenha(String senha, View view){
+    private void alterarSenha(String senha){
         dao = new UsuarioDAO(getContext());
 
         UsuarioModel usuario = new UsuarioModel();
         usuario.setId(preferences.getInt(KeysUtil.ID_USER_LOGIN, -1));
         usuario.setSenha(senha);
+
         dao.editarSenha(usuario);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE) {
+        if (requestCode == SELECIONAR_IMAGEM) {
             if (resultCode == Activity.RESULT_OK) {
                 if (data != null) {
                     try {
                         Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), data.getData());
+
                         byte[] imageBytes = imageUtil.imageToBytes(bitmap);
 
-                        saveImageToDatabase(imageBytes);
+                        salvarImagemNoSQLite(imageBytes);
                     } catch (Exception e) {
-                        Toast.makeText(getActivity(), "Ocorreu um erro ao processar a imagem.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), getString(R.string.erroImagem), Toast.LENGTH_SHORT).show();
                     }
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                Toast.makeText(getActivity(), "Canceled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), getString(R.string.imagemCancelada), Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    public void saveImageToDatabase(byte[] imageBytes) {
+    public void salvarImagemNoSQLite(byte[] imageBytes) {
         usuario.setImagem(imageBytes);
         dao.editarImagem(usuario);
 
@@ -190,4 +185,3 @@ public class ConfiguracoesFragment extends Fragment {
     }
 
 }
-

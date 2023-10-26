@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
@@ -65,8 +66,9 @@ public class ResumoViagemActivity extends AppCompatActivity {
     private CardView[] cardViews;
     private ImageButton[] imageButtons;
 
-    private HashMap<Integer, Object> map;
-
+    private HashMap<Integer, Integer> hashMapAdicionouViagem;
+    private HashMap<Integer, Runnable> hashMapFuncoes;
+    private HashMap<Integer, Integer> hashMapStrings;
     private String idViagem;
 
     @Override
@@ -82,81 +84,40 @@ public class ResumoViagemActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         idViagem = intent.getStringExtra("id_viagem");
+
         setModels(idViagem);
         setDadosViagem();
+        defineHashMaps();
 
-        hiddenViews = new LinearLayout[]{hiddenView1, hiddenView2, hiddenView3, hiddenView4, hiddenView5};
-        cardViews = new CardView[]{cardView1, cardView2, cardView3, cardView4, cardView5};
-        imageButtons = new ImageButton[]{arrow1, arrow2, arrow3, arrow4, arrow5};
+        hiddenViews = new LinearLayout[]{ hiddenView1, hiddenView2, hiddenView3, hiddenView4, hiddenView5 };
+        cardViews = new CardView[]{ cardView1, cardView2, cardView3, cardView4, cardView5 };
+        imageButtons = new ImageButton[]{ arrow1, arrow2, arrow3, arrow4, arrow5 };
 
         for (int i = 0; i < hiddenViews.length; i++){
-            defineFuncaoArrow(imageButtons[i], hiddenViews[i], cardViews[i], map.get(i));
+            defineFuncaoArrow(imageButtons[i], hiddenViews[i], cardViews[i], i);
         }
 
-        edicoesViagem();
+        adicionaAcoesDeletarEditar();
+
+        // Setamos o result para atualizarmos a lista, caso haja alteração em algum dado dessa viagem.
+        setResult(1);
     }
 
-    private void defineFuncaoArrow(ImageButton arrow, LinearLayout hiddenView, CardView cardView, Object model){
-        if(model instanceof GasolinaModel){
-            if(gasolinaModel.getAdicionouViagem() != 0) {
-                setDadosGasolina();
-                expandeCardView(arrow, hiddenView, cardView);
-            }
-            else{
-                arrow.setAlpha(0.3F);
-                arrow.setOnClickListener(view ->{
-                    Toast.makeText(ResumoViagemActivity.this, R.string.gasolinaAviso, Toast.LENGTH_SHORT).show();
-                });
-            }
-        } else if(model instanceof TarifaAereaModel){
-            if(tarifaAereaModel.getAdicionouViagem() != 0) {
-                setDadosTarifasAereas();
-                expandeCardView(arrow, hiddenView, cardView);
-            }
-            else{
-                arrow.setAlpha(0.3F);
-                arrow.setOnClickListener(view ->{
-                    Toast.makeText(ResumoViagemActivity.this, R.string.tarifaAereaAviso, Toast.LENGTH_SHORT).show();
-                });
-            }
-        } else if(model instanceof RefeicoesModel){
-            if(refeicoesModel.getAdicionouViagem() != 0) {
-                setDadosRefeicoes();
-                expandeCardView(arrow, hiddenView, cardView);
-            }
-            else{
-                arrow.setAlpha(0.3F);
-                arrow.setOnClickListener(view ->{
-                    Toast.makeText(ResumoViagemActivity.this, R.string.refeicoesAviso, Toast.LENGTH_SHORT).show();
-                });
-            }
-        }else if(model instanceof HospedagemModel){
-            if(hospedagemModel.getAdicionouViagem() != 0) {
-                setDadoshospedagem();
-                expandeCardView(arrow, hiddenView, cardView);
-            }
-            else{
-                arrow.setAlpha(0.3F);
-                arrow.setOnClickListener(view ->{
-                    Toast.makeText(ResumoViagemActivity.this, R.string.hospedagemAviso, Toast.LENGTH_SHORT).show();
-                });
-            }
-        } else if(model instanceof EntretenimentoModel){
-            if(entretenimentoModel.getAdicionouViagem() != 0) {
-                setDadosEntreterimento();
-                expandeCardView(arrow, hiddenView, cardView);
-            }
-            else{
-                arrow.setAlpha(0.3F);
-                arrow.setOnClickListener(view ->{
-                    Toast.makeText(ResumoViagemActivity.this, R.string.entreterimentoAviso, Toast.LENGTH_SHORT).show();
-                });
-            }
+    private void defineFuncaoArrow(ImageButton arrow, LinearLayout hiddenView, CardView cardView, int indice) {
+        if (hashMapAdicionouViagem.get(indice) != 0) {
+            hashMapFuncoes.get(indice).run();
+            expandeCardView(arrow, hiddenView, cardView);
+        } else {
+            arrow.setAlpha(0.3F);
+            arrow.setOnClickListener(view ->{
+                Toast.makeText(ResumoViagemActivity.this, hashMapStrings.get(indice), Toast.LENGTH_SHORT).show();
+            });
         }
-
     }
 
-    private void expandeCardView(ImageButton arrow, LinearLayout hiddenView, CardView cardView){
+    private void expandeCardView(ImageButton arrow, LinearLayout hiddenView, CardView cardView) {
+        arrow.setAlpha(1F);
+
         arrow.setOnClickListener(view -> {
             if (hiddenView.getVisibility() == View.VISIBLE) {
                 TransitionManager.beginDelayedTransition(cardView, new AutoTransition());
@@ -171,21 +132,24 @@ public class ResumoViagemActivity extends AppCompatActivity {
         });
     }
 
-    private void setDadosViagem(){
+    private void setDadosViagem() {
         DecimalFormat df = new DecimalFormat("0.00");
         double valorPorPessoa = viagemModel.getTotal() / viagemModel.getTotalViajantes();
 
+        String viajantes = viagemModel.getTotalViajantes() + " " + getString(R.string.viajantes);
+        String dias = viagemModel.getDuracao() + " " + getString(R.string.dias);
+        String valorPorPessoa2 = getString(R.string.reais) + " " + df.format(valorPorPessoa) + " " + getString(R.string.porPessoa);
+        String total =  getString(R.string.reais) + " " + df.format(viagemModel.getTotal());
+
         txtTituloViagem.setText(viagemModel.getTitulo());
         txtDataCriacaoViagem.setText(viagemModel.getDataCriacao());
-        txtNumeroViajantesViagem.setText((viagemModel.getTotalViajantes()) + " " + getString(R.string.viajantes));
-        txtDuracaoViagem.setText((viagemModel.getDuracao()) + " " + getString(R.string.dias));
-        txtValorPorPessoa.setText( df.format(valorPorPessoa) + " " + getString(R.string.porPessoa));
-        txtTotalViagem.setText(String.valueOf( df.format(viagemModel.getTotal())));
-
+        txtNumeroViajantesViagem.setText(viajantes);
+        txtDuracaoViagem.setText(dias);
+        txtValorPorPessoa.setText(valorPorPessoa2);
+        txtTotalViagem.setText(total);
     }
 
-
-    private  void setarIds(){
+    private  void setarIds() {
         toolbar = findViewById(R.id.toolbarResumoViagem);
         txtTituloViagem = findViewById(R.id.resumo_tituloViagem);
         txtDataCriacaoViagem = findViewById(R.id.resumo_textDataCriacaoViagem);
@@ -235,11 +199,11 @@ public class ResumoViagemActivity extends AppCompatActivity {
         resumoLinearEnt3 = findViewById(R.id.resumo_LinearEnt3);
         editBtn = findViewById(R.id.resumo_editBtn);
         deleteBtn = findViewById(R.id.resumo_deleteBtn);
-
     }
 
     private void setaVariaveisExtras() {
         Context context = ResumoViagemActivity.this;
+
         gasolinaModel = new GasolinaModel();
         tarifaAereaModel = new TarifaAereaModel();
         refeicoesModel = new RefeicoesModel();
@@ -252,25 +216,41 @@ public class ResumoViagemActivity extends AppCompatActivity {
         refeicoesDAO = new RefeicoesDAO(context);
         hospedagemDAO = new HospedagemDAO(context);
         entretenimentoDAO = new EntretenimentoDAO(context);
-
-        map = new HashMap<>();
-        map.put(0, gasolinaModel);
-        map.put(1, tarifaAereaModel);
-        map.put(2, refeicoesModel);
-        map.put(3, hospedagemModel);
-        map.put(4, entretenimentoModel);
     }
 
-    private void setModels(String idViagem){
-        viagemModel = viagemDAO.selectById(String.valueOf(idViagem));
-        gasolinaModel = gasolinaDAO.selectBy(GasolinaModel.COLUNA_ID_VIAGEM, String.valueOf(idViagem));
-        tarifaAereaModel = tarifaAereaDAO.selectBy(TarifaAereaModel.COLUNA_ID_VIAGEM, String.valueOf(idViagem));
-        refeicoesModel = refeicoesDAO.selectBy(RefeicoesModel.COLUNA_ID_VIAGEM, String.valueOf(idViagem));
-        hospedagemModel = hospedagemDAO.selectBy(HospedagemModel.COLUNA_ID_VIAGEM, String.valueOf(idViagem));
-        entretenimentoModel = entretenimentoDAO.selectBy(EntretenimentoModel.COLUNA_ID_VIAGEM, String.valueOf(idViagem));
+    private void defineHashMaps() {
+        hashMapAdicionouViagem = new HashMap<>();
+        hashMapAdicionouViagem.put(0, gasolinaModel.getAdicionouViagem());
+        hashMapAdicionouViagem.put(1, tarifaAereaModel.getAdicionouViagem());
+        hashMapAdicionouViagem.put(2, refeicoesModel.getAdicionouViagem());
+        hashMapAdicionouViagem.put(3, hospedagemModel.getAdicionouViagem());
+        hashMapAdicionouViagem.put(4, entretenimentoModel.getAdicionouViagem());
+
+        hashMapFuncoes = new HashMap<>();
+        hashMapFuncoes.put(0, this::setDadosGasolina);
+        hashMapFuncoes.put(1, this::setDadosTarifasAereas);
+        hashMapFuncoes.put(2, this::setDadosRefeicoes);
+        hashMapFuncoes.put(3, this::setDadoshospedagem);
+        hashMapFuncoes.put(4, this::setDadosEntreterimento);
+
+        hashMapStrings = new HashMap<>();
+        hashMapStrings.put(0, R.string.gasolinaAviso);
+        hashMapStrings.put(1, R.string.tarifaAereaAviso);
+        hashMapStrings.put(2, R.string.refeicoesAviso);
+        hashMapStrings.put(3, R.string.hospedagemAviso);
+        hashMapStrings.put(4, R.string.entreterimentoAviso);
     }
 
-    private void setDadosGasolina(){
+    private void setModels(String idViagem) {
+        viagemModel = viagemDAO.selectById(idViagem);
+        gasolinaModel = gasolinaDAO.selectBy(GasolinaModel.COLUNA_ID_VIAGEM, idViagem);
+        tarifaAereaModel = tarifaAereaDAO.selectBy(TarifaAereaModel.COLUNA_ID_VIAGEM, idViagem);
+        refeicoesModel = refeicoesDAO.selectBy(RefeicoesModel.COLUNA_ID_VIAGEM, idViagem);
+        hospedagemModel = hospedagemDAO.selectBy(HospedagemModel.COLUNA_ID_VIAGEM, idViagem);
+        entretenimentoModel = entretenimentoDAO.selectBy(EntretenimentoModel.COLUNA_ID_VIAGEM, idViagem);
+    }
+
+    private void setDadosGasolina() {
         txtTotalKms.setText(String.valueOf(gasolinaModel.getTotalEstimadoKms()));
         txtMediaKmsLitro.setText(String.valueOf(gasolinaModel.getMediaKmsLitro()));
         txtCustoMedioLitro.setText(String.valueOf(gasolinaModel.getCustoMedioLitro()));
@@ -278,50 +258,49 @@ public class ResumoViagemActivity extends AppCompatActivity {
         txtTotalFinalGasolina.setText(String.valueOf(gasolinaModel.getTotal()));
     }
 
-    private void setDadosTarifasAereas(){
+    private void setDadosTarifasAereas() {
         txtCustoPorPessoa.setText(String.valueOf(tarifaAereaModel.getCustoEstimadoPessoa()));
         txtAluguelVeiculo.setText(String.valueOf(tarifaAereaModel.getAluguelVeiculo()));
         txtTotalFinalTarifasAereas.setText(String.valueOf(tarifaAereaModel.getTotal()));
     }
 
-    private void setDadoshospedagem(){
+    private void setDadoshospedagem() {
         txtCustoMedioNoite.setText(String.valueOf(hospedagemModel.getCustoMedioNoite()));
         txtTotalNoites.setText(String.valueOf(hospedagemModel.getTotalNoites()));
         txtTotalQuartos.setText(String.valueOf(hospedagemModel.getTotalQuartos()));
         txtTotalFinalHospedagem.setText(String.valueOf(hospedagemModel.getTotal()));
     }
 
-    private void setDadosRefeicoes(){
+    private void setDadosRefeicoes() {
         txtCustoRefeicao.setText(String.valueOf(refeicoesModel.getCustoEstimadoRefeicao()));
         txtRefeicoesDia.setText(String.valueOf(refeicoesModel.getRefeicoesDia()));
         txtTotalFinalRefeicoes.setText(String.valueOf(refeicoesModel.getTotal()));
     }
 
-    private void setDadosEntreterimento(){
+    private void setDadosEntreterimento() {
+        txtEntreterimento1.setText(String.valueOf(entretenimentoModel.getEntretenimento1()));
+        txtEntreterimento2.setText(String.valueOf(entretenimentoModel.getEntretenimento2()));
+        txtEntreterimento3.setText(String.valueOf(entretenimentoModel.getEntretenimento3()));
+        txtValorEntreterimento1.setText((String.valueOf(entretenimentoModel.getValorEntretenimento1())));
+        txtValorEntreterimento2.setText((String.valueOf(entretenimentoModel.getValorEntretenimento2())));
+        txtValorEntreterimento3.setText((String.valueOf(entretenimentoModel.getValorEntretenimento3())));
 
-            txtEntreterimento1.setText(String.valueOf(entretenimentoModel.getEntretenimento1()));
-            txtEntreterimento2.setText(String.valueOf(entretenimentoModel.getEntretenimento2()));
-            txtEntreterimento3.setText(String.valueOf(entretenimentoModel.getEntretenimento3()));
-            txtValorEntreterimento1.setText((String.valueOf(entretenimentoModel.getValorEntretenimento1())));
-            txtValorEntreterimento2.setText((String.valueOf(entretenimentoModel.getValorEntretenimento2())));
-            txtValorEntreterimento3.setText((String.valueOf(entretenimentoModel.getValorEntretenimento3())));
+        if (entretenimentoModel.getEntretenimento1().equals("")) {
+            resumoLinearEnt1.setVisibility(View.GONE);
+        }
 
-            if (entretenimentoModel.getEntretenimento1().equals("")) {
-                resumoLinearEnt1.setVisibility(View.GONE);
-            }
+        if (entretenimentoModel.getEntretenimento2().equals("")) {
+            resumoLinearEnt2.setVisibility(View.GONE);
+        }
 
-            if (entretenimentoModel.getEntretenimento2().equals("")) {
-                resumoLinearEnt2.setVisibility(View.GONE);
-            }
+        if (entretenimentoModel.getEntretenimento3().equals("")) {
+            resumoLinearEnt3.setVisibility(View.GONE);
+        }
 
-            if (entretenimentoModel.getEntretenimento3().equals("")) {
-                resumoLinearEnt3.setVisibility(View.GONE);
-            }
-
-            txtTotalFinalEntreterimento.setText(String.valueOf(entretenimentoModel.getTotal()));
+        txtTotalFinalEntreterimento.setText(String.valueOf(entretenimentoModel.getTotal()));
     }
 
-    private void edicoesViagem(){
+    private void adicionaAcoesDeletarEditar() {
         editBtn.setOnClickListener(view -> {
             Integer id = Integer.valueOf(idViagem);
 
@@ -329,17 +308,43 @@ public class ResumoViagemActivity extends AppCompatActivity {
             in.putExtra("EDITAR", true);
             in.putExtra("ID_VIAGEM", id);
 
-            startActivity(in);
+            startActivityForResult(in, 1);
         });
 
         deleteBtn.setOnClickListener(view -> {
+            viagemDAO.deleteBy(ViagemModel.COLUNA_ID, idViagem);
 
+            Toast.makeText(ResumoViagemActivity.this, getString(R.string.viagemExcluida), Toast.LENGTH_SHORT).show();
+
+            setResult(1);
+            finish();
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == 1 && requestCode == 1) {
+            setModels(idViagem);
+            defineHashMaps();
+            setDadosViagem();
+
+            for (int i = 0; i < hiddenViews.length; i++) {
+                defineFuncaoArrow(imageButtons[i], hiddenViews[i], cardViews[i], i);
+            }
+        }
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         finish();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        setResult(1);
+        super.onBackPressed();
     }
 }
