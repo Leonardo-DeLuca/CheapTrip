@@ -45,8 +45,8 @@ public class ViagensAdapter extends BaseAdapter {
 
         String titulo = listaViagens.get(i).getTitulo();
         String total = "R$ " + listaViagens.get(i).getTotal();
-        String numeroViajantes = listaViagens.get(i).getTotalViajantes() + " viajantes";
-        String duracao = listaViagens.get(i).getDuracao() + " dias";
+        String numeroViajantes = listaViagens.get(i).getTotalViajantes() + " " + activity.getString(R.string.viajantes);
+        String duracao = listaViagens.get(i).getDuracao() + " " + activity.getString(R.string.dias);
         String data = listaViagens.get(i).getDataCriacao();
 
         TextView textTitulo = view.findViewById(R.id.textTituloViagem);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.transition.AutoTransition;
 import android.transition.TransitionManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -17,6 +18,7 @@ import androidx.cardview.widget.CardView;
 
 import com.example.cheaptrip.R;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import database.dao.EntretenimentoDAO;
@@ -50,7 +52,8 @@ public class ResumoViagemActivity extends AppCompatActivity {
     private ImageButton arrow1, arrow2, arrow3, arrow4, arrow5;
     private LinearLayout hiddenView1, hiddenView2, hiddenView3, hiddenView4, hiddenView5, resumoLinearEnt1, resumoLinearEnt2, resumoLinearEnt3;
     private CardView cardView1, cardView2, cardView3, cardView4, cardView5;
-    private TextView txtTotalKms, txtMediaKmsLitro, txtCustoMedioLitro, txtTotalVeiculos,
+    private TextView txtTituloViagem, txtNumeroViajantesViagem, txtDuracaoViagem, txtDataCriacaoViagem, txtValorPorPessoa, txtTotalViagem,
+            txtTotalKms, txtMediaKmsLitro, txtCustoMedioLitro, txtTotalVeiculos,
             txtCustoPorPessoa, txtAluguelVeiculo,
             txtCustoRefeicao, txtRefeicoesDia,
             txtCustoMedioNoite, txtTotalNoites, txtTotalQuartos,
@@ -78,6 +81,7 @@ public class ResumoViagemActivity extends AppCompatActivity {
         String idViagem = intent.getStringExtra("id_viagem");
 
         setModels(idViagem);
+        setDadosViagem();
 
         hiddenViews = new LinearLayout[]{hiddenView1, hiddenView2, hiddenView3, hiddenView4, hiddenView5};
         cardViews = new CardView[]{cardView1, cardView2, cardView3, cardView4, cardView5};
@@ -85,58 +89,6 @@ public class ResumoViagemActivity extends AppCompatActivity {
 
         for (int i = 0; i < hiddenViews.length; i++){
             defineFuncaoArrow(imageButtons[i], hiddenViews[i], cardViews[i], map.get(i));
-
-//            else if(i == 1) {
-//                if(tarifaAereaModel.getAdicionouViagem() != 0) {
-//                    setDadosTarifasAereas();
-//                    expandeCardView(imageButtons[i], hiddenViews[i], cardViews[i], map.get(i));
-//                }
-//                else{
-//                    imageButtons[i].setAlpha(0.3F);
-//                    imageButtons[i].setOnClickListener(view ->{
-//                        Toast.makeText(ResumoViagemActivity.this, R.string.tarifaAereaAviso, Toast.LENGTH_SHORT).show();
-//                    });
-//                }
-//            }
-//
-//            else if(i == 2) {
-//                if(refeicoesModel.getAdicionouViagem() != 0) {
-//                    setDadosRefeicoes();
-//                    expandeCardView(imageButtons[i], hiddenViews[i], cardViews[i], map.get(i));
-//                }
-//                else{
-//                    imageButtons[i].setAlpha(0.3F);
-//                    imageButtons[i].setOnClickListener(view ->{
-//                        Toast.makeText(ResumoViagemActivity.this, R.string.refeicoesAviso, Toast.LENGTH_SHORT).show();
-//                    });
-//                }
-//            }
-//
-//            else if(i == 3) {
-//                if(hospedagemModel.getAdicionouViagem() != 0) {
-//                    setDadoshospedagem();
-//                    expandeCardView(imageButtons[i], hiddenViews[i], cardViews[i], map.get(i));
-//                }
-//                else{
-//                    imageButtons[i].setAlpha(0.3F);
-//                    imageButtons[i].setOnClickListener(view ->{
-//                        Toast.makeText(ResumoViagemActivity.this, R.string.hospedagemAviso, Toast.LENGTH_SHORT).show();
-//                    });
-//                }
-//            }
-//
-//            else if(i == 4) {
-//                if(entretenimentoModel.getAdicionouViagem() != 0) {
-//                    setDadosEntreterimento();
-//                    expandeCardView(imageButtons[i], hiddenViews[i], cardViews[i], map.get(i));
-//                }
-//                else{
-//                    imageButtons[i].setAlpha(0.3F);
-//                    imageButtons[i].setOnClickListener(view ->{
-//                        Toast.makeText(ResumoViagemActivity.this, R.string.entreterimentoAviso, Toast.LENGTH_SHORT).show();
-//                    });
-//                }
-//            }
         }
     }
 
@@ -215,9 +167,28 @@ public class ResumoViagemActivity extends AppCompatActivity {
         });
     }
 
+    private void setDadosViagem(){
+        DecimalFormat df = new DecimalFormat("0.00");
+        double valorPorPessoa = viagemModel.getTotal() / viagemModel.getTotalViajantes();
+
+        txtTituloViagem.setText(viagemModel.getTitulo());
+        txtDataCriacaoViagem.setText(viagemModel.getDataCriacao());
+        txtNumeroViajantesViagem.setText((viagemModel.getTotalViajantes()) + " " + getString(R.string.viajantes));
+        txtDuracaoViagem.setText((viagemModel.getDuracao()) + " " + getString(R.string.dias));
+        txtValorPorPessoa.setText( df.format(valorPorPessoa) + " " + getString(R.string.porPessoa));
+        txtTotalViagem.setText(String.valueOf( df.format(viagemModel.getTotal())));
+
+    }
+
 
     private  void setarIds(){
         toolbar = findViewById(R.id.toolbarResumoViagem);
+        txtTituloViagem = findViewById(R.id.resumo_tituloViagem);
+        txtDataCriacaoViagem = findViewById(R.id.resumo_textDataCriacaoViagem);
+        txtNumeroViajantesViagem = findViewById(R.id.resumo_textNumeroViajantesViagem);
+        txtDuracaoViagem = findViewById(R.id.resumo_textDuracaoViagem);
+        txtValorPorPessoa = findViewById(R.id.resumo_textValorPorPessoa);
+        txtTotalViagem = findViewById(R.id.resumo_textTotalViagem);
         cardView1 = findViewById(R.id.base_cardview1);
         cardView2 = findViewById(R.id.base_cardview2);
         cardView3 = findViewById(R.id.base_cardview3);
@@ -258,7 +229,6 @@ public class ResumoViagemActivity extends AppCompatActivity {
         resumoLinearEnt1 = findViewById(R.id.resumo_LinearEnt1);
         resumoLinearEnt2 = findViewById(R.id.resumo_LinearEnt2);
         resumoLinearEnt3 = findViewById(R.id.resumo_LinearEnt3);
-
 
     }
 

@@ -9,6 +9,9 @@
     <string name="adicionarViagem">Adicionar à viagem</string>
     <string name="valorInvalido">Valor inválido</string>
     <string name="campoObrigatorio">Campo obrigatório</string>
+    <string name="viajantes">Viajantes</string>
+    <string name="dias">Dias</string>
+    <string name="porPessoa">Por Pessoa</string>
 
     <!--  Login/Registrar  -->
     <string name="logarTxt">Logar</string>
