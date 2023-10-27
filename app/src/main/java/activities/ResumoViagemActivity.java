@@ -287,14 +287,20 @@ public class ResumoViagemActivity extends AppCompatActivity {
 
         if (entretenimentoModel.getEntretenimento1().equals("")) {
             resumoLinearEnt1.setVisibility(View.GONE);
+        } else {
+            resumoLinearEnt1.setVisibility(View.VISIBLE);
         }
 
         if (entretenimentoModel.getEntretenimento2().equals("")) {
             resumoLinearEnt2.setVisibility(View.GONE);
+        } else {
+            resumoLinearEnt2.setVisibility(View.VISIBLE);
         }
 
         if (entretenimentoModel.getEntretenimento3().equals("")) {
             resumoLinearEnt3.setVisibility(View.GONE);
+        } else {
+            resumoLinearEnt3.setVisibility(View.VISIBLE);
         }
 
         txtTotalFinalEntreterimento.setText(String.valueOf(entretenimentoModel.getTotal()));

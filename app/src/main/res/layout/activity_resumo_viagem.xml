@@ -147,7 +147,7 @@
                     android:id="@+id/resumo_textTotalViagem"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="40"
+                    android:layout_weight="50"
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text=""

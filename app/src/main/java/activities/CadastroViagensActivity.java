@@ -49,6 +49,7 @@ import listeners.entretenimento.ListenerEditTextEntretenimento;
 import listeners.geral.ListenerCheckBox;
 import listeners.gasolina.ListenerEditTextGasolina;
 import listeners.hospedagem.ListenerEditTextHospedagem;
+import listeners.inicio.ListenerEditTextInicio;
 import listeners.refeicoes.ListenerEditTextRefeicoes;
 import listeners.tarifaAerea.ListenerEditTextTarifaAerea;
 import util.KeysUtil;
@@ -261,6 +262,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
     }
 
     private void setaListeners() {
+        setaListenersInicio();
         setaListenersGasolina();
         setaListenersTarifaAerea();
         setaListenersRefeicoes();
@@ -284,6 +286,15 @@ public class CadastroViagensActivity extends AppCompatActivity {
         editTextTituloViagem = findViewById(R.id.edit_text_titulo_viagem);
         editTextTotalViajantes = findViewById(R.id.edit_text_numero_viajantes);
         editTextDuracaoViagem = findViewById(R.id.edit_text_duracao_viagem);
+    }
+
+    private void setaListenersInicio() {
+        // Serve para ao mudarmos o número de viajantes ou a duração da viagem, atualizar o cálculo para o total das seções
+        // de tarifa aérea e refeições
+        EditText[] editTextsAtualizarValorAoMudarViajantesOuDuracao = new EditText[]{ editTextCustoEstimadoTarifaAerea, editTextRefeicoesDia };
+
+        editTextTotalViajantes.setOnFocusChangeListener(new ListenerEditTextInicio(editTextsAtualizarValorAoMudarViajantesOuDuracao));
+        editTextDuracaoViagem.setOnFocusChangeListener(new ListenerEditTextInicio(editTextsAtualizarValorAoMudarViajantesOuDuracao));
     }
 
     private void setaElementosGasolina() {
