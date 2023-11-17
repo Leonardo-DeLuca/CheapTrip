@@ -37,6 +37,7 @@ public class ViagensFragment extends Fragment {
 
     private FragmentViagensBinding binding;
     private FloatingActionButton btnAdd;
+    private FloatingActionButton btnSync;
     private ListView listaViagens;
     private ViagensAdapter adapter;
     private ViagemDAO viagemDAO;
@@ -59,6 +60,11 @@ public class ViagensFragment extends Fragment {
         btnAdd.setOnClickListener(view1 -> {
             Intent i = new Intent(getActivity(), CadastroViagensActivity.class);
             startActivityForResult(i, 1);
+        });
+
+        btnSync = view.findViewById(R.id.btn_sync);
+        btnSync.setOnClickListener(view2 -> {
+
         });
 
         listaViagens = view.findViewById(R.id.lista_viagens);

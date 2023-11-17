@@ -1,47 +1,12 @@
 package api.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ViagemCustoEntretenimento {
-    private int id;
-    private int idConta;
-    private Date dataInclusao;
-    private int viagemId;
+public class ViagemCustoEntretenimento implements Serializable {
+
     private String entretenimento;
     private int valor;
-    private int idUsuario;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getIdConta() {
-        return idConta;
-    }
-
-    public void setIdConta(int idConta) {
-        this.idConta = idConta;
-    }
-
-    public Date getDataInclusao() {
-        return dataInclusao;
-    }
-
-    public void setDataInclusao(Date dataInclusao) {
-        this.dataInclusao = dataInclusao;
-    }
-
-    public int getViagemId() {
-        return viagemId;
-    }
-
-    public void setViagemId(int viagemId) {
-        this.viagemId = viagemId;
-    }
 
     public String getEntretenimento() {
         return entretenimento;
@@ -59,11 +24,4 @@ public class ViagemCustoEntretenimento {
         this.valor = valor;
     }
 
-    public int getIdUsuario() {
-        return idUsuario;
-    }
-
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
-    }
 }
