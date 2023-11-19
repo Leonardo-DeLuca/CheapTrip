@@ -15,7 +15,8 @@ public class ViagemModel {
         COLUNA_TOTAL_VIAJANTES = "total_viajantes",
         COLUNA_DURACAO = "duracao",
         COLUNA_DATA_CRIACAO = "data_criacao",
-        COLUNA_TOTAL = "total";
+        COLUNA_TOTAL = "total",
+        COLUNA_SINCRONIZADA = "sincronizada";
 
     public static final String CREATE_TABLE = "create table " + TABELA
             + "("
@@ -25,13 +26,14 @@ public class ViagemModel {
             + COLUNA_TOTAL_VIAJANTES + " integer not null, "
             + COLUNA_DURACAO + " integer not null, "
             + COLUNA_DATA_CRIACAO + " text not null, "
-            + COLUNA_TOTAL + " real not null"
+            + COLUNA_TOTAL + " real not null, "
+            + COLUNA_SINCRONIZADA + " text not null"
             + ")";
 
     public static final String DROP_TABLE = "drop table if exists " + TABELA + ";";
 
     public static final String[] getColunas() {
-        return new String[] { COLUNA_ID, COLUNA_ID_USUARIO, COLUNA_TITULO, COLUNA_TOTAL_VIAJANTES, COLUNA_DURACAO, COLUNA_DATA_CRIACAO, COLUNA_TOTAL };
+        return new String[] { COLUNA_ID, COLUNA_ID_USUARIO, COLUNA_TITULO, COLUNA_TOTAL_VIAJANTES, COLUNA_DURACAO, COLUNA_DATA_CRIACAO, COLUNA_TOTAL, COLUNA_SINCRONIZADA };
     }
 
     private int id;
@@ -41,7 +43,7 @@ public class ViagemModel {
     private int duracao;
     private String dataCriacao;
     private double total;
-
+    private String sincronizada;
 
     public int getId() {
         return id;
@@ -97,5 +99,13 @@ public class ViagemModel {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public String getSincronizada() {
+        return sincronizada;
+    }
+
+    public void setSincronizada(String sincronizada) {
+        this.sincronizada = sincronizada;
     }
 }

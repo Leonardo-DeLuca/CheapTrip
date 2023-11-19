@@ -23,14 +23,32 @@ import com.example.cheaptrip.databinding.FragmentViagensBinding;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import activities.CadastroViagensActivity;
 import activities.LoginActivity;
 import activities.MainActivity;
 import activities.ResumoViagemActivity;
 import adapter.ViagensAdapter;
+import api.Api;
+import api.Conversor;
+import api.model.DTOEnviar;
+import api.model.Resposta;
+import database.dao.EntretenimentoDAO;
+import database.dao.GasolinaDAO;
+import database.dao.HospedagemDAO;
+import database.dao.RefeicoesDAO;
+import database.dao.TarifaAereaDAO;
 import database.dao.ViagemDAO;
+import database.model.EntretenimentoModel;
+import database.model.GasolinaModel;
+import database.model.HospedagemModel;
+import database.model.RefeicoesModel;
+import database.model.TarifaAereaModel;
 import database.model.ViagemModel;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import util.KeysUtil;
 
 public class ViagensFragment extends Fragment {
@@ -41,6 +59,11 @@ public class ViagensFragment extends Fragment {
     private ListView listaViagens;
     private ViagensAdapter adapter;
     private ViagemDAO viagemDAO;
+    private EntretenimentoDAO entretenimentoDAO;
+    private GasolinaDAO gasolinaDAO;
+    private HospedagemDAO hospedagemDAO;
+    private RefeicoesDAO refeicoesDAO;
+    private TarifaAereaDAO tarifaAereaDAO;
     private List<ViagemModel> viagensUsuario;
     private SharedPreferences preferences;
     private int idUsuario;
@@ -64,7 +87,7 @@ public class ViagensFragment extends Fragment {
 
         btnSync = view.findViewById(R.id.btn_sync);
         btnSync.setOnClickListener(view2 -> {
-
+            sincronizarViagensAPI();
         });
 
         listaViagens = view.findViewById(R.id.lista_viagens);
@@ -81,6 +104,11 @@ public class ViagensFragment extends Fragment {
 
     private void setaVariaveisExtras() {
         viagemDAO = new ViagemDAO(getContext());
+        entretenimentoDAO = new EntretenimentoDAO(getContext());
+        gasolinaDAO = new GasolinaDAO(getContext());
+        hospedagemDAO = new HospedagemDAO(getContext());
+        refeicoesDAO = new RefeicoesDAO(getContext());
+        tarifaAereaDAO = new TarifaAereaDAO(getContext());
         preferences = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         idUsuario = preferences.getInt(KeysUtil.ID_USER_LOGIN, -1);
     }
@@ -93,6 +121,42 @@ public class ViagensFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
+    private void sincronizarViagensAPI() {
+        List<ViagemModel> viagensNaoSincronizadas = viagensUsuario.stream().filter(v -> v.getSincronizada().equals("N")).collect(Collectors.toList());
+        int quantidade = viagensNaoSincronizadas.size();
+
+        if (quantidade == 0) {
+            Toast.makeText(getContext(), "Sem viagens para sincronizar.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        viagensNaoSincronizadas.forEach(viagem -> {
+            DTOEnviar dtoEnviar = new DTOEnviar(viagem.getTotalViajantes(), viagem.getDuracao(), viagem.getTotal(), viagem.getTitulo());
+
+            dtoEnviar.setViagemCustoEntretenimentos(Conversor.converterEntretenimentos(entretenimentoDAO.selectBy(EntretenimentoModel.COLUNA_ID_VIAGEM, String.valueOf(viagem.getId()))));
+            dtoEnviar.setViagemCustoGasolina(Conversor.converterGasolina(gasolinaDAO.selectBy(GasolinaModel.COLUNA_ID_VIAGEM, String.valueOf(viagem.getId()))));
+            dtoEnviar.setViagemCustoHospedagem(Conversor.converterHospedagem(hospedagemDAO.selectBy(HospedagemModel.COLUNA_ID_VIAGEM, String.valueOf(viagem.getId()))));
+            dtoEnviar.setViagemCustoRefeicao(Conversor.converterRefeicao(refeicoesDAO.selectBy(RefeicoesModel.COLUNA_ID_VIAGEM, String.valueOf(viagem.getId()))));
+            dtoEnviar.setViagemCustoAereo(Conversor.converterTarifaAerea(tarifaAereaDAO.selectBy(TarifaAereaModel.COLUNA_ID_VIAGEM, String.valueOf(viagem.getId()))));
+
+            Api.postViagem(dtoEnviar, new Callback<Resposta>() {
+                @Override
+                public void onResponse(Call<Resposta> call, Response<Resposta> response) {
+                    if (response.isSuccessful()) {
+                        viagem.setSincronizada("S");
+                        viagemDAO.update(viagem);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Resposta> call, Throwable t) {
+                    t.printStackTrace();
+                }
+            });
+        });
+
+        Toast.makeText(getContext(), "Sincronização concluída.", Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

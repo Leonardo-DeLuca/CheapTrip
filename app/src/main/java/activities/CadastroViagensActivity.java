@@ -462,6 +462,7 @@ public class CadastroViagensActivity extends AppCompatActivity {
         viagemModel.setTotalViajantes(Integer.parseInt(editTextTotalViajantes.getText().toString()));
         viagemModel.setDuracao(Integer.parseInt(editTextDuracaoViagem.getText().toString()));
         viagemModel.setDataCriacao(getDataCriacaoViagem());
+        viagemModel.setSincronizada("N");
 
         double totalGasolina = Double.parseDouble(editTextTotalGasolina.getText().toString().replace(",", "."));
         double totalTarifaAerea = Double.parseDouble(editTextTotalTarifaAerea.getText().toString().replace(",", "."));

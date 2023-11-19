@@ -8,6 +8,11 @@ public class ViagemCustoRefeicao implements Serializable {
     private double custoRefeicao;
     private int refeicoesDia;
 
+    public ViagemCustoRefeicao(double custoRefeicao, int refeicoesDia) {
+        this.custoRefeicao = custoRefeicao;
+        this.refeicoesDia = refeicoesDia;
+    }
+
     public double getCustoRefeicao() {
         return custoRefeicao;
     }

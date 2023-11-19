@@ -6,6 +6,12 @@ import java.util.Date;
 public class ViagemCustoAereo implements Serializable {
     private double custoPessoa;
     private double custoAluguelVeiculo;
+
+    public ViagemCustoAereo(double custoPessoa, double custoAluguelVeiculo) {
+        this.custoPessoa = custoPessoa;
+        this.custoAluguelVeiculo = custoAluguelVeiculo;
+    }
+
     public double getCustoPessoa() {
         return custoPessoa;
     }

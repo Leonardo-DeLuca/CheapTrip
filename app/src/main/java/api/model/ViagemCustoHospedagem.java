@@ -9,6 +9,12 @@ public class ViagemCustoHospedagem implements Serializable {
     private int totalNoite;
     private int totalQuartos;
 
+    public ViagemCustoHospedagem(double custoMedioNoite, int totalNoite, int totalQuartos) {
+        this.custoMedioNoite = custoMedioNoite;
+        this.totalNoite = totalNoite;
+        this.totalQuartos = totalQuartos;
+    }
+
     public double getCustoMedioNoite() {
         return custoMedioNoite;
     }

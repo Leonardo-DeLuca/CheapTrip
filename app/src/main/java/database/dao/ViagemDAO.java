@@ -117,6 +117,7 @@ public class ViagemDAO extends Base {
         values.put(ViagemModel.COLUNA_DURACAO, viagemModel.getDuracao());
         values.put(ViagemModel.COLUNA_DATA_CRIACAO, viagemModel.getDataCriacao());
         values.put(ViagemModel.COLUNA_TOTAL, viagemModel.getTotal());
+        values.put(ViagemModel.COLUNA_SINCRONIZADA, viagemModel.getSincronizada());
 
         return values;
     }
@@ -131,6 +132,7 @@ public class ViagemDAO extends Base {
         v.setDuracao(cursor.getInt(4));
         v.setDataCriacao(cursor.getString(5));
         v.setTotal(cursor.getDouble(6));
+        v.setSincronizada(cursor.getString(7));
 
         return v;
     }

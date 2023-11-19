@@ -5,16 +5,23 @@ import java.util.Date;
 
 public class ViagemCustoGasolina implements Serializable {
 
-    private int totalEstimadoKM;
+    private double totalEstimadoKM;
     private double mediaKMLitro;
     private double custoMedioLitro;
-    private int custoPorPessoa;
+    private double custoPorPessoa;
 
-    public int getTotalEstimadoKM() {
+    public ViagemCustoGasolina(double totalEstimadoKM, double mediaKMLitro, double custoMedioLitro, double custoPorPessoa) {
+        this.totalEstimadoKM = totalEstimadoKM;
+        this.mediaKMLitro = mediaKMLitro;
+        this.custoMedioLitro = custoMedioLitro;
+        this.custoPorPessoa = custoPorPessoa;
+    }
+
+    public double getTotalEstimadoKM() {
         return totalEstimadoKM;
     }
 
-    public void setTotalEstimadoKM(int totalEstimadoKM) {
+    public void setTotalEstimadoKM(double totalEstimadoKM) {
         this.totalEstimadoKM = totalEstimadoKM;
     }
 
@@ -34,11 +41,11 @@ public class ViagemCustoGasolina implements Serializable {
         this.custoMedioLitro = custoMedioLitro;
     }
 
-    public int getCustoPorPessoa() {
+    public double getCustoPorPessoa() {
         return custoPorPessoa;
     }
 
-    public void setCustoPorPessoa(int custoPorPessoa) {
+    public void setCustoPorPessoa(double custoPorPessoa) {
         this.custoPorPessoa = custoPorPessoa;
     }
 }

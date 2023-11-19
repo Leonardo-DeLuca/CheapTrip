@@ -4,9 +4,13 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class ViagemCustoEntretenimento implements Serializable {
-
     private String entretenimento;
-    private int valor;
+    private double valor;
+
+    public ViagemCustoEntretenimento(String entretenimento, double valor) {
+        this.entretenimento = entretenimento;
+        this.valor = valor;
+    }
 
     public String getEntretenimento() {
         return entretenimento;
@@ -16,11 +20,11 @@ public class ViagemCustoEntretenimento implements Serializable {
         this.entretenimento = entretenimento;
     }
 
-    public int getValor() {
+    public double getValor() {
         return valor;
     }
 
-    public void setValor(int valor) {
+    public void setValor(double valor) {
         this.valor = valor;
     }
 

@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class Resposta implements Serializable {
 
     private boolean sucesso;
-    private String Mensagem;
+    private String mensagem;
     private int ChavePrimaria;
 
     public Resposta(){
@@ -21,11 +21,11 @@ public class Resposta implements Serializable {
     }
 
     public String getMensagem() {
-        return Mensagem;
+        return mensagem;
     }
 
     public void setMensagem(String mensagem) {
-        Mensagem = mensagem;
+        mensagem = mensagem;
     }
 
     public int getChavePrimaria() {
