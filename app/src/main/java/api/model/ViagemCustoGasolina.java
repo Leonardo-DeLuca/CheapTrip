@@ -8,13 +8,13 @@ public class ViagemCustoGasolina implements Serializable {
     private double totalEstimadoKM;
     private double mediaKMLitro;
     private double custoMedioLitro;
-    private double custoPorPessoa;
+    private double totalVeiculos;
 
-    public ViagemCustoGasolina(double totalEstimadoKM, double mediaKMLitro, double custoMedioLitro, double custoPorPessoa) {
+    public ViagemCustoGasolina(double totalEstimadoKM, double mediaKMLitro, double custoMedioLitro, double totalVeiculos) {
         this.totalEstimadoKM = totalEstimadoKM;
         this.mediaKMLitro = mediaKMLitro;
         this.custoMedioLitro = custoMedioLitro;
-        this.custoPorPessoa = custoPorPessoa;
+        this.totalVeiculos = totalVeiculos;
     }
 
     public double getTotalEstimadoKM() {
@@ -42,10 +42,10 @@ public class ViagemCustoGasolina implements Serializable {
     }
 
     public double getCustoPorPessoa() {
-        return custoPorPessoa;
+        return totalVeiculos;
     }
 
-    public void setCustoPorPessoa(double custoPorPessoa) {
-        this.custoPorPessoa = custoPorPessoa;
+    public void setTotalVeiculos(double totalVeiculos) {
+        this.totalVeiculos = totalVeiculos;
     }
 }

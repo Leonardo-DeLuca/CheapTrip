@@ -6,9 +6,9 @@ public class Resposta implements Serializable {
 
     private boolean sucesso;
     private String mensagem;
-    private int ChavePrimaria;
+    private int dados;
 
-    public Resposta(){
+    public Resposta() {
 
     }
 
@@ -28,11 +28,11 @@ public class Resposta implements Serializable {
         mensagem = mensagem;
     }
 
-    public int getChavePrimaria() {
-        return ChavePrimaria;
+    public int getDados() {
+        return dados;
     }
 
-    public void setChavePrimaria(int chavePrimaria) {
-        ChavePrimaria = chavePrimaria;
+    public void setDados(int dados) {
+        dados = dados;
     }
 }

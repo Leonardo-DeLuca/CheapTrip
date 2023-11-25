@@ -19,7 +19,7 @@ public class DTOEnviar implements Serializable {
         this.custoTotalViagem = custoTotalViagem;
         this.local = local;
         this.idConta = 121133;
-        this.custoPorPessoa = 0;
+        this.custoPorPessoa = custoTotalViagem / totalViajantes;
     }
 
     @SerializedName("aereo")

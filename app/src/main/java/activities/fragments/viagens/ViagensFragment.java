@@ -145,6 +145,9 @@ public class ViagensFragment extends Fragment {
                     if (response.isSuccessful()) {
                         viagem.setSincronizada("S");
                         viagemDAO.update(viagem);
+
+                        Log.d("Debug - Mensagem Sinc.", response.body().getMensagem());
+                        Log.d("Debug - Dados Sinc.", String.valueOf(response.body().getDados()));
                     }
                 }
 
