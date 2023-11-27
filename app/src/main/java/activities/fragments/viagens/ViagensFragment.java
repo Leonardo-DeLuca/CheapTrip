@@ -153,6 +153,8 @@ public class ViagensFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<Resposta> call, Throwable t) {
+                    Toast.makeText(getContext(), "Ocorreu um erro ao sincronizar.", Toast.LENGTH_SHORT).show();
+
                     t.printStackTrace();
                 }
             });
